@@ -5,9 +5,9 @@ import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/screens/details/components/genres.dart';
 import 'package:movie_app/screens/details/components/information.dart';
 
-class About extends StatelessWidget {
+class AboutTab extends StatelessWidget {
   final Movie movie;
-  const About({super.key, required this.movie});
+  const AboutTab({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {

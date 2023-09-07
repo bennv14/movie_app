@@ -78,7 +78,12 @@ class _BodyState extends State<Body> {
                   moviesCards.add(MovieCard(movie: movie));
                 }
                 return Carousel(
-                  widgets: moviesCards,
+                  widgets: moviesCards
+                    ..add(
+                      const Center(
+                        child: CircularProgressIndicator(color: secondaryColor),
+                      ),
+                    ),
                   onAddPage: fetchMovies,
                 );
               case MoviesStatus.failure:

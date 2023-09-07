@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:movie_app/api/api.dart';
 import 'package:movie_app/common_widget/image_border.dart';
@@ -85,10 +87,27 @@ class BackdropTitle extends StatelessWidget {
                 ),
               ),
             ),
-            const Positioned(
+            Positioned(
+                top: defaultPadding * 1.5,
+                child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Icon(
+                      Icons.arrow_back_rounded,
+                      color: Colors.white,
+                    ))),
+            Positioned(
               top: defaultPadding * 1.5,
-              child: BackButton(
-                color: Colors.white,
+              right: 0,
+              child: TextButton(
+                onPressed: () {
+                  log("add");
+                },
+                child: Icon(
+                  Icons.bookmark,
+                  color: Colors.white.withOpacity(0.9),
+                ),
               ),
             ),
           ],

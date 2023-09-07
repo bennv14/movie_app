@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/api/api.dart';
-import 'package:movie_app/common_widget/expandable_text.dart';
+import 'package:movie_app/api/movie_api.dart';
 import 'package:movie_app/common_widget/sliver_appbar_delegate.dart';
 import 'package:movie_app/common_widget/sliver_tabbar_delegate.dart';
 import 'package:movie_app/constants.dart';
 import 'package:movie_app/models/cast.dart';
 import 'package:movie_app/models/movie.dart';
-import 'package:movie_app/screens/details/components/about.dart';
+import 'package:movie_app/models/review.dart';
+import 'package:movie_app/screens/details/components/about_tab.dart';
 import 'package:movie_app/screens/details/components/list_cast.dart';
+import 'package:movie_app/screens/details/components/reviews_tab.dart';
 
 class Body extends StatefulWidget {
   final Movie movie;
@@ -18,12 +20,14 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  late Future<List<Cast>> casts;
+  late final Future<List<Cast>> casts;
+  late final Future<List<Review>> reviews;
 
   @override
   void initState() {
     super.initState();
-    casts = API.getCastsMovie(widget.movie.id ?? 0);
+    casts = MovieAPI.getCasts(id: widget.movie.id!);
+    reviews = MovieAPI.getReviews(id: widget.movie.id!);
   }
 
   @override
@@ -49,7 +53,7 @@ class _BodyState extends State<Body> {
             body: TabBarView(
               children: [
                 SingleChildScrollView(
-                  child: About(movie: widget.movie),
+                  child: AboutTab(movie: widget.movie),
                 ),
                 FutureBuilder(
                   future: casts,
@@ -76,15 +80,30 @@ class _BodyState extends State<Body> {
                     }
                   },
                 ),
-                Center(
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: ExpandableText(
-                      text: widget.movie.overview ?? "",
-                    ),
-                  ),
-                ),
+                FutureBuilder(
+                    future: reviews,
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.done:
+                          if (snapshot.hasError) {
+                            return Expanded(
+                              child: Center(
+                                child: Text(snapshot.error.toString()),
+                              ),
+                            );
+                          } else {
+                            return SingleChildScrollView(
+                              child: ReviewsTab(reviews: snapshot.data ?? []),
+                            );
+                          }
+                        default:
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: secondaryColor,
+                            ),
+                          );
+                      }
+                    }),
                 const Center(
                   child: CircularProgressIndicator(color: secondaryColor),
                 ),

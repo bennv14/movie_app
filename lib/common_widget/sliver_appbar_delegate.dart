@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:movie_app/constants.dart';
 import 'package:movie_app/models/movie.dart';
@@ -7,8 +9,7 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   final Movie movie;
   final double minHeight;
   final double maxHeight;
-  SliverAppBarDelegate(
-      {required this.movie, this.minHeight = 85, this.maxHeight = 340});
+  SliverAppBarDelegate({required this.movie, this.minHeight = 85, this.maxHeight = 340});
 
   @override
   double get minExtent => minHeight;
@@ -23,8 +24,7 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   bool appear(double shrinkOffset) => shrinkOffset / minHeight >= 2;
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -47,6 +47,17 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
             style: const TextStyle(color: Colors.black),
           ),
           leading: const BackButton(color: Colors.black),
+          actions: [
+            TextButton(
+              onPressed: () {
+                log("add");
+              },
+              child: const Icon(
+                Icons.bookmark,
+                color: Colors.black87,
+              ),
+            ),
+          ],
         ),
       );
 

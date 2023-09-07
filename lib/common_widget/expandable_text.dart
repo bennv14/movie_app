@@ -20,6 +20,19 @@ class _ExpandableTextState extends State<ExpandableText> {
 
   @override
   Widget build(BuildContext context) {
+    TextPainter textPainter = TextPainter(
+      text: TextSpan(text: widget.text, style: textStyle),
+      maxLines: 5,
+      textDirection: TextDirection.ltr,
+    );
+    textPainter.layout(maxWidth: MediaQuery.of(context).size.width - 40);
+
+    if (textPainter.didExceedMaxLines == false) {
+      return Text(
+        widget.text,
+        style: textStyle,
+      );
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
