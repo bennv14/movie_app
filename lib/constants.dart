@@ -7,7 +7,7 @@ const fillStarColor = Color(0xFFFCC419);
 
 const defaultPadding = 20.0;
 
-const titleMovie =  TextStyle(
+const titleMovie = TextStyle(
   fontSize: 24,
   fontWeight: FontWeight.w600,
   color: Colors.black87,
@@ -38,12 +38,21 @@ const textStyle = TextStyle(
 );
 
 const defaultShadow = BoxShadow(
-  offset: Offset(0, 4),
-  blurRadius: 15,
-  color:secondaryColor,
-  spreadRadius: 40,
-  blurStyle: BlurStyle.inner
-);
+    offset: Offset(0, 4),
+    blurRadius: 15,
+    color: secondaryColor,
+    spreadRadius: 40,
+    blurStyle: BlurStyle.inner);
 
-const List<String> tabBarMovie = ["Thông tin", "Diễn viên","Đánh giá","Gợi ý","Tương tự"];
-const List <String> categories = ["Đang chiếu", "Phổ biến", "BXH", "Sắp chiếu"];
+const List<String> tabBarMovie = [
+  "Thông tin",
+  "Diễn viên",
+  "Đánh giá",
+  "Gợi ý",
+  "Tương tự"
+];
+const List<String> categories = ["Đang chiếu", "Phổ biến", "BXH", "Sắp chiếu"];
+
+String urlImage(String path) {
+  return "https://image.tmdb.org/t/p/w500$path";
+}

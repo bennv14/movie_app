@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:movie_app/api/api.dart';
 import 'package:movie_app/common_widget/image_border.dart';
 import 'package:movie_app/common_widget/rating_vote.dart';
 import 'package:movie_app/constants.dart';
@@ -30,7 +29,7 @@ class BackdropTitle extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 borderImage(
-                  image: createImage(API.makeUlrImage(movie.backdropPath)),
+                  image: createImage(urlImage(movie.backdropPath!)),
                   height: heightBackdrop,
                   width: width,
                   borderRadius: const BorderRadius.only(
@@ -79,7 +78,7 @@ class BackdropTitle extends StatelessWidget {
               top: heightBackdrop - 75,
               left: defaultPadding,
               child: borderImage(
-                image: createImage(API.makeUlrImage(movie.posterPath)),
+                image: createImage(urlImage(movie.posterPath!)),
                 height: 150,
                 width: 100,
                 borderRadius: const BorderRadius.all(

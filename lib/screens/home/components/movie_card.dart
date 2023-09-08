@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:movie_app/api/api.dart';
 import 'package:movie_app/constants.dart';
 import 'package:movie_app/models/movie.dart';
 import 'package:animations/animations.dart';
@@ -37,15 +36,15 @@ class BuildMovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              "${API.urlImage}${movie.posterPath}",
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
+        // Expanded(
+        //   child: ClipRRect(
+        //     borderRadius: BorderRadius.circular(20),
+        //     child: Image.network(
+        //       urlImage(movie.posterPath!),
+        //       fit: BoxFit.cover,
+        //     ),
+        //   ),
+        // ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: defaultPadding / 2),
           child: Text(

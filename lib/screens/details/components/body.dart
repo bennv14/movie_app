@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/api/api.dart';
 import 'package:movie_app/api/movie_api.dart';
 import 'package:movie_app/common_widget/sliver_appbar_delegate.dart';
 import 'package:movie_app/common_widget/sliver_tabbar_delegate.dart';
@@ -27,93 +26,70 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     casts = MovieAPI.getCasts(id: widget.movie.id!);
-    reviews = MovieAPI.getReviews(id: widget.movie.id!);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      return DefaultTabController(
-        length: tabBarMovie.length,
-        child: NestedScrollView(
-            headerSliverBuilder: (context, value) {
-              return [
-                SliverPersistentHeader(
-                  delegate: SliverAppBarDelegate(
-                    movie: widget.movie,
-                  ),
-                  pinned: true,
+    return DefaultTabController(
+      length: tabBarMovie.length,
+      child: NestedScrollView(
+          headerSliverBuilder: (context, value) {
+            return [
+              SliverPersistentHeader(
+                delegate: SliverAppBarDelegate(
+                  movie: widget.movie,
                 ),
-                SliverPersistentHeader(
-                  delegate: SliverTabBarDelegate(builTapBar()),
-                  pinned: true,
-                ),
-              ];
-            },
-            body: TabBarView(
-              children: [
-                SingleChildScrollView(
-                  child: AboutTab(movie: widget.movie),
-                ),
-                FutureBuilder(
-                  future: casts,
-                  builder: (context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.done:
-                        if (snapshot.hasError) {
-                          return Expanded(
-                            child: Center(
-                              child: Text(snapshot.error.toString()),
-                            ),
-                          );
-                        } else {
-                          return SingleChildScrollView(
-                            child: ListCast(casts: snapshot.data ?? []),
-                          );
-                        }
-                      default:
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: secondaryColor,
+                pinned: true,
+              ),
+              SliverPersistentHeader(
+                delegate: SliverTabBarDelegate(builTapBar()),
+                pinned: true,
+              ),
+            ];
+          },
+          body: TabBarView(
+            children: [
+              SingleChildScrollView(
+                child: AboutTab(movie: widget.movie),
+              ),
+              FutureBuilder(
+                future: casts,
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.done:
+                      if (snapshot.hasError) {
+                        return Expanded(
+                          child: Center(
+                            child: Text(snapshot.error.toString()),
                           ),
                         );
-                    }
-                  },
-                ),
-                FutureBuilder(
-                    future: reviews,
-                    builder: (context, snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.done:
-                          if (snapshot.hasError) {
-                            return Expanded(
-                              child: Center(
-                                child: Text(snapshot.error.toString()),
-                              ),
-                            );
-                          } else {
-                            return SingleChildScrollView(
-                              child: ReviewsTab(reviews: snapshot.data ?? []),
-                            );
-                          }
-                        default:
-                          return const Center(
-                            child: CircularProgressIndicator(
-                              color: secondaryColor,
-                            ),
-                          );
+                      } else {
+                        return SingleChildScrollView(
+                          child: ListCast(casts: snapshot.data ?? []),
+                        );
                       }
-                    }),
-                const Center(
-                  child: CircularProgressIndicator(color: secondaryColor),
-                ),
-                const Center(
-                  child: CircularProgressIndicator(color: secondaryColor),
-                ),
-              ],
-            )),
-      );
-    });
+                    default:
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: secondaryColor,
+                        ),
+                      );
+                  }
+                },
+              ),
+              // ReviewTab(movie: widget.movie),
+              const Center(
+                child: CircularProgressIndicator(color: secondaryColor),
+              ),
+              const Center(
+                child: CircularProgressIndicator(color: secondaryColor),
+              ),
+              const Center(
+                child: CircularProgressIndicator(color: secondaryColor),
+              ),
+            ],
+          )),
+    );
   }
 
   TabBar builTapBar() {

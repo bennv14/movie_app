@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/api/api.dart';
 import 'package:movie_app/common_widget/image_border.dart';
 import 'package:movie_app/constants.dart';
 import 'package:movie_app/models/cast.dart';
@@ -13,7 +12,7 @@ class CastCard extends StatelessWidget {
     return Row(
       children: [
         borderImage(
-          image: createImage(API.makeUlrImage(cast.profilePath)),
+          image: createImage(cast.profilePath),
           height: 70,
           width: 70,
           borderRadius: const BorderRadius.all(
@@ -50,7 +49,7 @@ class CastCard extends StatelessWidget {
       );
     } else {
       return Image.network(
-        url,
+        urlImage(url),
         fit: BoxFit.cover,
       );
     }

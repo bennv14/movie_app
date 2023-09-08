@@ -20,11 +20,6 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   List<int> genresSelected = [];
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   void fetchMovies() {
     context.read<MoviesBloc>().add(FetchMovies());
   }
@@ -73,19 +68,22 @@ class _BodyState extends State<Body> {
           builder: (context, state) {
             switch (state.status) {
               case MoviesStatus.waiting:
-                List<Widget> moviesCards = [];
-                for (var movie in state.movies) {
-                  moviesCards.add(MovieCard(movie: movie));
-                }
-                return Carousel(
-                  widgets: moviesCards
-                    ..add(
-                      const Center(
-                        child: CircularProgressIndicator(color: secondaryColor),
-                      ),
-                    ),
-                  onAddPage: fetchMovies,
-                );
+                // List<Widget> moviesCards = [];
+                // for (var movie in state.movies) {
+                //   moviesCards.add(MovieCard(movie: movie));
+                // }
+                // return Carousel(
+                //   widgets: moviesCards
+                //     ..add(
+                //       const Center(
+                //         child: CircularProgressIndicator(color: secondaryColor),
+                //       ),
+                //     ),
+                //   onAddPage: () {},
+                // );
+                return (Center(
+                  child: CircularProgressIndicator(color: Colors.amber),
+                ));
               case MoviesStatus.failure:
                 return const Center(
                   child: Text(
@@ -100,13 +98,16 @@ class _BodyState extends State<Body> {
                   ),
                 );
               case MoviesStatus.success:
-                List<Widget> moviesCards = [];
-                for (var movie in state.movies) {
-                  moviesCards.add(MovieCard(movie: movie));
-                }
-                return Carousel(
-                  widgets: moviesCards,
-                  onAddPage: fetchMovies,
+                // List<Widget> moviesCards = [];
+                // for (var movie in state.movies) {
+                //   moviesCards.add(MovieCard(movie: movie));
+                // }
+                // return Carousel(
+                //   widgets: moviesCards,
+                //   onAddPage: () {},
+                // );
+                return Center(
+                  child: Text('Success'),
                 );
             }
           },

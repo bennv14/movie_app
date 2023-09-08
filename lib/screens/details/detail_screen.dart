@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/api/api.dart';
+import 'package:movie_app/api/movie_api.dart';
 import 'package:movie_app/constants.dart';
 import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/screens/details/components/body.dart';
@@ -18,7 +18,7 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   void initState() {
     super.initState();
-    movie = API.getFullDetailMovie(widget.movie);
+    movie = MovieAPI.getDetails(id: widget.movie.id!);
   }
 
   @override
