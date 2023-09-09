@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/api/movie_api.dart';
@@ -35,66 +37,83 @@ class _BodyState extends State<Body> {
     return DefaultTabController(
       length: tabBarMovie.length,
       child: NestedScrollView(
-          headerSliverBuilder: (context, value) {
-            return [
-              SliverPersistentHeader(
-                delegate: SliverAppBarDelegate(
-                  movie: widget.movie,
+        headerSliverBuilder: (context, value) {
+          return [
+            SliverPersistentHeader(
+              delegate: SliverAppBarDelegate(
+                movie: widget.movie,
+              ),
+              pinned: true,
+            ),
+            SliverPersistentHeader(
+              delegate: SliverTabBarDelegate(builTapBar()),
+              pinned: true,
+            ),
+          ];
+        },
+        body: Builder(
+          builder: (context) {
+            final controller = PrimaryScrollController.of(context);
+            return TabBarView(
+              children: [
+                SingleChildScrollView(
+                  child: AboutTab(movie: widget.movie),
                 ),
-                pinned: true,
-              ),
-              SliverPersistentHeader(
-                delegate: SliverTabBarDelegate(builTapBar()),
-                pinned: true,
-              ),
-            ];
-          },
-          body: TabBarView(
-            children: [
-              SingleChildScrollView(
-                child: AboutTab(movie: widget.movie),
-              ),
-              FutureBuilder(
-                future: casts,
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.done:
-                      if (snapshot.hasError) {
-                        return Expanded(
-                          child: Center(
-                            child: Text(snapshot.error.toString()),
+                FutureBuilder(
+                  future: casts,
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.done:
+                        if (snapshot.hasError) {
+                          return Expanded(
+                            child: Center(
+                              child: Text(snapshot.error.toString()),
+                            ),
+                          );
+                        } else {
+                          return SingleChildScrollView(
+                            controller: controller,
+                            child: ListCast(casts: snapshot.data ?? []),
+                          );
+                        }
+                      default:
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: secondaryColor,
                           ),
                         );
-                      } else {
-                        return SingleChildScrollView(
-                          child: ListCast(casts: snapshot.data ?? []),
-                        );
+                    }
+                  },
+                ),
+                BlocProvider(
+                  create: (context) {
+                    var reviewBloc = ReviewsBloc(
+                      MovieAPI.getReviews(
+                        id: widget.movie.id!,
+                      ),
+                    )..add(Initial());
+                    controller.addListener(() {
+                      if (controller.offset == controller.position.maxScrollExtent) {
+                        reviewBloc.add(FetchData());
                       }
-                    default:
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: secondaryColor,
-                        ),
-                      );
-                  }
-                },
-              ),
-              BlocProvider(
-                create: (context) => ReviewsBloc(
-                  MovieAPI.getReviews(
-                    id: widget.movie.id!,
+                    });
+                    return reviewBloc;
+                  },
+                  child: SingleChildScrollView(
+                    child: ReviewTab(movie: widget.movie),
                   ),
-                )..add(Initial()),
-                child: ReviewTab(movie: widget.movie),
-              ),
-              const Center(
-                child: CircularProgressIndicator(color: secondaryColor),
-              ),
-              const Center(
-                child: CircularProgressIndicator(color: secondaryColor),
-              ),
-            ],
-          )),
+                ),
+                const Center(
+                  child: CircularProgressIndicator(color: secondaryColor),
+                ),
+                const Center(
+                  child: CircularProgressIndicator(color: secondaryColor),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 

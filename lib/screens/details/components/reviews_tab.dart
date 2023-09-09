@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/bloc/reviews_bloc/reviews_bloc.dart';
-import 'package:movie_app/common_widget/list_view_infinite.dart';
 import 'package:movie_app/constants.dart';
 import 'package:movie_app/models/movie.dart';
 import 'review_card.dart';
@@ -18,10 +17,6 @@ class _ReviewTabState extends State<ReviewTab> {
   @override
   void initState() {
     super.initState();
-  }
-
-  void funcFetch() {
-    context.read<ReviewsBloc>().add(FetchData());
   }
 
   @override
@@ -53,13 +48,7 @@ class _ReviewTabState extends State<ReviewTab> {
                 ),
               );
             }
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: ListViewInfinite(
-                widgets: widgets,
-                funcAddWidgets: funcFetch,
-              ),
-            );
+            return view(widgets);
 
           case ReviewStatus.failure:
             List<Widget> widgets = [];
@@ -81,13 +70,7 @@ class _ReviewTabState extends State<ReviewTab> {
               );
             }
             widgets.add(const Text("Fail"));
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: ListViewInfinite(
-                widgets: widgets,
-                funcAddWidgets: funcFetch,
-              ),
-            );
+            return view(widgets);
 
           case ReviewStatus.waiting:
             List<Widget> widgets = [];
@@ -109,15 +92,19 @@ class _ReviewTabState extends State<ReviewTab> {
             widgets.add(const Center(
               child: CircularProgressIndicator(color: secondaryColor),
             ));
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: ListViewInfinite(
-                widgets: widgets,
-                funcAddWidgets: funcFetch,
-              ),
-            );
+            return view(widgets);
         }
       },
+    );
+  }
+
+  Widget view(List<Widget> widgets) {
+    return Padding(
+      padding: const EdgeInsets.all(defaultPadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [...widgets],
+      ),
     );
   }
 }
