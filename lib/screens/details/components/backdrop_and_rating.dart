@@ -29,7 +29,7 @@ class BackdropTitle extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 borderImage(
-                  image: createImage(urlImage(movie.backdropPath!)),
+                  image: createImage(movie.backdropPath),
                   height: heightBackdrop,
                   width: width,
                   borderRadius: const BorderRadius.only(
@@ -130,7 +130,7 @@ class BackdropTitle extends StatelessWidget {
       );
     } else {
       return Image.network(
-        url,
+        urlImage(url),
         fit: BoxFit.cover,
       );
     }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/api/movie_api.dart';
+import 'package:movie_app/bloc/reviews_bloc/reviews_bloc.dart';
 import 'package:movie_app/common_widget/sliver_appbar_delegate.dart';
 import 'package:movie_app/common_widget/sliver_tabbar_delegate.dart';
 import 'package:movie_app/constants.dart';
@@ -77,9 +79,13 @@ class _BodyState extends State<Body> {
                   }
                 },
               ),
-              // ReviewTab(movie: widget.movie),
-              const Center(
-                child: CircularProgressIndicator(color: secondaryColor),
+              BlocProvider(
+                create: (context) => ReviewsBloc(
+                  MovieAPI.getReviews(
+                    id: widget.movie.id!,
+                  ),
+                )..add(Initial()),
+                child: ReviewTab(movie: widget.movie),
               ),
               const Center(
                 child: CircularProgressIndicator(color: secondaryColor),

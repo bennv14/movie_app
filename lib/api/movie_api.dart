@@ -55,43 +55,42 @@ class MovieAPI {
     }
   }
 
-  // static Function getReviews({
-  //   required int id,
-  //   int curentPage = 1,
-  //   String language = 'en',
-  // }) {
-  //   int totalPages = 1;
+  static Function getReviews({
+    required int id,
+    int curentPage = 1,
+    String language = 'en',
+  }) {
+    int totalPages = 1;
+    int totalResults = 0;
 
-  //   Future<List<Review>> funcResult(int? page) async {
-  //     List<Review> reviews = [];
-  //     if (page != null) {
-  //       curentPage = page;
-  //     }
+    Future<List> funcResult() async {
+      List<Review> reviews = [];
 
-  //     if (curentPage <= totalPages) {
-  //       log(name: "MovieAPI", "getReviews");
-  //       final response = await http.get(
-  //         Uri.parse("$url$id/reviews?language=$language&page=$curentPage"),
-  //         headers: headers,
-  //       );
+      if (curentPage <= totalPages) {
+        log(name: "MovieAPI", "getReviews");
+        final response = await http.get(
+          Uri.parse("$url$id/reviews?language=$language&page=$curentPage"),
+          headers: headers,
+        );
 
-  //       if (response.statusCode == 200) {
-  //         final decodeData = json.decode(response.body);
-  //         totalPages = decodeData["total_pages"];
-  //         curentPage++;
+        if (response.statusCode == 200) {
+          final decodeData = json.decode(response.body);
+          totalPages = decodeData["total_pages"];
+          curentPage++;
+          totalResults = decodeData["total_results"];
 
-  //         for (var data in decodeData['results']) {
-  //           reviews.add(Review.fromJson(data));
-  //         }
-  //         log(name: "MovieAPI", "Length of reviews = ${reviews.length}");
-  //         return reviews;
-  //       } else {
-  //         throw Exception("Fail getReviews statusCode = ${response.statusCode}");
-  //       }
-  //     }
-  //     return reviews;
-  //   }
+          for (var data in decodeData['results']) {
+            reviews.add(Review.fromJson(data));
+          }
+          log(name: "MovieAPI", "Length of reviews = ${reviews.length}");
+          return [totalResults, reviews];
+        } else {
+          throw Exception("Fail getReviews statusCode = ${response.statusCode}");
+        }
+      }
+      return [totalResults, reviews];
+    }
 
-  //   return funcResult;
-  // }
+    return funcResult;
+  }
 }

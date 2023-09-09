@@ -68,22 +68,20 @@ class _BodyState extends State<Body> {
           builder: (context, state) {
             switch (state.status) {
               case MoviesStatus.waiting:
-                // List<Widget> moviesCards = [];
-                // for (var movie in state.movies) {
-                //   moviesCards.add(MovieCard(movie: movie));
-                // }
-                // return Carousel(
-                //   widgets: moviesCards
-                //     ..add(
-                //       const Center(
-                //         child: CircularProgressIndicator(color: secondaryColor),
-                //       ),
-                //     ),
-                //   onAddPage: () {},
-                // );
-                return (Center(
-                  child: CircularProgressIndicator(color: Colors.amber),
-                ));
+                List<Widget> moviesCards = [];
+                for (var movie in state.movies) {
+                  moviesCards.add(MovieCard(movie: movie));
+                }
+                return Carousel(
+                  widgets: moviesCards
+                    ..add(
+                      const Center(
+                        child: CircularProgressIndicator(color: secondaryColor),
+                      ),
+                    ),
+                  onAddPage: () {},
+                );
+
               case MoviesStatus.failure:
                 return const Center(
                   child: Text(
@@ -98,16 +96,13 @@ class _BodyState extends State<Body> {
                   ),
                 );
               case MoviesStatus.success:
-                // List<Widget> moviesCards = [];
-                // for (var movie in state.movies) {
-                //   moviesCards.add(MovieCard(movie: movie));
-                // }
-                // return Carousel(
-                //   widgets: moviesCards,
-                //   onAddPage: () {},
-                // );
-                return Center(
-                  child: Text('Success'),
+                List<Widget> moviesCards = [];
+                for (var movie in state.movies) {
+                  moviesCards.add(MovieCard(movie: movie));
+                }
+                return Carousel(
+                  widgets: moviesCards,
+                  onAddPage: () {},
                 );
             }
           },

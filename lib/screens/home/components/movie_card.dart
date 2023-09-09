@@ -36,15 +36,15 @@ class BuildMovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Expanded(
-        //   child: ClipRRect(
-        //     borderRadius: BorderRadius.circular(20),
-        //     child: Image.network(
-        //       urlImage(movie.posterPath!),
-        //       fit: BoxFit.cover,
-        //     ),
-        //   ),
-        // ),
+        Expanded(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.network(
+              urlImage(movie.posterPath!),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: defaultPadding / 2),
           child: Text(

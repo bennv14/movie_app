@@ -68,7 +68,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
       ));
     } on Exception catch (e) {
       emit(state.copyWith(status: MoviesStatus.failure));
-      log(name: "_onFetchMovies", e.toString());
+      log(name: "_onInittial", e.toString());
     }
   }
 }

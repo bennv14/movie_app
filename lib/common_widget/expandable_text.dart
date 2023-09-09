@@ -36,11 +36,14 @@ class _ExpandableTextState extends State<ExpandableText> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          widget.text,
-          style: textStyle,
-          maxLines: isShowLess ? widget.maxLines : null,
-          overflow: isShowLess ? TextOverflow.ellipsis : null,
+        InkWell(
+          onTap: ontap,
+          child: Text(
+            widget.text,
+            style: textStyle,
+            maxLines: isShowLess ? widget.maxLines : null,
+            overflow: isShowLess ? TextOverflow.ellipsis : null,
+          ),
         ),
         InkWell(
           onTap: ontap,

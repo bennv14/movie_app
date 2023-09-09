@@ -27,13 +27,9 @@ class MoviesAPI {
     log(name: "MovieAPI", "func get movies call");
     int totalPages = 1;
 
-    Future<List<Movie>> funcResult(int? page) async {
+    Future<List<Movie>> funcResult() async {
       log(name: "MovieAPI", " get movies");
       List<Movie> movies = [];
-
-      if (page != null) {
-        curentPage = page;
-      }
 
       if (curentPage <= totalPages) {
         String strUrl = "$url$uri?language=$language&page=$curentPage&region=$region";

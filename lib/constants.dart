@@ -56,3 +56,17 @@ const List<String> categories = ["Đang chiếu", "Phổ biến", "BXH", "Sắp 
 String urlImage(String path) {
   return "https://image.tmdb.org/t/p/w500$path";
 }
+
+Image createImage(String? url) {
+  if (url == null) {
+    return Image.asset(
+      "assets/images/no-image.png",
+      fit: BoxFit.fitHeight,
+    );
+  } else {
+    return Image.network(
+      urlImage(url),
+      fit: BoxFit.cover,
+    );
+  }
+}

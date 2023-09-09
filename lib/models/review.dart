@@ -3,7 +3,7 @@ class Review {
   String? name;
   String? username;
   String? avatarPath;
-  int? rating;
+  double? rating;
   String? content;
   DateTime? createdAt;
   String? id;
@@ -25,10 +25,10 @@ class Review {
 
   factory Review.fromJson(Map<String, dynamic> json) => Review(
         author: json["author"],
-        name: json["name"],
-        username: json["username"],
-        avatarPath: json["avatar_path"],
-        rating: json["rating"],
+        name: json["author_details"]["name"],
+        username: json["author_details"]["username"],
+        avatarPath: json["author_details"]["avatar_path"],
+        rating: json["author_details"]["rating"],
         content: json["content"],
         createdAt: DateTime.parse(json["created_at"]),
         id: json["id"],
