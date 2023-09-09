@@ -17,7 +17,7 @@ class MovieAPI {
 
   static Future<Movie> getDetails({
     required int id,
-    String language = 'vn',
+    String language = 'vi',
   }) async {
     final response = await http.get(
       Uri.parse("$url$id?language=$language"),
@@ -34,7 +34,7 @@ class MovieAPI {
 
   static Future<List<Cast>> getCasts({
     required int id,
-    String language = 'en',
+    String language = 'vi',
   }) async {
     log(name: "MovieAPI", "getCasts");
     List<Cast> casts = <Cast>[];

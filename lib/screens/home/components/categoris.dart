@@ -39,28 +39,28 @@ class _CategoryListState extends State<CategoryList> {
               context.read<MoviesBloc>().add(
                     ChangeFuncFetchMovies(
                       funFetch: MoviesAPI.getMovies(
-                          uri: MoviesAPI.uriNowPlaying, language: 'vi', region: 'VN'),
+                          uri: MoviesAPI.uriNowPlaying, language: 'vi', region: 'vn'),
                     ),
                   );
             } else if (selectedCategory == 1) {
               context.read<MoviesBloc>().add(
                     ChangeFuncFetchMovies(
                       funFetch: MoviesAPI.getMovies(
-                          uri: MoviesAPI.uriPopular, language: 'vi', region: 'US'),
+                          uri: MoviesAPI.uriPopular, language: 'vi', region: 'vn'),
                     ),
                   );
             } else if (selectedCategory == 2) {
               context.read<MoviesBloc>().add(
                     ChangeFuncFetchMovies(
                       funFetch: MoviesAPI.getMovies(
-                          uri: MoviesAPI.uriTopRate, language: 'vi', region: 'US'),
+                          uri: MoviesAPI.uriTopRate, language: 'vi', region: 'vn'),
                     ),
                   );
             } else if (selectedCategory == 3) {
               context.read<MoviesBloc>().add(
                     ChangeFuncFetchMovies(
                       funFetch: MoviesAPI.getMovies(
-                          uri: MoviesAPI.uriUpcomming, language: 'vi', region: 'US'),
+                          uri: MoviesAPI.uriUpcomming, language: 'vi', region: 'vn'),
                     ),
                   );
             }

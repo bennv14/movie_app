@@ -1,16 +1,12 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:movie_app/constants.dart';
 
 class ListViewInfinite extends StatefulWidget {
-  final int totalResults;
   final List<Widget> widgets;
   final Function funcAddWidgets;
 
   const ListViewInfinite({
     super.key,
     required this.widgets,
-    required this.totalResults,
     required this.funcAddWidgets,
   });
 
@@ -25,10 +21,9 @@ class _ListViewInfiniteState extends State<ListViewInfinite> {
     super.initState();
     controller = ScrollController();
     controller.addListener(
-      () {
+      () async {
         if (controller.position.maxScrollExtent == controller.offset) {
-          log(name: "add reviews", "add review");
-          widget.funcAddWidgets();
+          await widget.funcAddWidgets();
         }
       },
     );
@@ -36,22 +31,9 @@ class _ListViewInfiniteState extends State<ListViewInfinite> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(defaultPadding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Comments: ${widget.totalResults}",
-            style: headerMedium,
-          ),
-          Expanded(
-            child: ListView(
-              children: widget.widgets,
-            ),
-          ),
-        ],
-      ),
+    return ListView(
+      controller: controller,
+      children: widget.widgets,
     );
   }
 }

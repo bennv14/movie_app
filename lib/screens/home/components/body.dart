@@ -79,15 +79,29 @@ class _BodyState extends State<Body> {
                         child: CircularProgressIndicator(color: secondaryColor),
                       ),
                     ),
-                  onAddPage: () {},
+                  onAddPage: () {
+                    fetchMovies();
+                  },
                 );
 
               case MoviesStatus.failure:
-                return const Center(
-                  child: Text(
-                    "Has Error",
-                    style: headerLarge,
-                  ),
+                List<Widget> moviesCards = [];
+                for (var movie in state.movies) {
+                  moviesCards.add(MovieCard(movie: movie));
+                }
+                return Carousel(
+                  widgets: moviesCards
+                    ..add(
+                      const Center(
+                        child: Text(
+                          "Error",
+                          style: headerLarge,
+                        ),
+                      ),
+                    ),
+                  onAddPage: () {
+                    fetchMovies();
+                  },
                 );
               case MoviesStatus.initial:
                 return const Expanded(
@@ -102,7 +116,9 @@ class _BodyState extends State<Body> {
                 }
                 return Carousel(
                   widgets: moviesCards,
-                  onAddPage: () {},
+                  onAddPage: () {
+                    fetchMovies();
+                  },
                 );
             }
           },
