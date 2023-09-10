@@ -20,20 +20,28 @@ class ListCast extends StatelessWidget {
       ),
     );
 
-    for (var cast in casts) {
-      castView.add(
-        Container(
-          margin: const EdgeInsets.only(
-            left: defaultPadding,
-            right: defaultPadding,
-            bottom: defaultPadding,
-          ),
-          child: CastCard(cast: cast),
+    // for (var cast in casts) {
+    //   castView.add(
+    //     Container(
+    //       margin: const EdgeInsets.only(
+    //         left: defaultPadding,
+    //         right: defaultPadding,
+    //         bottom: defaultPadding,
+    //       ),
+    //       child: CastCard(cast: cast),
+    //     ),
+    //   );
+    // }
+    return ListView.builder(
+      itemCount: casts.length,
+      itemBuilder: (context, index) => Container(
+        margin: const EdgeInsets.only(
+          left: defaultPadding,
+          right: defaultPadding,
+          bottom: defaultPadding,
         ),
-      );
-    }
-    return ListView(
-      children: castView,
+        child: CastCard(cast: casts[index]),
+      ),
     );
   }
 }

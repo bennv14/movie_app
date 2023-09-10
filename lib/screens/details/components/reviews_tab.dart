@@ -39,89 +39,144 @@ class _ReviewTabState extends State<ReviewTab> {
             );
 
           case ReviewStatus.success:
-            List<Widget> widgets = [];
-            widgets.add(
-              Padding(
-                padding: const EdgeInsets.only(bottom: defaultPadding),
-                child: Text(
-                  "Đánh giá: ${state.totalReviews}",
-                  style: headerMedium,
-                ),
-              ),
+            return ListView.builder(
+              itemCount: state.reviews.length + 1,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                      left: defaultPadding,
+                      right: defaultPadding,
+                      bottom: defaultPadding,
+                    ),
+                    child: Text(
+                      "Comments: ${state.totalReviews}",
+                      style: headerMedium,
+                    ),
+                  );
+                }
+                return Container(
+                  margin: const EdgeInsets.only(
+                    bottom: defaultPadding,
+                    left: defaultPadding,
+                    right: defaultPadding,
+                  ),
+                  child: ReviewCard(review: state.reviews[index - 1]),
+                );
+              },
             );
-            for (var review in state.reviews) {
-              widgets.add(
-                Container(
-                  margin: const EdgeInsets.only(bottom: defaultPadding),
-                  child: ReviewCard(review: review),
-                ),
-              );
-            }
-            return view(widgets);
 
           case ReviewStatus.failure:
-            List<Widget> widgets = [];
-            widgets.add(
-              Padding(
-                padding: const EdgeInsets.only(bottom: defaultPadding),
-                child: Text(
-                  "Đánh giá: ${state.totalReviews}",
-                  style: headerMedium,
-                ),
-              ),
+            int length = state.reviews.length;
+            return ListView.builder(
+              itemCount: length + 2,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                      left: defaultPadding,
+                      right: defaultPadding,
+                      bottom: defaultPadding,
+                    ),
+                    child: Text(
+                      "Comments: ${state.totalReviews}",
+                      style: headerMedium,
+                    ),
+                  );
+                }
+                if (index == length + 1) {
+                  return const Padding(
+                    padding: EdgeInsets.only(
+                      left: defaultPadding,
+                      right: defaultPadding,
+                      bottom: defaultPadding,
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Error",
+                        style: headerLarge,
+                      ),
+                    ),
+                  );
+                }
+                return Container(
+                  margin: const EdgeInsets.only(
+                    bottom: defaultPadding,
+                    left: defaultPadding,
+                    right: defaultPadding,
+                  ),
+                  child: ReviewCard(review: state.reviews[index - 1]),
+                );
+              },
             );
-            for (var review in state.reviews) {
-              widgets.add(
-                Container(
-                  margin: const EdgeInsets.only(bottom: defaultPadding),
-                  child: ReviewCard(review: review),
-                ),
-              );
-            }
-            widgets.add(const Text("Fail"));
-            return view(widgets);
 
           case ReviewStatus.waiting:
-            List<Widget> widgets = [];
-            widgets.add(Padding(
-              padding: const EdgeInsets.only(bottom: defaultPadding),
-              child: Text(
-                "Đánh giá: ${state.totalReviews}",
-                style: headerMedium,
-              ),
-            ));
-            for (var review in state.reviews) {
-              widgets.add(
-                Container(
-                  margin: const EdgeInsets.only(bottom: defaultPadding),
-                  child: ReviewCard(review: review),
-                ),
-              );
-            }
-            widgets.add(const Center(
-              child: CircularProgressIndicator(color: secondaryColor),
-            ));
-            return view(widgets);
-          case ReviewStatus.hasReachMax:
-            List<Widget> widgets = [];
-            widgets.add(
-              Padding(
-                padding: const EdgeInsets.only(bottom: defaultPadding),
-                child: Text(
-                  "Đánh giá: ${state.totalReviews}",
-                  style: headerMedium,
-                ),
-              ),
+            int length = state.reviews.length;
+            return ListView.builder(
+              itemCount: length + 2,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                      left: defaultPadding,
+                      right: defaultPadding,
+                      bottom: defaultPadding,
+                    ),
+                    child: Text(
+                      "Comments: ${state.totalReviews}",
+                      style: headerMedium,
+                    ),
+                  );
+                }
+                if (index == length + 1) {
+                  return const Padding(
+                    padding: EdgeInsets.only(
+                      left: defaultPadding,
+                      right: defaultPadding,
+                      bottom: defaultPadding,
+                    ),
+                    child: Center(
+                      child: CircularProgressIndicator(color: secondaryColor),
+                    ),
+                  );
+                }
+                return Container(
+                  margin: const EdgeInsets.only(
+                    bottom: defaultPadding,
+                    left: defaultPadding,
+                    right: defaultPadding,
+                  ),
+                  child: ReviewCard(review: state.reviews[index - 1]),
+                );
+              },
             );
-            for (var review in state.reviews) {
-              widgets.add(
-                Container(
-                  margin: const EdgeInsets.only(bottom: defaultPadding),
-                  child: ReviewCard(review: review),
-                ),
-              );
-            }
-            return view(widgets);
+          case ReviewStatus.hasReachMax:
+            return ListView.builder(
+              itemCount: state.reviews.length + 1,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                      left: defaultPadding,
+                      right: defaultPadding,
+                      bottom: defaultPadding,
+                    ),
+                    child: Text(
+                      "Comments: ${state.totalReviews}",
+                      style: headerMedium,
+                    ),
+                  );
+                }
+                return Container(
+                  margin: const EdgeInsets.only(
+                    bottom: defaultPadding,
+                    left: defaultPadding,
+                    right: defaultPadding,
+                  ),
+                  child: ReviewCard(review: state.reviews[index - 1]),
+                );
+              },
+            );
         }
       },
     );
