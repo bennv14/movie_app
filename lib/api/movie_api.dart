@@ -83,12 +83,12 @@ class MovieAPI {
             reviews.add(Review.fromJson(data));
           }
           log(name: "MovieAPI", "Length of reviews = ${reviews.length}");
-          return [totalResults, reviews];
+          return [totalResults, reviews, curentPage > totalPages];
         } else {
           throw Exception("Fail getReviews statusCode = ${response.statusCode}");
         }
       }
-      return [totalResults, reviews];
+      return [totalResults, reviews, curentPage > totalPages];
     }
 
     return funcResult;

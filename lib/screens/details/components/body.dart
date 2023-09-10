@@ -93,14 +93,17 @@ class _BodyState extends State<Body> {
                       ),
                     )..add(Initial());
                     controller.addListener(() {
-                      if (controller.offset == controller.position.maxScrollExtent) {
-                        reviewBloc.add(FetchData());
+                      if (!reviewBloc.state.hasReachMax) {
+                        if (controller.offset == controller.position.maxScrollExtent) {
+                          reviewBloc.add(FetchData());
+                        }
                       }
                     });
                     return reviewBloc;
                   },
-                  child: SingleChildScrollView(
-                    child: ReviewTab(movie: widget.movie),
+                  child: ReviewTab(
+                    movie: widget.movie,
+                    controller: controller,
                   ),
                 ),
                 const Center(

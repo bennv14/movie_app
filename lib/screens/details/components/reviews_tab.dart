@@ -7,7 +7,8 @@ import 'review_card.dart';
 
 class ReviewTab extends StatefulWidget {
   final Movie movie;
-  const ReviewTab({super.key, required this.movie});
+  final ScrollController controller;
+  const ReviewTab({super.key, required this.movie, required this.controller});
 
   @override
   State<ReviewTab> createState() => _ReviewTabState();
@@ -93,17 +94,40 @@ class _ReviewTabState extends State<ReviewTab> {
               child: CircularProgressIndicator(color: secondaryColor),
             ));
             return view(widgets);
+          case ReviewStatus.hasReachMax:
+            List<Widget> widgets = [];
+            widgets.add(
+              Padding(
+                padding: const EdgeInsets.only(bottom: defaultPadding),
+                child: Text(
+                  "Đánh giá: ${state.totalReviews}",
+                  style: headerMedium,
+                ),
+              ),
+            );
+            for (var review in state.reviews) {
+              widgets.add(
+                Container(
+                  margin: const EdgeInsets.only(bottom: defaultPadding),
+                  child: ReviewCard(review: review),
+                ),
+              );
+            }
+            return view(widgets);
         }
       },
     );
   }
 
   Widget view(List<Widget> widgets) {
-    return Padding(
-      padding: const EdgeInsets.all(defaultPadding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [...widgets],
+    return SingleChildScrollView(
+      controller: widget.controller,
+      child: Padding(
+        padding: const EdgeInsets.all(defaultPadding),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: widgets,
+        ),
       ),
     );
   }

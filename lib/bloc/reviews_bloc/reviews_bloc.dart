@@ -22,7 +22,12 @@ class ReviewsBloc extends Bloc<ReviewsEvent, ReviewsState> {
         status: ReviewStatus.success,
         reviews: [...state.reviews, ...data[1]],
         totalReviews: data[0],
+        hasReachMax: data[2],
       ));
+      if (state.hasReachMax) {
+        emit(state.copyWith(status: ReviewStatus.hasReachMax));
+        return;
+      }
     } catch (e) {
       log(name: "ReviewsBloc", "Failure: ${e.toString()}");
       emit(state.copyWith(
@@ -32,14 +37,20 @@ class ReviewsBloc extends Bloc<ReviewsEvent, ReviewsState> {
   }
 
   FutureOr<void> _onFetchData(FetchData event, Emitter<ReviewsState> emit) async {
+    if (state.hasReachMax) {
+      emit(state.copyWith(status: ReviewStatus.hasReachMax));
+      return;
+    }
+
     emit(state.copyWith(status: ReviewStatus.waiting));
     try {
       final data = await funcFetch();
 
       emit(state.copyWith(
         status: ReviewStatus.success,
-        reviews: state.reviews..addAll(data[1]),
+        reviews: [...state.reviews, ...data[1]],
         totalReviews: data[0],
+        hasReachMax: data[2],
       ));
     } catch (e) {
       log(name: "ReviewsBloc", "Failure: ${e.toString()}");

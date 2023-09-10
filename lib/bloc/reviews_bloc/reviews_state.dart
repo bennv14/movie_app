@@ -1,38 +1,34 @@
 part of 'reviews_bloc.dart';
 
-enum ReviewStatus { initial, success, failure, waiting }
+enum ReviewStatus { initial, success, failure, waiting, hasReachMax }
 
 class ReviewsState extends Equatable {
   final ReviewStatus status;
   final int totalReviews;
-  final int curentPage;
-  final int totalPages;
   final List<Review> reviews;
+  final bool hasReachMax;
 
   const ReviewsState({
     this.status = ReviewStatus.initial,
     this.totalReviews = 0,
-    this.curentPage = 1,
-    this.totalPages = 1,
     this.reviews = const [],
+    this.hasReachMax = false,
   });
 
   ReviewsState copyWith({
     ReviewStatus? status,
     int? totalReviews,
-    int? curentPage,
-    int? totalPages,
     List<Review>? reviews,
+    bool? hasReachMax,
   }) {
     return ReviewsState(
       status: status ?? this.status,
       totalReviews: totalReviews ?? this.totalReviews,
-      curentPage: curentPage ?? this.curentPage,
-      totalPages: totalPages ?? this.totalPages,
       reviews: reviews ?? this.reviews,
+      hasReachMax: hasReachMax ?? this.hasReachMax,
     );
   }
 
   @override
-  List<Object> get props => [status, totalReviews, reviews];
+  List<Object> get props => [status, totalReviews, reviews, hasReachMax];
 }
