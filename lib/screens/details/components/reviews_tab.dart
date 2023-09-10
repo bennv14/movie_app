@@ -18,6 +18,14 @@ class _ReviewTabState extends State<ReviewTab> {
   @override
   void initState() {
     super.initState();
+    ReviewsBloc reviewsBloc = context.read<ReviewsBloc>();
+    widget.controller.addListener(() {
+      if (!reviewsBloc.state.hasReachMax) {
+        if (widget.controller.offset == widget.controller.position.maxScrollExtent) {
+          reviewsBloc.add(FetchData());
+        }
+      }
+    });
   }
 
   @override

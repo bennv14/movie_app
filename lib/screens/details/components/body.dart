@@ -86,21 +86,9 @@ class _BodyState extends State<Body> {
                   },
                 ),
                 BlocProvider(
-                  create: (context) {
-                    var reviewBloc = ReviewsBloc(
-                      MovieAPI.getReviews(
-                        id: widget.movie.id!,
-                      ),
-                    )..add(Initial());
-                    controller.addListener(() {
-                      if (!reviewBloc.state.hasReachMax) {
-                        if (controller.offset == controller.position.maxScrollExtent) {
-                          reviewBloc.add(FetchData());
-                        }
-                      }
-                    });
-                    return reviewBloc;
-                  },
+                  create: (context) => ReviewsBloc(
+                    MovieAPI.getReviews(id: widget.movie.id!),
+                  ),
                   child: ReviewTab(
                     movie: widget.movie,
                     controller: controller,
