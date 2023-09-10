@@ -26,7 +26,6 @@ class ReviewsBloc extends Bloc<ReviewsEvent, ReviewsState> {
       ));
       if (state.hasReachMax) {
         emit(state.copyWith(status: ReviewStatus.hasReachMax));
-        return;
       }
     } catch (e) {
       log(name: "ReviewsBloc", "Failure: ${e.toString()}");

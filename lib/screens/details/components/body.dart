@@ -85,14 +85,9 @@ class _BodyState extends State<Body> {
                     }
                   },
                 ),
-                BlocProvider(
-                  create: (context) => ReviewsBloc(
-                    MovieAPI.getReviews(id: widget.movie.id!),
-                  ),
-                  child: ReviewTab(
-                    movie: widget.movie,
-                    controller: controller,
-                  ),
+                ReviewTab(
+                  movie: widget.movie,
+                  controller: controller,
                 ),
                 const Center(
                   child: CircularProgressIndicator(color: secondaryColor),
