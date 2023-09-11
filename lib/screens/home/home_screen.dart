@@ -5,6 +5,7 @@ import 'package:movie_app/api/movies_api.dart';
 import 'package:movie_app/bloc/genres-bloc/genres_bloc.dart';
 import 'package:movie_app/bloc/movies_bloc/movies_bloc.dart';
 import 'package:movie_app/constants.dart';
+import 'package:movie_app/screens/search/srearch_screen.dart';
 import 'components/body.dart';
 import 'dart:developer';
 
@@ -15,7 +16,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: buildAppBar(),
+      appBar: buildAppBar(context),
       body: MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -39,7 +40,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  AppBar buildAppBar() {
+  AppBar buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
@@ -51,7 +52,7 @@ class HomeScreen extends StatelessWidget {
           height: 40,
         ),
         onPressed: () {
-          log('press menu buttom', name: 'movie_app:home');
+          log('press menu button', name: 'movie_app:home');
         },
       ),
       actions: <Widget>[
@@ -63,7 +64,12 @@ class HomeScreen extends StatelessWidget {
             height: 50,
           ),
           onPressed: () {
-            log('press search button', name: 'movie_app:home');
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: ((context) => const SearchScreen()),
+              ),
+            );
           },
         ),
       ],

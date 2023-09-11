@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/api/movie_api.dart';
+import 'package:movie_app/bloc/recommendations_bloc/recommendations_bloc.dart';
 import 'package:movie_app/bloc/reviews_bloc/reviews_bloc.dart';
 import 'package:movie_app/bloc/similar_bloc/similar_bloc.dart';
 import 'package:movie_app/common_widget/sliver_appbar_delegate.dart';
@@ -11,6 +12,7 @@ import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/models/review.dart';
 import 'package:movie_app/screens/details/components/about_tab.dart';
 import 'package:movie_app/screens/details/components/list_cast.dart';
+import 'package:movie_app/screens/details/components/recommendations_tab.dart';
 import 'package:movie_app/screens/details/components/reviews_tab.dart';
 import 'package:movie_app/screens/details/components/similar_tab.dart';
 
@@ -92,10 +94,14 @@ class _BodyState extends State<Body> {
                   ),
                 ),
                 BlocProvider(
-                  create: (context) => SimilarBloc(
+                  create: (context) => RecommendationsBloc(
                     MovieAPI.getRecommendations(id: widget.movie.id!),
-                  )..add(InitialSimilarEvent()),
-                  child: SimilarTab(controller: controller),
+                  )..add(InitialRecommendationsEvent()),
+                  child: Builder(builder: (context) {
+                    final controller = PrimaryScrollController.of(context);
+
+                    return RecommendationsTab(controller: controller);
+                  }),
                 ),
                 BlocProvider(
                   create: (context) => SimilarBloc(

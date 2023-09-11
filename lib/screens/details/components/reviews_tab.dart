@@ -17,18 +17,30 @@ class ReviewTab extends StatefulWidget {
 }
 
 class _ReviewTabState extends State<ReviewTab> {
+  late final ReviewsBloc reviewsBloc;
   @override
   void initState() {
     super.initState();
-    ReviewsBloc reviewsBloc = context.read<ReviewsBloc>();
+    reviewsBloc = context.read<ReviewsBloc>();
     widget.controller.addListener(() {
-      if (!reviewsBloc.state.hasReachMax) {
-        if (widget.controller.offset == widget.controller.position.maxScrollExtent) {
-          print('fetch');
-          reviewsBloc.add(FetchData());
-        }
-      }
+      addData();
     });
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(() {
+      addData();
+    });
+    super.dispose();
+  }
+
+  void addData() {
+    if (!reviewsBloc.state.hasReachMax) {
+      if (widget.controller.offset == widget.controller.position.maxScrollExtent) {
+        reviewsBloc.add(FetchData());
+      }
+    }
   }
 
   @override
@@ -60,6 +72,9 @@ class _ReviewTabState extends State<ReviewTab> {
                       style: headerMedium,
                     ),
                   );
+                }
+                if (index == state.reviews.length) {
+                  reviewsBloc.add(FetchData());
                 }
                 return Container(
                   margin: const EdgeInsets.only(

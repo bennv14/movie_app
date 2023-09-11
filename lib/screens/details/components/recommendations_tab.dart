@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/bloc/similar_bloc/similar_bloc.dart';
+import 'package:movie_app/bloc/recommendations_bloc/recommendations_bloc.dart';
 import 'package:movie_app/common_widget/movie_card.dart';
 import 'package:movie_app/constants.dart';
 
-class SimilarTab extends StatefulWidget {
+class RecommendationsTab extends StatefulWidget {
   final ScrollController controller;
 
-  const SimilarTab({super.key, required this.controller});
+  const RecommendationsTab({super.key, required this.controller});
 
   @override
-  State<SimilarTab> createState() => _SimilarTabState();
+  State<RecommendationsTab> createState() => _RecommendationsTabState();
 }
 
-class _SimilarTabState extends State<SimilarTab> {
-  late final SimilarBloc similarBloc;
+class _RecommendationsTabState extends State<RecommendationsTab> {
+  late final RecommendationsBloc recommendationsBloc;
   @override
   void initState() {
     super.initState();
-    similarBloc = context.read<SimilarBloc>();
+    recommendationsBloc = context.read<RecommendationsBloc>();
     // widget.controller.addListener(() {
     //   addData();
     // });
@@ -33,24 +33,24 @@ class _SimilarTabState extends State<SimilarTab> {
   }
 
   void addData() {
-    if (similarBloc.state.hasReachMax == false) {
-      if (widget.controller.offset >= widget.controller.position.maxScrollExtent) {
-        similarBloc.add(FetchDataSimilarEvent());
+    if (recommendationsBloc.state.hasReachMax == false) {
+      if (widget.controller.offset == widget.controller.position.maxScrollExtent) {
+        recommendationsBloc.add(FetchDataRecommendationsEvent());
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SimilarBloc, SimilarState>(
+    return BlocBuilder<RecommendationsBloc, RecommendationsState>(
       builder: (context, state) {
         switch (state.status) {
-          case SimilarStatus.initial:
+          case RecommendationsStatus.initial:
             return const Center(
               child: CircularProgressIndicator(color: secondaryColor),
             );
-          case SimilarStatus.waiting:
-            int length = state.similars.length;
+          case RecommendationsStatus.waiting:
+            int length = state.recommendations.length;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               child: ListView.builder(
@@ -64,29 +64,29 @@ class _SimilarTabState extends State<SimilarTab> {
 
                   return Padding(
                     padding: const EdgeInsets.only(bottom: defaultPadding),
-                    child: MovieCard(movie: state.similars[index]),
+                    child: MovieCard(movie: state.recommendations[index]),
                   );
                 },
               ),
             );
-          case SimilarStatus.success:
-            int length = state.similars.length;
+          case RecommendationsStatus.success:
+            int length = state.recommendations.length;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               child: ListView.builder(
                 itemCount: length,
                 itemBuilder: (context, index) {
                   if (index == length - 1) {
-                    similarBloc.add(FetchDataSimilarEvent());
+                    recommendationsBloc.add(FetchDataRecommendationsEvent());
                   }
                   return Padding(
                       padding: const EdgeInsets.only(bottom: defaultPadding),
-                      child: MovieCard(movie: state.similars[index]));
+                      child: MovieCard(movie: state.recommendations[index]));
                 },
               ),
             );
-          case SimilarStatus.failure:
-            int length = state.similars.length;
+          case RecommendationsStatus.failure:
+            int length = state.recommendations.length;
 
             return ListView.builder(
               itemCount: length + 1,
@@ -100,7 +100,7 @@ class _SimilarTabState extends State<SimilarTab> {
                   );
                 }
 
-                return MovieCard(movie: state.similars[index]);
+                return MovieCard(movie: state.recommendations[index]);
               },
             );
         }
