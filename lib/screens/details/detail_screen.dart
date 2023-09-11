@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/api/movie_api.dart';
-import 'package:movie_app/bloc/reviews_bloc/reviews_bloc.dart';
 import 'package:movie_app/constants.dart';
 import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/screens/details/components/body.dart';
@@ -31,13 +29,8 @@ class _DetailScreenState extends State<DetailScreen> {
         future: movie,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return BlocProvider(
-              create: (context) =>
-                  ReviewsBloc(MovieAPI.getReviews(id: snapshot.data?.id ?? 0))
-                    ..add(Initial()),
-              child: Body(
-                movie: snapshot.data ?? Movie(),
-              ),
+            return Body(
+              movie: snapshot.data ?? Movie(),
             );
           } else if (snapshot.hasError) {
             return Center(

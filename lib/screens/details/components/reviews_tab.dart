@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/bloc/reviews_bloc/reviews_bloc.dart';
@@ -22,6 +24,7 @@ class _ReviewTabState extends State<ReviewTab> {
     widget.controller.addListener(() {
       if (!reviewsBloc.state.hasReachMax) {
         if (widget.controller.offset == widget.controller.position.maxScrollExtent) {
+          print('fetch');
           reviewsBloc.add(FetchData());
         }
       }
@@ -34,11 +37,14 @@ class _ReviewTabState extends State<ReviewTab> {
       builder: (context, state) {
         switch (state.status) {
           case ReviewStatus.initial:
+            log(name: "initial", state.reviews.length.toString());
             return const Center(
               child: CircularProgressIndicator(color: secondaryColor),
             );
 
           case ReviewStatus.success:
+            log(name: "success", state.reviews.length.toString());
+
             return ListView.builder(
               itemCount: state.reviews.length + 1,
               itemBuilder: (context, index) {
@@ -50,7 +56,7 @@ class _ReviewTabState extends State<ReviewTab> {
                       bottom: defaultPadding,
                     ),
                     child: Text(
-                      "Comments: ${state.totalReviews}",
+                      "Đánh giá: ${state.totalReviews}",
                       style: headerMedium,
                     ),
                   );
@@ -67,6 +73,8 @@ class _ReviewTabState extends State<ReviewTab> {
             );
 
           case ReviewStatus.failure:
+            log(name: "failure", state.reviews.length.toString());
+
             int length = state.reviews.length;
             return ListView.builder(
               itemCount: length + 2,
@@ -79,7 +87,7 @@ class _ReviewTabState extends State<ReviewTab> {
                       bottom: defaultPadding,
                     ),
                     child: Text(
-                      "Comments: ${state.totalReviews}",
+                      "Đánh giá: ${state.totalReviews}",
                       style: headerMedium,
                     ),
                   );
@@ -112,6 +120,8 @@ class _ReviewTabState extends State<ReviewTab> {
 
           case ReviewStatus.waiting:
             int length = state.reviews.length;
+            log(name: "watting", state.reviews.length.toString());
+
             return ListView.builder(
               itemCount: length + 2,
               itemBuilder: (context, index) {
@@ -123,7 +133,7 @@ class _ReviewTabState extends State<ReviewTab> {
                       bottom: defaultPadding,
                     ),
                     child: Text(
-                      "Comments: ${state.totalReviews}",
+                      "Đánh giá: ${state.totalReviews}",
                       style: headerMedium,
                     ),
                   );
@@ -151,6 +161,8 @@ class _ReviewTabState extends State<ReviewTab> {
               },
             );
           case ReviewStatus.hasReachMax:
+            log(name: "hasReachMax", state.reviews.length.toString());
+
             return ListView.builder(
               itemCount: state.reviews.length + 1,
               itemBuilder: (context, index) {
@@ -162,7 +174,7 @@ class _ReviewTabState extends State<ReviewTab> {
                       bottom: defaultPadding,
                     ),
                     child: Text(
-                      "Comments: ${state.totalReviews}",
+                      "Đánh giá: ${state.totalReviews}",
                       style: headerMedium,
                     ),
                   );

@@ -93,4 +93,76 @@ class MovieAPI {
 
     return funcResult;
   }
+
+  static Function getRecommendations({
+    required int id,
+    int curentPage = 1,
+    String language = 'vi',
+  }) {
+    int totalPages = 1;
+    Future<List> funcFetch() async {
+      List<Movie> movies = [];
+
+      if (curentPage <= totalPages) {
+        log(name: "MovieAPI", "getRecommendations");
+        final response = await http.get(
+          Uri.parse("$url$id/recommendations?language=$language&page=$curentPage"),
+          headers: headers,
+        );
+
+        if (response.statusCode == 200) {
+          final decodeData = json.decode(response.body);
+          totalPages = decodeData["total_pages"];
+          curentPage++;
+
+          for (var data in decodeData['results']) {
+            movies.add(Movie.importantDetail(data));
+          }
+          log(name: "MovieAPI", "Length of recommendations = ${movies.length}");
+          return [movies, curentPage > totalPages];
+        } else {
+          throw Exception("Fail recommendations statusCode = ${response.statusCode}");
+        }
+      }
+      return [movies, curentPage > totalPages];
+    }
+
+    return funcFetch;
+  }
+
+  static Function getSimilar({
+    required int id,
+    int curentPage = 1,
+    String language = 'vi',
+  }) {
+    int totalPages = 1;
+    Future<List> funcFetch() async {
+      List<Movie> movies = [];
+
+      if (curentPage <= totalPages) {
+        log(name: "MovieAPI", "getSimilars");
+        final response = await http.get(
+          Uri.parse("$url$id/similar?language=$language&page=$curentPage"),
+          headers: headers,
+        );
+
+        if (response.statusCode == 200) {
+          final decodeData = json.decode(response.body);
+          totalPages = decodeData["total_pages"];
+          curentPage++;
+
+          for (var data in decodeData['results']) {
+            movies.add(Movie.importantDetail(data));
+          }
+          log(name: "MovieAPI", "Length of similars = ${movies.length}");
+          return [movies, curentPage > totalPages];
+        } else {
+          throw Exception("Fail getSimilars statusCode = ${response.statusCode}");
+        }
+      }
+      return [movies, curentPage > totalPages];
+    }
+
+    return funcFetch;
+  }
 }

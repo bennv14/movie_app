@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/api/movie_api.dart';
+import 'package:movie_app/bloc/reviews_bloc/reviews_bloc.dart';
+import 'package:movie_app/bloc/similar_bloc/similar_bloc.dart';
 import 'package:movie_app/common_widget/sliver_appbar_delegate.dart';
 import 'package:movie_app/common_widget/sliver_tabbar_delegate.dart';
 import 'package:movie_app/constants.dart';
@@ -9,6 +12,7 @@ import 'package:movie_app/models/review.dart';
 import 'package:movie_app/screens/details/components/about_tab.dart';
 import 'package:movie_app/screens/details/components/list_cast.dart';
 import 'package:movie_app/screens/details/components/reviews_tab.dart';
+import 'package:movie_app/screens/details/components/similar_tab.dart';
 
 class Body extends StatefulWidget {
   final Movie movie;
@@ -78,15 +82,26 @@ class _BodyState extends State<Body> {
                     }
                   },
                 ),
-                ReviewTab(
-                  movie: widget.movie,
-                  controller: controller,
+                BlocProvider(
+                  create: (context) => ReviewsBloc(
+                    MovieAPI.getReviews(id: widget.movie.id!),
+                  )..add(Initial()),
+                  child: ReviewTab(
+                    movie: widget.movie,
+                    controller: controller,
+                  ),
                 ),
-                const Center(
-                  child: CircularProgressIndicator(color: secondaryColor),
+                BlocProvider(
+                  create: (context) => SimilarBloc(
+                    MovieAPI.getRecommendations(id: widget.movie.id!),
+                  )..add(InitialSimilarEvent()),
+                  child: SimilarTab(controller: controller),
                 ),
-                const Center(
-                  child: CircularProgressIndicator(color: secondaryColor),
+                BlocProvider(
+                  create: (context) => SimilarBloc(
+                    MovieAPI.getSimilar(id: widget.movie.id!),
+                  )..add(InitialSimilarEvent()),
+                  child: SimilarTab(controller: controller),
                 ),
               ],
             );

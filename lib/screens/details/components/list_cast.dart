@@ -9,39 +9,28 @@ class ListCast extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> castView = [];
-    castView.add(
-      Padding(
-        padding: const EdgeInsets.all(defaultPadding),
-        child: Text(
-          "Diễn viên: ${casts.length}",
-          style: headerMedium,
-        ),
-      ),
-    );
-
-    // for (var cast in casts) {
-    //   castView.add(
-    //     Container(
-    //       margin: const EdgeInsets.only(
-    //         left: defaultPadding,
-    //         right: defaultPadding,
-    //         bottom: defaultPadding,
-    //       ),
-    //       child: CastCard(cast: cast),
-    //     ),
-    //   );
-    // }
     return ListView.builder(
-      itemCount: casts.length,
-      itemBuilder: (context, index) => Container(
-        margin: const EdgeInsets.only(
-          left: defaultPadding,
-          right: defaultPadding,
-          bottom: defaultPadding,
-        ),
-        child: CastCard(cast: casts[index]),
-      ),
+      itemCount: casts.length + 1,
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return Padding(
+            padding: const EdgeInsets.only(
+                left: defaultPadding, right: defaultPadding, bottom: defaultPadding),
+            child: Text(
+              "Diễn viên: ${casts.length}",
+              style: headerMedium,
+            ),
+          );
+        }
+        return Container(
+          margin: const EdgeInsets.only(
+            left: defaultPadding,
+            right: defaultPadding,
+            bottom: defaultPadding,
+          ),
+          child: CastCard(cast: casts[index - 1]),
+        );
+      },
     );
   }
 }

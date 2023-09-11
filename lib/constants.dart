@@ -61,7 +61,7 @@ Image createImage(String? url) {
   if (url == null) {
     return Image.asset(
       "assets/images/no-image.png",
-      fit: BoxFit.fitHeight,
+      fit: BoxFit.contain,
     );
   } else {
     return Image.network(
