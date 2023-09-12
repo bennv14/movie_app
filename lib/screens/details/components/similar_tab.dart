@@ -29,16 +29,21 @@ class _SimilarTabState extends State<SimilarTab> {
               child: ListView.builder(
                 itemCount: length + 1,
                 itemBuilder: (context, index) {
-                  if (index == length) {
-                    return const Center(
-                      child: CircularProgressIndicator(color: secondaryColor),
+                  try {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: defaultPadding),
+                      child: MovieCard(movie: state.similars[index]),
+                    );
+                  } on RangeError {
+                    return const Padding(
+                      padding: EdgeInsets.only(
+                        bottom: defaultPadding,
+                      ),
+                      child: Center(
+                        child: CircularProgressIndicator(color: secondaryColor),
+                      ),
                     );
                   }
-
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: defaultPadding),
-                    child: MovieCard(movie: state.similars[index]),
-                  );
                 },
               ),
             );
@@ -47,34 +52,41 @@ class _SimilarTabState extends State<SimilarTab> {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               child: ListView.builder(
-                itemCount: length,
+                itemCount: length + 1,
                 itemBuilder: (context, index) {
-                  if (index == length - 1) {
+                  try {
+                    return Padding(
+                        padding: const EdgeInsets.only(bottom: defaultPadding),
+                        child: MovieCard(movie: state.similars[index]));
+                  } on RangeError {
                     context.read<SimilarBloc>().add(FetchDataSimilarEvent());
+                    return null;
                   }
-                  return Padding(
-                      padding: const EdgeInsets.only(bottom: defaultPadding),
-                      child: MovieCard(movie: state.similars[index]));
                 },
               ),
             );
           case SimilarStatus.failure:
             int length = state.similars.length;
-
-            return ListView.builder(
-              itemCount: length + 1,
-              itemBuilder: (context, index) {
-                if (index == length) {
-                  return const Center(
-                    child: Text(
-                      "Fail",
-                      style: headerLarge,
-                    ),
-                  );
-                }
-
-                return MovieCard(movie: state.similars[index]);
-              },
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: ListView.builder(
+                itemCount: length + 1,
+                itemBuilder: (context, index) {
+                  try {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: defaultPadding),
+                      child: MovieCard(movie: state.similars[index]),
+                    );
+                  } on RangeError {
+                    return const Center(
+                      child: Text(
+                        "Error",
+                        style: headerLarge,
+                      ),
+                    );
+                  }
+                },
+              ),
             );
         }
       },

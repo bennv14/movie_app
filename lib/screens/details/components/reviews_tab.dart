@@ -101,44 +101,43 @@ class ReviewTab extends StatelessWidget {
 
           case ReviewStatus.waiting:
             int length = state.reviews.length;
-            log(name: "watting", state.reviews.length.toString());
 
             return ListView.builder(
               itemCount: length + 2,
               itemBuilder: (context, index) {
-                if (index == 0) {
-                  return Padding(
-                    padding: const EdgeInsets.only(
+                try {
+                  return Container(
+                    margin: const EdgeInsets.only(
+                      bottom: defaultPadding,
                       left: defaultPadding,
                       right: defaultPadding,
-                      bottom: defaultPadding,
                     ),
-                    child: Text(
-                      "Đánh giá: ${state.totalReviews}",
-                      style: headerMedium,
-                    ),
+                    child: ReviewCard(review: state.reviews[index - 1]),
                   );
+                } on RangeError {
+                  if (index == 0) {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        left: defaultPadding,
+                        right: defaultPadding,
+                        bottom: defaultPadding,
+                      ),
+                      child: Text(
+                        "Đánh giá: ${state.totalReviews}",
+                        style: headerMedium,
+                      ),
+                    );
+                  } else {
+                    return const Padding(
+                      padding: EdgeInsets.only(
+                        bottom: defaultPadding,
+                      ),
+                      child: Center(
+                        child: CircularProgressIndicator(color: secondaryColor),
+                      ),
+                    );
+                  }
                 }
-                if (index == length + 1) {
-                  return const Padding(
-                    padding: EdgeInsets.only(
-                      left: defaultPadding,
-                      right: defaultPadding,
-                      bottom: defaultPadding,
-                    ),
-                    child: Center(
-                      child: CircularProgressIndicator(color: secondaryColor),
-                    ),
-                  );
-                }
-                return Container(
-                  margin: const EdgeInsets.only(
-                    bottom: defaultPadding,
-                    left: defaultPadding,
-                    right: defaultPadding,
-                  ),
-                  child: ReviewCard(review: state.reviews[index - 1]),
-                );
               },
             );
           case ReviewStatus.hasReachMax:

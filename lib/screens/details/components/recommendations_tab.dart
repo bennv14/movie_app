@@ -24,16 +24,21 @@ class RecommendationsTab extends StatelessWidget {
               child: ListView.builder(
                 itemCount: length + 1,
                 itemBuilder: (context, index) {
-                  if (index == length) {
-                    return const Center(
-                      child: CircularProgressIndicator(color: secondaryColor),
+                  try {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: defaultPadding),
+                      child: MovieCard(movie: state.recommendations[index]),
+                    );
+                  } catch (e) {
+                    return const Padding(
+                      padding: EdgeInsets.only(
+                        bottom: defaultPadding,
+                      ),
+                      child: Center(
+                        child: CircularProgressIndicator(color: secondaryColor),
+                      ),
                     );
                   }
-
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: defaultPadding),
-                    child: MovieCard(movie: state.recommendations[index]),
-                  );
                 },
               ),
             );
@@ -42,36 +47,47 @@ class RecommendationsTab extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               child: ListView.builder(
-                itemCount: length,
+                itemCount: length + 1,
                 itemBuilder: (context, index) {
-                  if (index == length - 1) {
+                  try {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: defaultPadding),
+                      child: MovieCard(movie: state.recommendations[index]),
+                    );
+                  } on RangeError {
                     context
                         .read<RecommendationsBloc>()
                         .add(FetchDataRecommendationsEvent());
+                    return null;
                   }
-                  return Padding(
-                      padding: const EdgeInsets.only(bottom: defaultPadding),
-                      child: MovieCard(movie: state.recommendations[index]));
                 },
               ),
             );
           case RecommendationsStatus.failure:
             int length = state.recommendations.length;
-
-            return ListView.builder(
-              itemCount: length + 1,
-              itemBuilder: (context, index) {
-                if (index == length) {
-                  return const Center(
-                    child: Text(
-                      "Fail",
-                      style: headerLarge,
-                    ),
-                  );
-                }
-
-                return MovieCard(movie: state.recommendations[index]);
-              },
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: ListView.builder(
+                itemCount: length + 1,
+                itemBuilder: (context, index) {
+                  try {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: defaultPadding),
+                      child: MovieCard(movie: state.recommendations[index]),
+                    );
+                  } on RangeError {
+                    return const Padding(
+                      padding: EdgeInsets.only(bottom: defaultPadding),
+                      child: Center(
+                        child: Text(
+                          "Fail",
+                          style: headerLarge,
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
             );
         }
       },
