@@ -4,44 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/bloc/reviews_bloc/reviews_bloc.dart';
 import 'package:movie_app/constants.dart';
-import 'package:movie_app/models/movie.dart';
 import 'review_card.dart';
 
-class ReviewTab extends StatefulWidget {
-  final Movie movie;
-  final ScrollController controller;
-  const ReviewTab({super.key, required this.movie, required this.controller});
-
-  @override
-  State<ReviewTab> createState() => _ReviewTabState();
-}
-
-class _ReviewTabState extends State<ReviewTab> {
-  late final ReviewsBloc reviewsBloc;
-  @override
-  void initState() {
-    super.initState();
-    reviewsBloc = context.read<ReviewsBloc>();
-    widget.controller.addListener(() {
-      addData();
-    });
-  }
-
-  @override
-  void dispose() {
-    widget.controller.removeListener(() {
-      addData();
-    });
-    super.dispose();
-  }
-
-  void addData() {
-    if (!reviewsBloc.state.hasReachMax) {
-      if (widget.controller.offset == widget.controller.position.maxScrollExtent) {
-        reviewsBloc.add(FetchData());
-      }
-    }
-  }
+class ReviewTab extends StatelessWidget {
+  const ReviewTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +40,7 @@ class _ReviewTabState extends State<ReviewTab> {
                   );
                 }
                 if (index == state.reviews.length) {
-                  reviewsBloc.add(FetchData());
+                  context.read<ReviewsBloc>().add(FetchData());
                 }
                 return Container(
                   margin: const EdgeInsets.only(
@@ -206,19 +172,6 @@ class _ReviewTabState extends State<ReviewTab> {
             );
         }
       },
-    );
-  }
-
-  Widget view(List<Widget> widgets) {
-    return SingleChildScrollView(
-      controller: widget.controller,
-      child: Padding(
-        padding: const EdgeInsets.all(defaultPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: widgets,
-        ),
-      ),
     );
   }
 }

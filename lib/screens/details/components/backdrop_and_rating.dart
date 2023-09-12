@@ -78,7 +78,7 @@ class BackdropTitle extends StatelessWidget {
               top: heightBackdrop - 75,
               left: defaultPadding,
               child: borderImage(
-                image: createImage(urlImage(movie.posterPath!)),
+                image: createImage(movie.posterPath),
                 height: 150,
                 width: 100,
                 borderRadius: const BorderRadius.all(
@@ -120,19 +120,5 @@ class BackdropTitle extends StatelessWidget {
         )
       ],
     );
-  }
-
-  Image createImage(String? url) {
-    if (url == null) {
-      return Image.asset(
-        "assets/images/no-image.png",
-        fit: BoxFit.fitHeight,
-      );
-    } else {
-      return Image.network(
-        urlImage(url),
-        fit: BoxFit.cover,
-      );
-    }
   }
 }

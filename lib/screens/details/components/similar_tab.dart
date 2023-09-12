@@ -5,41 +5,14 @@ import 'package:movie_app/common_widget/movie_card.dart';
 import 'package:movie_app/constants.dart';
 
 class SimilarTab extends StatefulWidget {
-  final ScrollController controller;
-
-  const SimilarTab({super.key, required this.controller});
+  const SimilarTab({super.key});
 
   @override
   State<SimilarTab> createState() => _SimilarTabState();
 }
 
 class _SimilarTabState extends State<SimilarTab> {
-  late final SimilarBloc similarBloc;
   @override
-  void initState() {
-    super.initState();
-    similarBloc = context.read<SimilarBloc>();
-    // widget.controller.addListener(() {
-    //   addData();
-    // });
-  }
-
-  @override
-  void dispose() {
-    // widget.controller.removeListener(() {
-    //   addData();
-    // });
-    super.dispose();
-  }
-
-  void addData() {
-    if (similarBloc.state.hasReachMax == false) {
-      if (widget.controller.offset >= widget.controller.position.maxScrollExtent) {
-        similarBloc.add(FetchDataSimilarEvent());
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SimilarBloc, SimilarState>(
@@ -77,7 +50,7 @@ class _SimilarTabState extends State<SimilarTab> {
                 itemCount: length,
                 itemBuilder: (context, index) {
                   if (index == length - 1) {
-                    similarBloc.add(FetchDataSimilarEvent());
+                    context.read<SimilarBloc>().add(FetchDataSimilarEvent());
                   }
                   return Padding(
                       padding: const EdgeInsets.only(bottom: defaultPadding),

@@ -4,7 +4,6 @@ import 'package:movie_app/constants.dart';
 import 'package:movie_app/models/movie.dart';
 import 'package:animations/animations.dart';
 import 'package:movie_app/screens/details/detail_screen.dart';
-import 'package:movie_app/screens/home/home_screen.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;

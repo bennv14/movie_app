@@ -53,65 +53,53 @@ class _BodyState extends State<Body> {
             ),
           ];
         },
-        body: Builder(
-          builder: (context) {
-            final controller = PrimaryScrollController.of(context);
-            return TabBarView(
-              children: [
-                SingleChildScrollView(
-                  child: AboutTab(movie: widget.movie),
-                ),
-                FutureBuilder(
-                  future: casts,
-                  builder: (context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.done:
-                        if (snapshot.hasError) {
-                          return Expanded(
-                            child: Center(
-                              child: Text(snapshot.error.toString()),
-                            ),
-                          );
-                        } else {
-                          return ListCast(casts: snapshot.data ?? []);
-                        }
-                      default:
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: secondaryColor,
-                          ),
-                        );
+        body: TabBarView(
+          children: [
+            SingleChildScrollView(
+              child: AboutTab(movie: widget.movie),
+            ),
+            FutureBuilder(
+              future: casts,
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.done:
+                    if (snapshot.hasError) {
+                      return Expanded(
+                        child: Center(
+                          child: Text(snapshot.error.toString()),
+                        ),
+                      );
+                    } else {
+                      return ListCast(casts: snapshot.data ?? []);
                     }
-                  },
-                ),
-                BlocProvider(
-                  create: (context) => ReviewsBloc(
-                    MovieAPI.getReviews(id: widget.movie.id!),
-                  )..add(Initial()),
-                  child: ReviewTab(
-                    movie: widget.movie,
-                    controller: controller,
-                  ),
-                ),
-                BlocProvider(
-                  create: (context) => RecommendationsBloc(
-                    MovieAPI.getRecommendations(id: widget.movie.id!),
-                  )..add(InitialRecommendationsEvent()),
-                  child: Builder(builder: (context) {
-                    final controller = PrimaryScrollController.of(context);
-
-                    return RecommendationsTab(controller: controller);
-                  }),
-                ),
-                BlocProvider(
-                  create: (context) => SimilarBloc(
-                    MovieAPI.getSimilar(id: widget.movie.id!),
-                  )..add(InitialSimilarEvent()),
-                  child: SimilarTab(controller: controller),
-                ),
-              ],
-            );
-          },
+                  default:
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: secondaryColor,
+                      ),
+                    );
+                }
+              },
+            ),
+            BlocProvider(
+              create: (context) => ReviewsBloc(
+                MovieAPI.getReviews(id: widget.movie.id!),
+              )..add(Initial()),
+              child: const ReviewTab(),
+            ),
+            BlocProvider(
+              create: (context) => RecommendationsBloc(
+                MovieAPI.getRecommendations(id: widget.movie.id!),
+              )..add(InitialRecommendationsEvent()),
+              child: const RecommendationsTab(),
+            ),
+            BlocProvider(
+              create: (context) => SimilarBloc(
+                MovieAPI.getSimilar(id: widget.movie.id!),
+              )..add(InitialSimilarEvent()),
+              child: const SimilarTab(),
+            ),
+          ],
         ),
       ),
     );
