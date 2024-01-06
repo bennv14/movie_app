@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "865440923160",
+    "project_id": "movie-app-bennv",
+    "storage_bucket": "movie-app-bennv.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865440923160:android:1945877431309904964d6d",
+        "android_client_info": {
+          "package_name": "com.example.movie_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0WL2bGmCC9M-YRLRYgIPix2pbM_UZ2uQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

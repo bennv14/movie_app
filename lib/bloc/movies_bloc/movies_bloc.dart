@@ -11,7 +11,7 @@ part 'movies_state.dart';
 class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
   Function funcFetch;
   MoviesBloc(this.funcFetch) : super(const MoviesState()) {
-    on<InitMoves>(_onInitial);
+    on<InitMovies>(_onInitial);
     on<FetchMovies>(_onFetchMovies);
     on<ChangeFuncFetchMovies>(_onChangeFunc);
   }
@@ -56,7 +56,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
   }
 
   FutureOr<void> _onInitial(
-    InitMoves event,
+    InitMovies event,
     Emitter<MoviesState> emit,
   ) async {
     emit(const MoviesState());

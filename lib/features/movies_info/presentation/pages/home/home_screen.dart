@@ -5,8 +5,8 @@ import 'package:movie_app/api/movies_api.dart';
 import 'package:movie_app/bloc/genres-bloc/genres_bloc.dart';
 import 'package:movie_app/bloc/movies_bloc/movies_bloc.dart';
 import 'package:movie_app/constants.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/body.dart';
 import 'package:movie_app/screens/search/srearch_screen.dart';
-import 'components/body.dart';
 import 'dart:developer';
 
 class HomeScreen extends StatelessWidget {
