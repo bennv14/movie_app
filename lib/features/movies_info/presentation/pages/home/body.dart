@@ -2,13 +2,14 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/bloc/genres-bloc/genres_bloc.dart';
-import 'package:movie_app/bloc/movies_bloc/movies_bloc.dart';
 import 'package:movie_app/common_widget/carousel.dart';
-import 'package:movie_app/constants.dart';
-import 'package:movie_app/models/movie.dart';
-import 'categoris.dart';
-import 'genres.dart';
-import 'movie_card.dart';
+import 'package:movie_app/core/constants/constants.dart';
+import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
+import 'package:movie_app/features/movies_info/presentation/bloc/movies_bloc/movies_bloc.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/categoris.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/genres.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/movie_card.dart';
+import 'package:movie_app/injection_container.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});
@@ -21,10 +22,10 @@ class _BodyState extends State<Body> {
   List<int> genresSelected = [];
 
   void fetchMovies() {
-    context.read<MoviesBloc>().add(FetchMovies());
+    getIt.get<MoviesBloc>().add(FetchMovies());
   }
 
-  bool checkGenresMovie(Movie movie, GenresBloc genresBloc) {
+  bool checkGenresMovie(MovieEntity movie, GenresBloc genresBloc) {
     if (genresBloc.state.genresSelected.isEmpty) {
       return true;
     } else {
@@ -41,7 +42,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    log(name: "Home", "openhome");
+    log(name: "Home", "open");
     return Column(
       children: [
         const CategoryList(),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/api/movie_api.dart';
 import 'package:movie_app/constants.dart';
+import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
 import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/screens/details/components/body.dart';
 
 class DetailScreen extends StatefulWidget {
-  final Movie movie;
+  final MovieEntity movie;
 
   const DetailScreen({super.key, required this.movie});
 

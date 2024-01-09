@@ -1,7 +1,7 @@
 import 'package:movie_app/features/movies_info/domain/entities/review_entity.dart';
 
 class ReviewModel extends ReviewEntity {
-  ReviewModel({
+  const ReviewModel({
     String? author,
     String? name,
     String? username,

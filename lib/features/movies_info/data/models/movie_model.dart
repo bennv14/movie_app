@@ -53,7 +53,7 @@ class MovieModel extends MovieEntity {
           voteCount: voteCount,
         );
 
-  MovieModel.fullDetail(Map<String, dynamic> json) {
+  factory MovieModel.fromJson(Map<String, dynamic> json) {
     var genres = <Genre>[];
     if (json['genres'] != null) {
       json['genres'].forEach((v) {
@@ -67,7 +67,7 @@ class MovieModel extends MovieEntity {
         productionCompanies.add(Company.fromJson(v));
       });
     }
-    MovieModel(
+    return MovieModel(
       adult: json['adult'],
       backdropPath: json['backdrop_path'],
       budget: json['budget'],
@@ -120,5 +120,10 @@ class MovieModel extends MovieEntity {
     data['vote_average'] = voteAverage;
     data['vote_count'] = voteCount;
     return data;
+  }
+
+  @override
+  String toString() {
+    return "{$id $title}";
   }
 }

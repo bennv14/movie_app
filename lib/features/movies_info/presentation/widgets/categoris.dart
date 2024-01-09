@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/api/movies_api.dart';
-import 'package:movie_app/bloc/movies_bloc/movies_bloc.dart';
-import 'package:movie_app/constants.dart';
+import 'package:movie_app/core/constants/constants.dart';
+import 'package:movie_app/features/movies_info/presentation/bloc/movies_bloc/movies_bloc.dart';
+import 'package:movie_app/injection_container.dart';
 
 class CategoryList extends StatefulWidget {
   const CategoryList({
@@ -36,33 +35,29 @@ class _CategoryListState extends State<CategoryList> {
           setState(() {
             selectedCategory = index;
             if (selectedCategory == 0) {
-              context.read<MoviesBloc>().add(
-                    ChangeFuncFetchMovies(
-                      funFetch: MoviesAPI.getMovies(
-                          uri: MoviesAPI.uriNowPlaying, language: 'vi', region: 'vn'),
-                    ),
-                  );
+              getIt<MoviesBloc>().add(
+                ChangeURI(
+                  uri: uriNowPlaying,
+                ),
+              );
             } else if (selectedCategory == 1) {
-              context.read<MoviesBloc>().add(
-                    ChangeFuncFetchMovies(
-                      funFetch: MoviesAPI.getMovies(
-                          uri: MoviesAPI.uriPopular, language: 'vi', region: 'vn'),
-                    ),
-                  );
+              getIt<MoviesBloc>().add(
+                ChangeURI(
+                  uri: uriPopular,
+                ),
+              );
             } else if (selectedCategory == 2) {
-              context.read<MoviesBloc>().add(
-                    ChangeFuncFetchMovies(
-                      funFetch: MoviesAPI.getMovies(
-                          uri: MoviesAPI.uriTopRate, language: 'vi', region: 'vn'),
-                    ),
-                  );
+              getIt<MoviesBloc>().add(
+                ChangeURI(
+                  uri: uriTopRate,
+                ),
+              );
             } else if (selectedCategory == 3) {
-              context.read<MoviesBloc>().add(
-                    ChangeFuncFetchMovies(
-                      funFetch: MoviesAPI.getMovies(
-                          uri: MoviesAPI.uriUpcomming, language: 'vi', region: 'vn'),
-                    ),
-                  );
+              getIt<MoviesBloc>().add(
+                ChangeURI(
+                  uri: uriUpcomming,
+                ),
+              );
             }
           });
         },

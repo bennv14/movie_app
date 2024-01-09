@@ -4,7 +4,7 @@ enum SimilarStatus { initial, waiting, success, failure }
 
 class SimilarState extends Equatable {
   final SimilarStatus status;
-  final List<Movie> similars;
+  final List<MovieEntity> similars;
   final bool hasReachMax;
 
   const SimilarState({
@@ -15,7 +15,7 @@ class SimilarState extends Equatable {
 
   SimilarState copyWith({
     SimilarStatus? status,
-    List<Movie>? similars,
+    List<MovieEntity>? similars,
     bool? hasReachMax,
   }) {
     return SimilarState(

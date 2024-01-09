@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movie_app/models/movie.dart';
+import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
 
 part 'similar_event.dart';
 part 'similar_state.dart';

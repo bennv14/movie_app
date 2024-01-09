@@ -4,7 +4,7 @@ enum RecommendationsStatus { initial, waiting, success, failure }
 
 class RecommendationsState extends Equatable {
   final RecommendationsStatus status;
-  final List<Movie> recommendations;
+  final List<MovieEntity> recommendations;
   final bool hasReachMax;
 
   const RecommendationsState({
@@ -15,7 +15,7 @@ class RecommendationsState extends Equatable {
 
   RecommendationsState copyWith({
     RecommendationsStatus? status,
-    List<Movie>? recommendations,
+    List<MovieEntity>? recommendations,
     bool? hasReachMax,
   }) {
     return RecommendationsState(

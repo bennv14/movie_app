@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movie_app/constants.dart';
-import 'package:movie_app/models/movie.dart';
+import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
 import 'package:animations/animations.dart';
 import 'package:movie_app/screens/details/detail_screen.dart';
 
 class MovieCard extends StatelessWidget {
-  final Movie movie;
+  final MovieEntity movie;
 
   const MovieCard({super.key, required this.movie});
 
@@ -30,7 +30,7 @@ class BuildMovieCard extends StatelessWidget {
     required this.movie,
   });
 
-  final Movie movie;
+  final MovieEntity movie;
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +39,7 @@ class BuildMovieCard extends StatelessWidget {
         Expanded(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              urlImage(movie.posterPath!),
-              fit: BoxFit.cover,
-            ),
+            child: createImage(movie.posterPath),
           ),
         ),
         Padding(

@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movie_app/models/movie.dart';
+import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
 
 part 'movies_event.dart';
 part 'movies_state.dart';
@@ -25,7 +25,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
     } else {
       emit(state.copyWith(status: MoviesStatus.waiting));
       try {
-        List<Movie> data = await funcFetch();
+        List<MovieEntity> data = await funcFetch();
         emit(state.copyWith(
           status: MoviesStatus.success,
           movies: List.of(state.movies)..addAll(data),
@@ -44,7 +44,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
     funcFetch = event.funFetch;
     emit(const MoviesState());
     try {
-      List<Movie> data = await funcFetch();
+      List<MovieEntity> data = await funcFetch();
       emit(state.copyWith(
         status: MoviesStatus.success,
         movies: List.of(state.movies)..addAll(data),
@@ -61,7 +61,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
   ) async {
     emit(const MoviesState());
     try {
-      List<Movie> data = await funcFetch();
+      List<MovieEntity> data = await funcFetch();
       emit(state.copyWith(
         status: MoviesStatus.success,
         movies: List.of(state.movies)..addAll(data),

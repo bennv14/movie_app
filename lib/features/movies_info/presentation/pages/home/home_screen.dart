@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:movie_app/api/movies_api.dart';
 import 'package:movie_app/bloc/genres-bloc/genres_bloc.dart';
-import 'package:movie_app/bloc/movies_bloc/movies_bloc.dart';
 import 'package:movie_app/constants.dart';
-import 'package:movie_app/features/movies_info/presentation/widgets/body.dart';
+import 'package:movie_app/features/movies_info/presentation/bloc/movies_bloc/movies_bloc.dart';
+import 'package:movie_app/features/movies_info/presentation/pages/home/body.dart';
+import 'package:movie_app/injection_container.dart';
 import 'package:movie_app/screens/search/srearch_screen.dart';
 import 'dart:developer';
 
@@ -20,13 +20,7 @@ class HomeScreen extends StatelessWidget {
       body: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => MoviesBloc(
-              MoviesAPI.getMovies(
-                uri: MoviesAPI.uriNowPlaying,
-                language: 'vi',
-                region: "vn",
-              ),
-            )..add(InitMovies()),
+            create: (context) => getIt.get<MoviesBloc>()..add(InitMovies()),
           ),
           BlocProvider<GenresBloc>(
             create: (context) => GenresBloc()
