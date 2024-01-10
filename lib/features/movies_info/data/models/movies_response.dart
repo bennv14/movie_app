@@ -1,9 +1,9 @@
 import 'package:http/http.dart';
-import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
+import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
 
 class MoviesResponse {
   final Response response;
-  final List<MovieEntity>? movies;
+  final List<MovieModel>? movies;
   final int? totalPage;
   final int? curentPage;
 

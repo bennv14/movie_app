@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:movie_app/bloc/genres-bloc/genres_bloc.dart';
 import 'package:movie_app/constants.dart';
+import 'package:movie_app/features/movies_info/presentation/bloc/genres_bloc/genres_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/movies_bloc/movies_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/home/body.dart';
 import 'package:movie_app/injection_container.dart';
@@ -19,14 +19,11 @@ class HomeScreen extends StatelessWidget {
       appBar: buildAppBar(context),
       body: MultiBlocProvider(
         providers: [
-          BlocProvider(
+          BlocProvider<MoviesBloc>(
             create: (context) => getIt.get<MoviesBloc>()..add(InitMovies()),
           ),
           BlocProvider<GenresBloc>(
-            create: (context) => GenresBloc()
-              ..add(
-                InitGenresEvent(),
-              ),
+            create: (context) => getIt.get<GenresBloc>()..add(GetGenresEvent()),
           ),
         ],
         child: const Body(),

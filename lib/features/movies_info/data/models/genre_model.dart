@@ -9,8 +9,8 @@ class GenreModel extends GenreEntity {
           name: name,
         );
 
-  GenreModel.fromJson(Map<String, dynamic> json) {
-    GenreModel(
+  factory GenreModel.fromJson(Map<String, dynamic> json) {
+    return GenreModel(
       id: json['id'],
       name: json['name'],
     );

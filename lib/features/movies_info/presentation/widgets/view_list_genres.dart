@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/bloc/genres-bloc/genres_bloc.dart';
-import 'package:movie_app/constants.dart';
-import 'package:movie_app/models/genre.dart';
+import 'package:movie_app/core/constants/constants.dart';
+import 'package:movie_app/features/movies_info/domain/entities/genre_entity.dart';
+import 'package:movie_app/features/movies_info/presentation/bloc/genres_bloc/genres_bloc.dart';
+import 'package:movie_app/injection_container.dart';
 
-class Genres extends StatelessWidget {
-  final List<Genre> genres;
-  const Genres({super.key, required this.genres});
+class ViewListGenres extends StatelessWidget {
+  final List<GenreEntity> genres;
+  const ViewListGenres({super.key, required this.genres});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class Genres extends StatelessWidget {
 }
 
 class GenreCard extends StatefulWidget {
-  final Genre genre;
+  final GenreEntity genre;
   const GenreCard({super.key, required this.genre});
 
   @override
@@ -40,15 +41,14 @@ class _GenreCardState extends State<GenreCard> {
       builder: (context, state) {
         return GestureDetector(
           onTap: () {
-            var genresBloc = context.read<GenresBloc>();
             if (isSelected) {
-              genresBloc.add(
-                RemoveGenresSelectedEvent(genresSelectedID: widget.genre.id!),
-              );
+              getIt.get<GenresBloc>().add(
+                    RemoveGenresSelectedEvent(genreSelectedID: widget.genre.id!),
+                  );
             } else {
-              genresBloc.add(
-                AddGenresSelectedEvent(genresSelectedID: widget.genre.id!),
-              );
+              getIt.get<GenresBloc>().add(
+                    AddGenresSelectedEvent(genreSelectedID: widget.genre.id!),
+                  );
             }
             setState(() {
               isSelected = !isSelected;
@@ -62,10 +62,10 @@ class _GenreCardState extends State<GenreCard> {
             padding: const EdgeInsets.symmetric(
                 horizontal: defaultPadding, vertical: defaultPadding / 4),
             decoration: BoxDecoration(
-                color: isSelected ? secondaryColor : Colors.transparent,
-                borderRadius: BorderRadius.circular(20),
-                border:
-                    Border.all(color: isSelected ? Colors.transparent : Colors.black26)),
+              color: isSelected ? secondaryColor : Colors.transparent,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: isSelected ? Colors.transparent : Colors.black26),
+            ),
             child: Text(
               widget.genre.name ?? "Null",
               style: TextStyle(

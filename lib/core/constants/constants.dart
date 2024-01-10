@@ -77,6 +77,7 @@ const String uriNowPlaying = "/movie/now_playing";
 const String uriPopular = "/movie/popular";
 const String uriTopRate = "/movie/top_rated";
 const String uriUpcomming = "/movie/upcoming";
+const String uriGenres = "/genre/movie/list";
 
 const String assetTokenAuth =
     "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4N2JiMWU3NGMyNDQ5ZWY4MWVmOTBiMTNhZjMyOTllOSIsInN1YiI6IjY0ZTk5MzllZWE4OWY1MDEzYjE4MmZlNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GwJ4LoIFhtrzZA83LgoiYPux_Mky3pSoG0T0HmcohJM";

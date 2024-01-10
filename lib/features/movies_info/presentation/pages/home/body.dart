@@ -1,13 +1,12 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/bloc/genres-bloc/genres_bloc.dart';
 import 'package:movie_app/common_widget/carousel.dart';
 import 'package:movie_app/core/constants/constants.dart';
-import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
+import 'package:movie_app/features/movies_info/presentation/bloc/genres_bloc/genres_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/movies_bloc/movies_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/categoris.dart';
-import 'package:movie_app/features/movies_info/presentation/widgets/genres.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/view_list_genres.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/movie_card.dart';
 import 'package:movie_app/injection_container.dart';
 
@@ -25,20 +24,20 @@ class _BodyState extends State<Body> {
     getIt.get<MoviesBloc>().add(FetchMovies());
   }
 
-  bool checkGenresMovie(MovieEntity movie, GenresBloc genresBloc) {
-    if (genresBloc.state.genresSelected.isEmpty) {
-      return true;
-    } else {
-      log(name: "Check genres", genresBloc.state.genresSelected.toString());
-      List genresMovie = movie.genreIds ?? [];
-      for (var genreID in genresSelected) {
-        if (genresMovie.contains(genreID)) {
-          return true;
-        }
-      }
-      return false;
-    }
-  }
+  // bool checkGenresMovie(MovieEntity movie, GenresBloc genresBloc) {
+  //   if (genresBloc.state.genresSelected.isEmpty) {
+  //     return true;
+  //   } else {
+  //     log(name: "Check genres", genresBloc.state.genresSelected.toString());
+  //     List genresMovie = movie.genreIds ?? [];
+  //     for (var genreID in genresSelected) {
+  //       if (genresMovie.contains(genreID)) {
+  //         return true;
+  //       }
+  //     }
+  //     return false;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -46,25 +45,27 @@ class _BodyState extends State<Body> {
     return Column(
       children: [
         const CategoryList(),
-        BlocBuilder<GenresBloc, GenresState>(builder: (context, state) {
-          switch (state.status) {
-            case GenresStatus.waiting:
-              return const Center(
-                child: CircularProgressIndicator(color: secondaryColor),
-              );
-            case GenresStatus.success:
-              return Genres(
-                genres: state.genres,
-              );
-            case GenresStatus.failure:
-              return const Center(
-                child: Text(
-                  "Error",
-                  style: headerLarge,
-                ),
-              );
-          }
-        }),
+        BlocBuilder<GenresBloc, GenresState>(
+          builder: (context, state) {
+            switch (state.status) {
+              case GenresStatus.loading:
+                return const Center(
+                  child: CircularProgressIndicator(color: secondaryColor),
+                );
+              case GenresStatus.success:
+                return ViewListGenres(
+                  genres: state.genres,
+                );
+              case GenresStatus.failure:
+                return const Center(
+                  child: Text(
+                    "Error",
+                    style: headerLarge,
+                  ),
+                );
+            }
+          },
+        ),
         BlocBuilder<MoviesBloc, MoviesState>(
           builder: (context, state) {
             switch (state.status) {
