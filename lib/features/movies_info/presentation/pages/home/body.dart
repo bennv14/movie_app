@@ -6,7 +6,7 @@ import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/genres_bloc/genres_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/movies_bloc/movies_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/categoris.dart';
-import 'package:movie_app/features/movies_info/presentation/widgets/view_list_genres.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/button_list_genres.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/movie_card.dart';
 import 'package:movie_app/injection_container.dart';
 
@@ -53,7 +53,7 @@ class _BodyState extends State<Body> {
                   child: CircularProgressIndicator(color: secondaryColor),
                 );
               case GenresStatus.success:
-                return ViewListGenres(
+                return ButtonListGenres(
                   genres: state.genres,
                 );
               case GenresStatus.failure:

@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:movie_app/constants.dart';
 import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
 import 'package:animations/animations.dart';
-import 'package:movie_app/screens/details/detail_screen.dart';
+import 'package:movie_app/features/movies_info/presentation/pages/detail_movies/detail_screen.dart';
 
 class MovieCard extends StatelessWidget {
   final MovieEntity movie;

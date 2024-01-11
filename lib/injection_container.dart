@@ -5,6 +5,7 @@ import 'package:movie_app/features/movies_info/data/data_sources/remote/movie_ap
 import 'package:movie_app/features/movies_info/data/repository/movie_repository_impl.dart';
 import 'package:movie_app/features/movies_info/domain/repository/movie_repository.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_genres_usecase.dart';
+import 'package:movie_app/features/movies_info/domain/usecases/get_movie_details_usecase.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_movies_usecase.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/genres_bloc/genres_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/movies_bloc/movies_bloc.dart';
@@ -32,6 +33,10 @@ Future<void> initDependencies() async {
 
   getIt.registerLazySingleton<GetGenresUseCase>(
     () => GetGenresUseCase(getIt.get<MovieRepository>()),
+  );
+
+  getIt.registerLazySingleton<GetMovieDetailsUseCase>(
+    () => GetMovieDetailsUseCase(getIt()),
   );
 
   //register bloc

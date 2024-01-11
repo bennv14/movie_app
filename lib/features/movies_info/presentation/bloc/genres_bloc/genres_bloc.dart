@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:movie_app/core/resources/data_state.dart';
 import 'package:movie_app/features/movies_info/data/models/genre_model.dart';
-import 'package:movie_app/features/movies_info/data/models/genres_response.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_genres_usecase.dart';
 
 part 'genres_event.dart';
@@ -30,11 +29,10 @@ class GenresBloc extends Bloc<GenresEvent, GenresState> {
     ));
 
     try {
-      DataState<GenresResponse> dataState =
-          await _getGenresUseCase(params: state.language);
+      final dataState = await _getGenresUseCase(params: state.language);
       if (dataState is DataSuccess) {
         emit(state.copyWith(
-            status: GenresStatus.success, genres: dataState.data!.genres!));
+            status: GenresStatus.success, genres: dataState.data!.responseData!));
       }
     } on Exception catch (e) {
       log(name: 'Genres Bloc', e.toString());

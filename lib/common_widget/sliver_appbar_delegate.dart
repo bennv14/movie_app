@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:movie_app/constants.dart';
-import 'package:movie_app/models/movie.dart';
+import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
 import 'package:movie_app/screens/details/components/backdrop_and_rating.dart';
 
 class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  final Movie movie;
+  final MovieModel movie;
   final double minHeight;
   final double maxHeight;
   SliverAppBarDelegate({required this.movie, this.minHeight = 85, this.maxHeight = 340});
@@ -61,7 +61,7 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
         ),
       );
 
-  Widget buildBackground(double shrinkOffset, Movie movie) => Visibility(
+  Widget buildBackground(double shrinkOffset, MovieModel movie) => Visibility(
         visible: !appear(shrinkOffset),
         child: BackdropTitle(movie: movie),
       );

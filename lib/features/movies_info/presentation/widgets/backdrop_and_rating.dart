@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/common_widget/image_border.dart';
 import 'package:movie_app/common_widget/rating_vote.dart';
 import 'package:movie_app/constants.dart';
-import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
+import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/screens/details/components/releasedate_runtime.dart';
 
 class BackdropTitle extends StatelessWidget {
-  final MovieModel movie;
+  final Movie movie;
 
   const BackdropTitle({
     super.key,

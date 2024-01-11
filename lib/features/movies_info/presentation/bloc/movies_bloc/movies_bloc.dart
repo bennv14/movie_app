@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
@@ -35,8 +36,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
       if (dataState is DataSuccess) {
         emit(state.copyWith(
           status: MoviesStatus.success,
-          movies: dataState.data!.movies!,
-          hasReachedMax: dataState.data!.curentPage! >= dataState.data!.totalPage!,
+          movies: dataState.data!.responseData!,
         ));
       } else {
         emit(state.copyWith(
@@ -66,12 +66,14 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
         );
 
         if (dataState is DataSuccess) {
+          final dataDecode = json.decode(dataState.data!.response.body);
           emit(
             state.copyWith(
               status: MoviesStatus.success,
-              movies: List.of(state.movies)..addAll(List.of(dataState.data!.movies!)),
-              hasReachedMax: dataState.data!.curentPage! >= dataState.data!.totalPage!,
-              currentPage: dataState.data!.curentPage,
+              movies: List.of(state.movies)
+                ..addAll(List.of(dataState.data!.responseData!)),
+              currentPage: dataDecode['page'],
+              hasReachedMax: dataDecode['page'] >= dataDecode['total_pages'],
             ),
           );
         } else {

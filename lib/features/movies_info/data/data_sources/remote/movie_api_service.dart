@@ -4,15 +4,14 @@ import 'package:http/http.dart' as http;
 import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/data/models/cast_model.dart';
 import 'package:movie_app/features/movies_info/data/models/genre_model.dart';
-import 'package:movie_app/features/movies_info/data/models/genres_response.dart';
 import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
-import 'package:movie_app/features/movies_info/data/models/movies_response.dart';
+import 'package:movie_app/features/movies_info/data/models/my_response.dart';
 
 class MovieAPISerVice {
   final http.Client client;
   MovieAPISerVice(this.client);
 
-  Future<MoviesResponse> getMovies({
+  Future<MyResponse<List<MovieModel>>> getMovies({
     String uri = uriNowPlaying,
     int curentPage = 1,
     String language = 'vi',
@@ -24,24 +23,20 @@ class MovieAPISerVice {
     final response = await client.get(Uri.parse(strUrl), headers: headers);
 
     final decodeData = json.decode(response.body);
-    final totalPages = decodeData["total_pages"];
     final List<MovieModel> movies = [];
     for (final data in decodeData["results"]) {
       final movie = MovieModel.fromJson(data);
       movies.add(movie);
     }
-    log(movies.toString());
     log(name: "MovieAPI", " Length of movies ${movies.length}");
 
-    return MoviesResponse(
-      movies: movies,
+    return MyResponse<List<MovieModel>>(
+      responseData: movies,
       response: response,
-      totalPage: totalPages,
-      curentPage: curentPage,
     );
   }
 
-  Future<GenresResponse> getAllGenres({String language = 'vi'}) async {
+  Future<MyResponse<List<GenreModel>>> getAllGenres({String language = 'vi'}) async {
     log(name: "MovieAPISerVice", "getAllGenres");
 
     final response = await http.get(
@@ -55,9 +50,29 @@ class MovieAPISerVice {
         genres.add(GenreModel.fromJson(data));
       }
       log(name: "MovieAPISerVice", "Length of genres ${genres.length}");
-      return GenresResponse(response: response, genres: genres);
+      return MyResponse(
+        response: response,
+        responseData: genres,
+      );
     } else {
       throw Exception("Fail getListGenres");
+    }
+  }
+
+  Future<MyResponse<MovieModel>> getDetailsMovie({
+    required int id,
+    String language = 'vi',
+  }) async {
+    final response = await http.get(
+      Uri.parse("$movieBaseURL$uriDetailMovie/$id?language=$language"),
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      final decodeData = json.decode(response.body);
+      var movie = MovieModel.fromJson(decodeData);
+      return MyResponse(response: response, responseData: movie);
+    } else {
+      throw Exception("Fail getFullDetailMovie");
     }
   }
 

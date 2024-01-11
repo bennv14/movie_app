@@ -7,8 +7,8 @@ import 'package:movie_app/bloc/similar_bloc/similar_bloc.dart';
 import 'package:movie_app/common_widget/sliver_appbar_delegate.dart';
 import 'package:movie_app/common_widget/sliver_tabbar_delegate.dart';
 import 'package:movie_app/constants.dart';
+import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
 import 'package:movie_app/models/cast.dart';
-import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/models/review.dart';
 import 'package:movie_app/screens/details/components/about_tab.dart';
 import 'package:movie_app/screens/details/components/list_cast.dart';
@@ -17,7 +17,7 @@ import 'package:movie_app/screens/details/components/reviews_tab.dart';
 import 'package:movie_app/screens/details/components/similar_tab.dart';
 
 class Body extends StatefulWidget {
-  final Movie movie;
+  final MovieModel movie;
   const Body({super.key, required this.movie});
 
   @override

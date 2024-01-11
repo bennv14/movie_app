@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/api/movie_api.dart';
 import 'package:movie_app/constants.dart';
+import 'package:movie_app/features/movies_info/data/data_sources/remote/movie_api_service.dart';
+import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
+import 'package:movie_app/features/movies_info/data/models/my_response.dart';
 import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
-import 'package:movie_app/models/movie.dart';
+import 'package:movie_app/features/movies_info/presentation/pages/detail_movies/body.dart';
+import 'package:movie_app/injection_container.dart';
 
 class DetailScreen extends StatefulWidget {
   final MovieEntity movie;
@@ -14,11 +17,11 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  late final Future<Movie> movie;
+  late final Future<MyResponse<MovieModel>> response;
   @override
   void initState() {
     super.initState();
-    movie = MovieAPI.getDetails(id: widget.movie.id!);
+    response = getIt.get<MovieAPISerVice>().getDetailsMovie(id: widget.movie.id!);
   }
 
   @override
@@ -26,10 +29,12 @@ class _DetailScreenState extends State<DetailScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: FutureBuilder(
-        future: movie,
+        future: response,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const Text("Dfa");
+            return Body(
+              movie: snapshot.data?.responseData ?? const MovieModel(),
+            );
           } else if (snapshot.hasError) {
             return Center(
               child: Text(
@@ -45,14 +50,5 @@ class _DetailScreenState extends State<DetailScreen> {
         },
       ),
     );
-  }
-}
-
-class DetailScreens extends StatelessWidget {
-  const DetailScreens({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
