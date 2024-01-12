@@ -7,7 +7,7 @@ import 'package:movie_app/features/movies_info/data/models/my_response.dart';
 abstract class MovieRepository {
   Future<DataState<MyResponse<List<MovieModel>>>> getMovies({
     String uri = uriNowPlaying,
-    int curentPage = 1,
+    int page = 1,
     String language = 'vi',
     String region = 'vn',
   });
@@ -17,4 +17,16 @@ abstract class MovieRepository {
   });
 
   Future<DataState<MyResponse<MovieModel>>> getMovieDetails({required int id});
+
+  Future<DataState<MyResponse<List<MovieModel>>>> getSimilarMovies({
+    required int id,
+    int page = 1,
+    String language = 'vi',
+  });
+
+  Future<DataState<MyResponse<List<MovieModel>>>> getRecommendMovies({
+    required int id,
+    int page = 1,
+    String language = 'vi',
+  });
 }

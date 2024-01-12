@@ -13,12 +13,11 @@ class MovieAPISerVice {
 
   Future<MyResponse<List<MovieModel>>> getMovies({
     String uri = uriNowPlaying,
-    int curentPage = 1,
+    int page = 1,
     String language = 'vi',
     String region = 'vn',
   }) async {
-    String strUrl =
-        "$movieBaseURL$uri?language=$language&page=$curentPage&region=$region";
+    String strUrl = "$movieBaseURL$uri?language=$language&page=$page&region=$region";
     log(name: "MovieAPISerVice", "getMovies: $strUrl");
     final response = await client.get(Uri.parse(strUrl), headers: headers);
 
@@ -97,5 +96,53 @@ class MovieAPISerVice {
     } else {
       throw Exception("Fail getCastsMovie");
     }
+  }
+
+  Future<MyResponse<List<MovieModel>>> getSimilarMovies({
+    required int id,
+    int page = 1,
+    String language = 'vi',
+  }) async {
+    String strUrl =
+        "$movieBaseURL$uriDetailMovie/$id/similar?language=$language&page=$page";
+    log(name: "MovieAPISerVice", "getSimilarMovies: $strUrl");
+    final response = await client.get(Uri.parse(strUrl), headers: headers);
+
+    final decodeData = json.decode(response.body);
+    final List<MovieModel> movies = [];
+    for (final data in decodeData["results"]) {
+      final movie = MovieModel.fromJson(data);
+      movies.add(movie);
+    }
+    log(name: "MovieAPISerVice", " similar length ${movies.length}");
+
+    return MyResponse<List<MovieModel>>(
+      responseData: movies,
+      response: response,
+    );
+  }
+
+  Future<MyResponse<List<MovieModel>>> getRecommendMovies({
+    required int id,
+    int page = 1,
+    String language = 'vi',
+  }) async {
+    String strUrl =
+        "$movieBaseURL$uriDetailMovie/$id/recommendations?language=$language&page=$page";
+    log(name: "MovieAPISerVice", "getSimilarMovies: $strUrl");
+    final response = await client.get(Uri.parse(strUrl), headers: headers);
+
+    final decodeData = json.decode(response.body);
+    final List<MovieModel> movies = [];
+    for (final data in decodeData["results"]) {
+      final movie = MovieModel.fromJson(data);
+      movies.add(movie);
+    }
+    log(name: "MovieAPISerVice", " recommend length ${movies.length}");
+
+    return MyResponse<List<MovieModel>>(
+      responseData: movies,
+      response: response,
+    );
   }
 }

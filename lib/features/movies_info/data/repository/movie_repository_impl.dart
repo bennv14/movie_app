@@ -17,20 +17,20 @@ class MovieRepositoryImpl implements MovieRepository {
   @override
   Future<DataState<MyResponse<List<MovieModel>>>> getMovies({
     String uri = uriNowPlaying,
-    int curentPage = 1,
+    int page = 1,
     String language = 'vi',
     String region = 'vn',
   }) async {
     try {
-      final moviesResponse = await _movieAPISerVice.getMovies(
+      final dataState = await _movieAPISerVice.getMovies(
         uri: uri,
-        curentPage: curentPage,
+        page: page,
         language: language,
         region: region,
       );
 
-      if (moviesResponse.response.statusCode == HttpStatus.ok) {
-        return DataSuccess(moviesResponse);
+      if (dataState.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(dataState);
       } else {
         return DataFailed(
           Exception(
@@ -70,6 +70,62 @@ class MovieRepositoryImpl implements MovieRepository {
       }
       return DataFailed(Exception("HTTP status code: ${response.response.statusCode}"));
     } on Exception catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<MyResponse<List<MovieModel>>>> getSimilarMovies({
+    required int id,
+    int page = 1,
+    String language = 'vi',
+  }) async {
+    try {
+      final dataState = await _movieAPISerVice.getSimilarMovies(
+        id: id,
+        page: page,
+        language: language,
+      );
+
+      if (dataState.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(dataState);
+      } else {
+        return DataFailed(
+          Exception(
+            "HTTP status code: ",
+          ),
+        );
+      }
+    } on Exception catch (e) {
+      log(e.toString(), name: "GetSimilarMoviesUseCase");
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<MyResponse<List<MovieModel>>>> getRecommendMovies({
+    required int id,
+    int page = 1,
+    String language = 'vi',
+  }) async {
+    try {
+      final dataState = await _movieAPISerVice.getRecommendMovies(
+        id: id,
+        page: page,
+        language: language,
+      );
+
+      if (dataState.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(dataState);
+      } else {
+        return DataFailed(
+          Exception(
+            "HTTP status code: ",
+          ),
+        );
+      }
+    } on Exception catch (e) {
+      log(e.toString(), name: "GetSimilarMoviesUseCase");
       return DataFailed(e);
     }
   }
