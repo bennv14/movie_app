@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/api/movie_api.dart';
-import 'package:movie_app/bloc/recommendations_bloc/recommendations_bloc.dart';
 import 'package:movie_app/bloc/reviews_bloc/reviews_bloc.dart';
 import 'package:movie_app/common_widget/sliver_appbar_delegate.dart';
 import 'package:movie_app/common_widget/sliver_tabbar_delegate.dart';
 import 'package:movie_app/constants.dart';
 import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
+import 'package:movie_app/features/movies_info/presentation/bloc/recomment_movies_bloc/recomment_movies_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/similar_movies_bloc/similar_movies_bloc.dart';
 import 'package:movie_app/injection_container.dart';
 import 'package:movie_app/models/cast.dart';
@@ -89,14 +89,13 @@ class _BodyState extends State<Body> {
               child: const ReviewTab(),
             ),
             BlocProvider(
-              create: (context) => RecommendationsBloc(
-                MovieAPI.getRecommendations(id: widget.movie.id!),
-              )..add(InitialRecommendationsEvent()),
+              create: (context) => RecommentMoviesBloc(getIt())
+                ..add(InitRecommentMovies(widget.movie.id!)),
               child: const RecommendationsTab(),
             ),
             BlocProvider(
               create: (context) =>
-                  getIt<SimilarMoviesBloc>()..add(InitSimilarMovies(widget.movie.id!)),
+                  SimilarMoviesBloc(getIt())..add(InitSimilarMovies(widget.movie.id!)),
               child: const SimilarTab(),
             ),
           ],

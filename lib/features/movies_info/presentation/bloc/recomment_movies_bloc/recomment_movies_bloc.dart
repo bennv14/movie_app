@@ -17,12 +17,12 @@ class RecommentMoviesBloc extends Bloc<RecommentMoviesEvent, RecommenetMoviesSta
 
   RecommentMoviesBloc(this._getSimilarMoviesUseCase)
       : super(const RecommenetMoviesState()) {
-    on<InitSimilarMovies>(_onInit);
-    on<FetchSimilarMovies>(_onFetching);
+    on<InitRecommentMovies>(_onInit);
+    on<FetchRecommentMovies>(_onFetching);
   }
 
   FutureOr<void> _onInit(
-      InitSimilarMovies event, Emitter<RecommenetMoviesState> emit) async {
+      InitRecommentMovies event, Emitter<RecommenetMoviesState> emit) async {
     emit(state.copyWith(id: event.id, status: RecommentMoviesStatus.loading));
     try {
       final dataState = await _getSimilarMoviesUseCase(
@@ -45,7 +45,7 @@ class RecommentMoviesBloc extends Bloc<RecommentMoviesEvent, RecommenetMoviesSta
   }
 
   FutureOr<void> _onFetching(
-      FetchSimilarMovies event, Emitter<RecommenetMoviesState> emit) async {
+      FetchRecommentMovies event, Emitter<RecommenetMoviesState> emit) async {
     emit(state.copyWith(status: RecommentMoviesStatus.loading));
     try {
       final dataState = await _getSimilarMoviesUseCase(

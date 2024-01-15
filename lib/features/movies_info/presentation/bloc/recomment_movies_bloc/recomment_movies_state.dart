@@ -1,6 +1,6 @@
 part of 'recomment_movies_bloc.dart';
 
-enum RecommentMoviesStatus { init, loading, success, errorr }
+enum RecommentMoviesStatus { init, loading, success, error }
 
 class RecommenetMoviesState extends Equatable {
   final int id;

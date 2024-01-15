@@ -1,6 +1,6 @@
 part of 'similar_movies_bloc.dart';
 
-enum SimilarMoviesStatus { init, loading, success, errorr }
+enum SimilarMoviesStatus { init, loading, success, error }
 
 class SimilarMoviesState extends Equatable {
   final int id;

@@ -2,15 +2,15 @@ part of 'recomment_movies_bloc.dart';
 
 abstract class RecommentMoviesEvent extends Equatable {}
 
-class InitSimilarMovies extends RecommentMoviesEvent {
+class InitRecommentMovies extends RecommentMoviesEvent {
   final int id;
 
-  InitSimilarMovies(this.id);
+  InitRecommentMovies(this.id);
   @override
   List<Object?> get props => [];
 }
 
-class FetchSimilarMovies extends RecommentMoviesEvent {
+class FetchRecommentMovies extends RecommentMoviesEvent {
   @override
   List<Object?> get props => [];
 }

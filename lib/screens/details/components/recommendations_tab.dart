@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/bloc/recommendations_bloc/recommendations_bloc.dart';
 import 'package:movie_app/common_widget/movie_card.dart';
 import 'package:movie_app/constants.dart';
+import 'package:movie_app/features/movies_info/presentation/bloc/recomment_movies_bloc/recomment_movies_bloc.dart';
+import 'package:movie_app/injection_container.dart';
 
 class RecommendationsTab extends StatelessWidget {
   const RecommendationsTab({super.key});
@@ -10,15 +11,15 @@ class RecommendationsTab extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RecommendationsBloc, RecommendationsState>(
+    return BlocBuilder<RecommentMoviesBloc, RecommenetMoviesState>(
       builder: (context, state) {
         switch (state.status) {
-          case RecommendationsStatus.initial:
+          case RecommentMoviesStatus.init:
             return const Center(
               child: CircularProgressIndicator(color: secondaryColor),
             );
-          case RecommendationsStatus.waiting:
-            int length = state.recommendations.length;
+          case RecommentMoviesStatus.loading:
+            int length = state.movies.length;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               child: ListView.builder(
@@ -27,7 +28,7 @@ class RecommendationsTab extends StatelessWidget {
                   try {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: defaultPadding),
-                      child: MovieCard(movie: state.recommendations[index]),
+                      child: MovieCard(movie: state.movies[index]),
                     );
                   } catch (e) {
                     return const Padding(
@@ -42,8 +43,8 @@ class RecommendationsTab extends StatelessWidget {
                 },
               ),
             );
-          case RecommendationsStatus.success:
-            int length = state.recommendations.length;
+          case RecommentMoviesStatus.success:
+            int length = state.movies.length;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               child: ListView.builder(
@@ -52,19 +53,17 @@ class RecommendationsTab extends StatelessWidget {
                   try {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: defaultPadding),
-                      child: MovieCard(movie: state.recommendations[index]),
+                      child: MovieCard(movie: state.movies[index]),
                     );
                   } on RangeError {
-                    context
-                        .read<RecommendationsBloc>()
-                        .add(FetchDataRecommendationsEvent());
+                    context.read<RecommentMoviesBloc>().add(FetchRecommentMovies());
                     return null;
                   }
                 },
               ),
             );
-          case RecommendationsStatus.failure:
-            int length = state.recommendations.length;
+          case RecommentMoviesStatus.error:
+            int length = state.movies.length;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               child: ListView.builder(
@@ -73,7 +72,7 @@ class RecommendationsTab extends StatelessWidget {
                   try {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: defaultPadding),
-                      child: MovieCard(movie: state.recommendations[index]),
+                      child: MovieCard(movie: state.movies[index]),
                     );
                   } on RangeError {
                     return const Padding(

@@ -60,13 +60,13 @@ class _SimilarTabState extends State<SimilarTab> {
                         padding: const EdgeInsets.only(bottom: defaultPadding),
                         child: MovieCard(movie: state.movies[index]));
                   } on RangeError {
-                    context.read<SimilarBloc>().add(FetchDataSimilarEvent());
+                    context.read<SimilarMoviesBloc>().add(FetchSimilarMovies());
                     return null;
                   }
                 },
               ),
             );
-          case SimilarMoviesStatus.errorr:
+          case SimilarMoviesStatus.error:
             int length = state.movies.length;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),

@@ -7,9 +7,11 @@ import 'package:movie_app/features/movies_info/domain/repository/movie_repositor
 import 'package:movie_app/features/movies_info/domain/usecases/get_genres_usecase.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_movie_details_usecase.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_movies_usecase.dart';
+import 'package:movie_app/features/movies_info/domain/usecases/get_recommend_moives_usecase.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_similar_movies_usecase.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/genres_bloc/genres_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/movies_bloc/movies_bloc.dart';
+import 'package:movie_app/features/movies_info/presentation/bloc/recomment_movies_bloc/recomment_movies_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/similar_movies_bloc/similar_movies_bloc.dart';
 
 final getIt = GetIt.instance;
@@ -41,8 +43,12 @@ Future<void> initDependencies() async {
     () => GetMovieDetailsUseCase(getIt()),
   );
 
-  getIt.registerLazySingleton<GetSimilarMoviesUseCase>(
+  getIt.registerFactory<GetSimilarMoviesUseCase>(
     () => GetSimilarMoviesUseCase(getIt()),
+  );
+
+  getIt.registerLazySingleton<GetRecommendMoviesUseCase>(
+    () => GetRecommendMoviesUseCase(getIt()),
   );
 
   //register bloc
@@ -56,5 +62,9 @@ Future<void> initDependencies() async {
 
   getIt.registerLazySingleton<SimilarMoviesBloc>(
     () => SimilarMoviesBloc(getIt()),
+  );
+
+  getIt.registerLazySingleton<RecommentMoviesBloc>(
+    () => RecommentMoviesBloc(getIt()),
   );
 }
