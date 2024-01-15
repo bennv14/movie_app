@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/api/movie_api.dart';
 import 'package:movie_app/bloc/recommendations_bloc/recommendations_bloc.dart';
 import 'package:movie_app/bloc/reviews_bloc/reviews_bloc.dart';
-import 'package:movie_app/bloc/similar_bloc/similar_bloc.dart';
 import 'package:movie_app/common_widget/sliver_appbar_delegate.dart';
 import 'package:movie_app/common_widget/sliver_tabbar_delegate.dart';
 import 'package:movie_app/constants.dart';
