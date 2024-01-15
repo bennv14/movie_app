@@ -27,7 +27,7 @@ class MovieAPISerVice {
       final movie = MovieModel.fromJson(data);
       movies.add(movie);
     }
-    log(name: "MovieAPI", " Length of movies ${movies.length}");
+    log(name: "MovieAPIService", " Length of movies ${movies.length}");
 
     return MyResponse<List<MovieModel>>(
       responseData: movies,

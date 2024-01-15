@@ -34,9 +34,13 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
       );
 
       if (dataState is DataSuccess) {
+        final dataDecode = json.decode(dataState.data!.response.body);
+
         emit(state.copyWith(
           status: MoviesStatus.success,
           movies: dataState.data!.responseData!,
+          currentPage: dataDecode['page'],
+          hasReachedMax: dataDecode['page'] >= dataDecode['total_pages'],
         ));
       } else {
         emit(state.copyWith(

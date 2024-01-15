@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/bloc/similar_bloc/similar_bloc.dart';
 import 'package:movie_app/common_widget/movie_card.dart';
 import 'package:movie_app/constants.dart';
+import 'package:movie_app/features/movies_info/presentation/bloc/similar_movies_bloc/similar_movies_bloc.dart';
 
 class SimilarTab extends StatefulWidget {
   const SimilarTab({super.key});
@@ -15,15 +16,15 @@ class _SimilarTabState extends State<SimilarTab> {
   @override
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SimilarBloc, SimilarState>(
+    return BlocBuilder<SimilarMoviesBloc, SimilarMoviesState>(
       builder: (context, state) {
         switch (state.status) {
-          case SimilarStatus.initial:
+          case SimilarMoviesStatus.init:
             return const Center(
               child: CircularProgressIndicator(color: secondaryColor),
             );
-          case SimilarStatus.waiting:
-            int length = state.similars.length;
+          case SimilarMoviesStatus.loading:
+            int length = state.movies.length;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               child: ListView.builder(
@@ -32,7 +33,7 @@ class _SimilarTabState extends State<SimilarTab> {
                   try {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: defaultPadding),
-                      child: MovieCard(movie: state.similars[index]),
+                      child: MovieCard(movie: state.movies[index]),
                     );
                   } on RangeError {
                     return const Padding(
@@ -47,8 +48,8 @@ class _SimilarTabState extends State<SimilarTab> {
                 },
               ),
             );
-          case SimilarStatus.success:
-            int length = state.similars.length;
+          case SimilarMoviesStatus.success:
+            int length = state.movies.length;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               child: ListView.builder(
@@ -57,7 +58,7 @@ class _SimilarTabState extends State<SimilarTab> {
                   try {
                     return Padding(
                         padding: const EdgeInsets.only(bottom: defaultPadding),
-                        child: MovieCard(movie: state.similars[index]));
+                        child: MovieCard(movie: state.movies[index]));
                   } on RangeError {
                     context.read<SimilarBloc>().add(FetchDataSimilarEvent());
                     return null;
@@ -65,8 +66,8 @@ class _SimilarTabState extends State<SimilarTab> {
                 },
               ),
             );
-          case SimilarStatus.failure:
-            int length = state.similars.length;
+          case SimilarMoviesStatus.errorr:
+            int length = state.movies.length;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               child: ListView.builder(
@@ -75,7 +76,7 @@ class _SimilarTabState extends State<SimilarTab> {
                   try {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: defaultPadding),
-                      child: MovieCard(movie: state.similars[index]),
+                      child: MovieCard(movie: state.movies[index]),
                     );
                   } on RangeError {
                     return const Center(
