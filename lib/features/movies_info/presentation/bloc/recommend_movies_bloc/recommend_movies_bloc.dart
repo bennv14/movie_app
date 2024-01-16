@@ -7,32 +7,35 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/resources/data_state.dart';
 import 'package:movie_app/features/movies_info/data/models/movie_request.dart';
 import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
-import 'package:movie_app/features/movies_info/domain/usecases/get_similar_movies_usecase.dart';
+import 'package:movie_app/features/movies_info/domain/usecases/get_recommend_moives_usecase.dart';
 
-part 'recomment_movies_state.dart';
-part 'recomment_movies_event.dart';
+part 'recommend_movies_state.dart';
+part 'recommend_movies_event.dart';
 
-class RecommentMoviesBloc extends Bloc<RecommentMoviesEvent, RecommenetMoviesState> {
-  final GetSimilarMoviesUseCase _getSimilarMoviesUseCase;
+class RecommendMoviesBloc extends Bloc<RecommendMoviesEvent, RecommendMoviesState> {
+  final GetRecommendMoviesUseCase _getRecommendMoviesUseCase;
 
-  RecommentMoviesBloc(this._getSimilarMoviesUseCase)
-      : super(const RecommenetMoviesState()) {
-    on<InitRecommentMovies>(_onInit);
-    on<FetchRecommentMovies>(_onFetching);
+  RecommendMoviesBloc(this._getRecommendMoviesUseCase)
+      : super(const RecommendMoviesState()) {
+    log('init');
+    on<InitRecommendMovies>(_onInit);
+    on<FetchRecommendMovies>(_onFetching);
   }
 
   FutureOr<void> _onInit(
-      InitRecommentMovies event, Emitter<RecommenetMoviesState> emit) async {
-    emit(state.copyWith(id: event.id, status: RecommentMoviesStatus.loading));
+      InitRecommendMovies event, Emitter<RecommendMoviesState> emit) async {
+    if (state.hasReachedMax) {
+      return null;
+    }
+    emit(state.copyWith(id: event.id, status: RecommendMoviesStatus.loading));
     try {
-      final dataState = await _getSimilarMoviesUseCase(
+      final dataState = await _getRecommendMoviesUseCase(
           params: MovieRequest(id: state.id, page: state.currentPage + 1));
       if (dataState is DataSuccess) {
         final dataDecode = json.decode(dataState.data!.response.body);
-
         emit(
           state.copyWith(
-            status: RecommentMoviesStatus.success,
+            status: RecommendMoviesStatus.success,
             movies: dataState.data!.responseData!,
             currentPage: dataDecode['page'],
             hasReachedMax: dataDecode['page'] >= dataDecode['total_pages'],
@@ -40,22 +43,26 @@ class RecommentMoviesBloc extends Bloc<RecommentMoviesEvent, RecommenetMoviesSta
         );
       }
     } on Exception catch (e) {
-      log(e.toString(), name: 'RecommentMoviesBloc');
+      log(e.toString(), name: 'RecommendMoviesBloc');
     }
   }
 
   FutureOr<void> _onFetching(
-      FetchRecommentMovies event, Emitter<RecommenetMoviesState> emit) async {
-    emit(state.copyWith(status: RecommentMoviesStatus.loading));
+      FetchRecommendMovies event, Emitter<RecommendMoviesState> emit) async {
+    if (state.hasReachedMax) {
+      return null;
+    }
+
+    emit(state.copyWith(status: RecommendMoviesStatus.loading));
     try {
-      final dataState = await _getSimilarMoviesUseCase(
+      final dataState = await _getRecommendMoviesUseCase(
           params: MovieRequest(id: state.id, page: state.currentPage + 1));
       if (dataState is DataSuccess) {
         final dataDecode = json.decode(dataState.data!.response.body);
 
         emit(
           state.copyWith(
-            status: RecommentMoviesStatus.success,
+            status: RecommendMoviesStatus.success,
             movies: List.of(state.movies)..addAll(dataState.data!.responseData!),
             currentPage: dataDecode['page'],
             hasReachedMax: dataDecode['page'] >= dataDecode['total_pages'],
@@ -63,7 +70,7 @@ class RecommentMoviesBloc extends Bloc<RecommentMoviesEvent, RecommenetMoviesSta
         );
       }
     } on Exception catch (e) {
-      log(e.toString(), name: 'RecommentMoviesBloc');
+      log(e.toString(), name: 'RecommendMoviesBloc');
     }
   }
 }

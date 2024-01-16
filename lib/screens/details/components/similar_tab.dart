@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/bloc/similar_bloc/similar_bloc.dart';
 import 'package:movie_app/common_widget/movie_card.dart';
 import 'package:movie_app/constants.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/similar_movies_bloc/similar_movies_bloc.dart';

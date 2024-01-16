@@ -22,6 +22,9 @@ class SimilarMoviesBloc extends Bloc<SimilarMoviesEvent, SimilarMoviesState> {
 
   FutureOr<void> _onInit(
       InitSimilarMovies event, Emitter<SimilarMoviesState> emit) async {
+    if (state.hasReachedMax) {
+      return null;
+    }
     emit(state.copyWith(id: event.id, status: SimilarMoviesStatus.loading));
     try {
       final dataState = await _getSimilarMoviesUseCase(
@@ -45,6 +48,9 @@ class SimilarMoviesBloc extends Bloc<SimilarMoviesEvent, SimilarMoviesState> {
 
   FutureOr<void> _onFetching(
       FetchSimilarMovies event, Emitter<SimilarMoviesState> emit) async {
+    if (state.hasReachedMax) {
+      return null;
+    }
     emit(state.copyWith(status: SimilarMoviesStatus.loading));
     try {
       final dataState = await _getSimilarMoviesUseCase(

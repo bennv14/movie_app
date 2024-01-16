@@ -11,8 +11,6 @@ import 'package:movie_app/features/movies_info/domain/usecases/get_recommend_moi
 import 'package:movie_app/features/movies_info/domain/usecases/get_similar_movies_usecase.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/genres_bloc/genres_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/movies_bloc/movies_bloc.dart';
-import 'package:movie_app/features/movies_info/presentation/bloc/recomment_movies_bloc/recomment_movies_bloc.dart';
-import 'package:movie_app/features/movies_info/presentation/bloc/similar_movies_bloc/similar_movies_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -58,13 +56,5 @@ Future<void> initDependencies() async {
 
   getIt.registerLazySingleton<GenresBloc>(
     () => GenresBloc(getIt.get<GetGenresUseCase>()),
-  );
-
-  getIt.registerLazySingleton<SimilarMoviesBloc>(
-    () => SimilarMoviesBloc(getIt()),
-  );
-
-  getIt.registerLazySingleton<RecommentMoviesBloc>(
-    () => RecommentMoviesBloc(getIt()),
   );
 }

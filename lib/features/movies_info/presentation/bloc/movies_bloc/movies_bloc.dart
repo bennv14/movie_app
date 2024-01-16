@@ -25,6 +25,9 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
     InitMovies event,
     Emitter<MoviesState> emit,
   ) async {
+    if (state.hasReachedMax) {
+      return null;
+    }
     try {
       final dataState = await _getMoviesUseCase(
         params: MoviesRequest(
@@ -57,6 +60,9 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
     FetchMovies event,
     Emitter<MoviesState> emit,
   ) async {
+    if (state.hasReachedMax) {
+      return null;
+    }
     if (state.hasReachedMax) {
       return;
     } else {

@@ -1,30 +1,30 @@
-part of 'recomment_movies_bloc.dart';
+part of 'recommend_movies_bloc.dart';
 
-enum RecommentMoviesStatus { init, loading, success, error }
+enum RecommendMoviesStatus { init, loading, success, error }
 
-class RecommenetMoviesState extends Equatable {
+class RecommendMoviesState extends Equatable {
   final int id;
-  final RecommentMoviesStatus status;
+  final RecommendMoviesStatus status;
   final List<MovieEntity> movies;
   final bool hasReachedMax;
   final int currentPage;
 
-  const RecommenetMoviesState({
+  const RecommendMoviesState({
     this.id = 0,
-    this.status = RecommentMoviesStatus.init,
+    this.status = RecommendMoviesStatus.init,
     this.movies = const [],
     this.hasReachedMax = false,
     this.currentPage = 0,
   });
 
-  RecommenetMoviesState copyWith({
+  RecommendMoviesState copyWith({
     int? id,
-    RecommentMoviesStatus? status,
+    RecommendMoviesStatus? status,
     List<MovieEntity>? movies,
     bool? hasReachedMax,
     int? currentPage,
   }) {
-    return RecommenetMoviesState(
+    return RecommendMoviesState(
       id: id ?? this.id,
       status: status ?? this.status,
       movies: movies ?? this.movies,

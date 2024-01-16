@@ -125,7 +125,7 @@ class MovieRepositoryImpl implements MovieRepository {
         );
       }
     } on Exception catch (e) {
-      log(e.toString(), name: "GetSimilarMoviesUseCase");
+      log(e.toString(), name: "GetRecommendMoviesUseCase");
       return DataFailed(e);
     }
   }
