@@ -4,9 +4,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:movie_app/constants.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/genres_bloc/genres_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/movies_bloc/movies_bloc.dart';
-import 'package:movie_app/features/movies_info/presentation/pages/home/body.dart';
+import 'package:movie_app/features/movies_info/presentation/pages/home/widgets/body.dart';
+import 'package:movie_app/features/movies_info/presentation/pages/search/srearch_screen.dart';
 import 'package:movie_app/injection_container.dart';
-import 'package:movie_app/screens/search/srearch_screen.dart';
 import 'dart:developer';
 
 class HomeScreen extends StatelessWidget {

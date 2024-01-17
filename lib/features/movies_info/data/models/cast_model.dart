@@ -29,8 +29,8 @@ class CastModel extends CastEntity {
           order: order,
         );
 
-  CastModel.fromJson(Map<String, dynamic> json) {
-    CastModel(
+  factory CastModel.fromJson(Map<String, dynamic> json) {
+    return CastModel(
       adult: json['adult'],
       gender: json['gender'],
       id: json['id'],

@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/resources/data_state.dart';
 import 'package:movie_app/features/movies_info/data/models/movie_request.dart';
 import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
-import 'package:movie_app/features/movies_info/domain/usecases/get_recommend_moives_usecase.dart';
+import 'package:movie_app/features/movies_info/domain/usecases/get_recommend_movies_usecase.dart';
 
 part 'recommend_movies_state.dart';
 part 'recommend_movies_event.dart';

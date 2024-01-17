@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/constants.dart';
-import 'package:movie_app/models/movie.dart';
+import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
 
 class Information extends StatelessWidget {
-  final Movie movie;
+  final MovieEntity movie;
   const Information({super.key, required this.movie});
 
   @override

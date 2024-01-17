@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/common_widget/cast_card.dart';
 import 'package:movie_app/constants.dart';
-import 'package:movie_app/models/cast.dart';
+import 'package:movie_app/features/movies_info/domain/entities/cast_entity.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/cast_card.dart';
 
 class ListCast extends StatelessWidget {
-  final List<Cast> casts;
+  final List<CastEntity> casts;
   const ListCast({super.key, required this.casts});
 
   @override

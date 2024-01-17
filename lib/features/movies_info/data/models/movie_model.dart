@@ -1,13 +1,15 @@
+import 'package:movie_app/features/movies_info/data/models/company_model.dart';
+import 'package:movie_app/features/movies_info/data/models/genre_model.dart';
+import 'package:movie_app/features/movies_info/domain/entities/company_entity.dart';
+import 'package:movie_app/features/movies_info/domain/entities/genre_entity.dart';
 import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
-import 'package:movie_app/models/genre.dart';
-import 'package:movie_app/models/company.dart';
 
 class MovieModel extends MovieEntity {
   const MovieModel({
     bool? adult,
     String? backdropPath,
     int? budget,
-    List<Genre>? genres,
+    List<GenreEntity>? genres,
     List? genreIds,
     String? homepage,
     int? id,
@@ -17,7 +19,7 @@ class MovieModel extends MovieEntity {
     String? overview,
     double? popularity,
     String? posterPath,
-    List<Company>? productionCompanies,
+    List<CompanyEntity>? productionCompanies,
     String? releaseDate,
     int? revenue,
     int? runtime,
@@ -41,7 +43,7 @@ class MovieModel extends MovieEntity {
           overview: overview,
           popularity: popularity,
           posterPath: posterPath,
-          productionCompanies: productionCompanies,
+          productionCompanies: productionCompanies ,
           releaseDate: releaseDate,
           revenue: revenue,
           runtime: runtime,
@@ -54,17 +56,17 @@ class MovieModel extends MovieEntity {
         );
 
   factory MovieModel.fromJson(Map<String, dynamic> json) {
-    var genres = <Genre>[];
+    var genres = <GenreEntity>[];
     if (json['genres'] != null) {
       json['genres'].forEach((v) {
-        genres.add(Genre.fromJson(v));
+        genres.add(GenreModel.fromJson(v));
       });
     }
 
-    var productionCompanies = <Company>[];
+    var productionCompanies = <CompanyEntity>[];
     if (json['production_companies'] != null) {
       json['production_companies'].forEach((v) {
-        productionCompanies.add(Company.fromJson(v));
+        productionCompanies.add(CompanyModel.fromJson(v));
       });
     }
     return MovieModel(
@@ -98,7 +100,7 @@ class MovieModel extends MovieEntity {
     data['backdrop_path'] = backdropPath;
     data['budget'] = budget;
     if (genres != null) {
-      data['genres'] = genres!.map((v) => v.toJson()).toList();
+      data['genres'] = genres!.map((v) => (v as GenreModel).toJson()).toList();
     }
     data['homepage'] = homepage;
     data['id'] = id;
@@ -109,7 +111,7 @@ class MovieModel extends MovieEntity {
     data['popularity'] = popularity;
     data['poster_path'] = posterPath;
     if (productionCompanies != null) {
-      data['production_companies'] = productionCompanies!.map((v) => v.toJson()).toList();
+      data['production_companies'] = productionCompanies!.map((v) => (v as CompanyModel).toJson()).toList();
     }
     data['release_date'] = releaseDate;
     data['revenue'] = revenue;

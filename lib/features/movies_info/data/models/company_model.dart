@@ -11,8 +11,8 @@ class CompanyModel extends CompanyEntity {
           name: name,
         );
 
-  CompanyModel.fromJson(Map<String, dynamic> json) {
-    CompanyModel(
+  factory CompanyModel.fromJson(Map<String, dynamic> json) {
+    return CompanyModel(
       id: json['id'],
       logoPath: json['logoPath'],
       name: json['name'],

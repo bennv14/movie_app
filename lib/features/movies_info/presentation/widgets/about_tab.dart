@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/common_widget/expandable_text.dart';
 import 'package:movie_app/constants.dart';
 import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
-import 'package:movie_app/screens/details/components/genres.dart';
-import 'package:movie_app/screens/details/components/information.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/expandable_text.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/information.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/view_list_genres.dart';
 
 class AboutTab extends StatelessWidget {
   final MovieModel movie;
@@ -37,7 +37,7 @@ class AboutTab extends StatelessWidget {
             style: headerMedium,
           ),
         ),
-        Genres(genres: movie.genres ?? []),
+        ViewListGenres(genres: movie.genres ?? []),
         const Padding(
           padding: EdgeInsets.all(defaultPadding),
           child: Text(

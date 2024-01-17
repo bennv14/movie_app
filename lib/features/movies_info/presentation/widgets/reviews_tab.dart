@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/bloc/reviews_bloc/reviews_bloc.dart';
 import 'package:movie_app/constants.dart';
+import 'package:movie_app/features/movies_info/presentation/bloc/reviews_movie_bloc/reviews_movie_bloc.dart';
 import 'review_card.dart';
 
 class ReviewTab extends StatelessWidget {
@@ -11,18 +11,15 @@ class ReviewTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ReviewsBloc, ReviewsState>(
+    return BlocBuilder<ReviewsMovieBloc, ReviewsMovieState>(
       builder: (context, state) {
         switch (state.status) {
-          case ReviewStatus.initial:
-            log(name: "initial", state.reviews.length.toString());
+          case ReviewsMovieStatus.init:
             return const Center(
               child: CircularProgressIndicator(color: secondaryColor),
             );
 
-          case ReviewStatus.success:
-            log(name: "success", state.reviews.length.toString());
-
+          case ReviewsMovieStatus.success:
             return ListView.builder(
               itemCount: state.reviews.length + 1,
               itemBuilder: (context, index) {
@@ -40,7 +37,7 @@ class ReviewTab extends StatelessWidget {
                   );
                 }
                 if (index == state.reviews.length) {
-                  context.read<ReviewsBloc>().add(FetchData());
+                  context.read<ReviewsMovieBloc>().add(FetchReviewsMovie());
                 }
                 return Container(
                   margin: const EdgeInsets.only(
@@ -53,9 +50,7 @@ class ReviewTab extends StatelessWidget {
               },
             );
 
-          case ReviewStatus.failure:
-            log(name: "failure", state.reviews.length.toString());
-
+          case ReviewsMovieStatus.error:
             int length = state.reviews.length;
             return ListView.builder(
               itemCount: length + 2,
@@ -99,7 +94,7 @@ class ReviewTab extends StatelessWidget {
               },
             );
 
-          case ReviewStatus.waiting:
+          case ReviewsMovieStatus.loading:
             int length = state.reviews.length;
 
             return ListView.builder(
@@ -123,7 +118,7 @@ class ReviewTab extends StatelessWidget {
                         bottom: defaultPadding,
                       ),
                       child: Text(
-                        "Đánh giá: ${state.totalReviews}",
+                        "Đánh giá: ${state.reviews}",
                         style: headerMedium,
                       ),
                     );
@@ -138,35 +133,6 @@ class ReviewTab extends StatelessWidget {
                     );
                   }
                 }
-              },
-            );
-          case ReviewStatus.hasReachMax:
-            log(name: "hasReachMax", state.reviews.length.toString());
-
-            return ListView.builder(
-              itemCount: state.reviews.length + 1,
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                      left: defaultPadding,
-                      right: defaultPadding,
-                      bottom: defaultPadding,
-                    ),
-                    child: Text(
-                      "Đánh giá: ${state.totalReviews}",
-                      style: headerMedium,
-                    ),
-                  );
-                }
-                return Container(
-                  margin: const EdgeInsets.only(
-                    bottom: defaultPadding,
-                    left: defaultPadding,
-                    right: defaultPadding,
-                  ),
-                  child: ReviewCard(review: state.reviews[index - 1]),
-                );
               },
             );
         }

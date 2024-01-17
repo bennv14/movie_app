@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
@@ -6,6 +7,9 @@ import 'package:movie_app/features/movies_info/data/models/cast_model.dart';
 import 'package:movie_app/features/movies_info/data/models/genre_model.dart';
 import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
 import 'package:movie_app/features/movies_info/data/models/my_response.dart';
+import 'package:movie_app/features/movies_info/data/models/review_model.dart';
+import 'package:movie_app/features/movies_info/domain/entities/cast_entity.dart';
+import 'package:movie_app/features/movies_info/domain/entities/review_entity.dart';
 
 class MovieAPISerVice {
   final http.Client client;
@@ -75,14 +79,14 @@ class MovieAPISerVice {
     }
   }
 
-  Future<List<CastModel>> getCasts({
+  Future<MyResponse<List<CastEntity>>> getCastsMovie({
     required int id,
     String language = 'vi',
   }) async {
     log(name: "MovieAPISerVice", "getCasts");
-    List<CastModel> casts = <CastModel>[];
+    List<CastEntity> casts = [];
     final response = await http.get(
-      Uri.parse("$movieBaseURL$id/credits?language=$language"),
+      Uri.parse("$movieBaseURL$uriDetailMovie/$id/credits?language=$language"),
       headers: headers,
     );
 
@@ -92,10 +96,26 @@ class MovieAPISerVice {
         casts.add(CastModel.fromJson(data));
       }
       log(name: "MovieAPISerVice", "Length of casts = ${casts.length}");
-      return casts;
+      return MyResponse(response: response, responseData: casts);
     } else {
       throw Exception("Fail getCastsMovie");
     }
+  }
+
+  Future<MyResponse<List<ReviewEntity>>> getReviewsMovie(
+      {required int id, int page = 1}) async {
+    String url = "$movieBaseURL$uriDetailMovie/$id/reviews?page=$page";
+    log(name: "MovieAPISerVice", "getReviewsMovie: $url");
+    final response = await client.get(Uri.parse(url), headers: headers);
+    final decodeData = json.decode(response.body);
+    final List<ReviewModel> reviews = [];
+    for (final data in decodeData['results']) {
+      final review = ReviewModel.fromJson(data);
+      reviews.add(review);
+    }
+
+    log(name: "MovieAPISerVice", "reviews: ${reviews.length}");
+    return MyResponse(response: response, responseData: reviews);
   }
 
   Future<MyResponse<List<MovieModel>>> getSimilarMovies({

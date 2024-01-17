@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/common_widget/expandable_text.dart';
-import 'package:movie_app/common_widget/image_border.dart';
-import 'package:movie_app/common_widget/rating_vote.dart';
 import 'package:movie_app/constants.dart';
-import 'package:movie_app/models/review.dart';
+import 'package:movie_app/features/movies_info/domain/entities/review_entity.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/expandable_text.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/rating_vote.dart';
+
+import 'image_border.dart';
 
 class ReviewCard extends StatelessWidget {
-  final Review review;
+  final ReviewEntity review;
   const ReviewCard({super.key, required this.review});
 
   @override
@@ -24,7 +25,8 @@ class ReviewCard extends StatelessWidget {
         children: [
           header(),
           const SizedBox(height: defaultPadding / 2),
-          ExpandableText(text: review.content ?? ""),
+          ExpandableText
+            (text: review.content ?? ""),
           const SizedBox(height: defaultPadding / 2),
           SizedBox(
             width: 65,

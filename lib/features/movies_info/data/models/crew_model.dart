@@ -27,8 +27,8 @@ class CrewModel extends CrewEntity {
           job: job,
         );
 
-  CrewModel.fromJson(Map<String, dynamic> json) {
-    CrewModel(
+  factory CrewModel.fromJson(Map<String, dynamic> json) {
+   return CrewModel(
         adult: json['adult'],
         gender: json['gender'],
         id: json['id'],

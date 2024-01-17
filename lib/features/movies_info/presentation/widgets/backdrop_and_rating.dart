@@ -1,14 +1,14 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:movie_app/common_widget/image_border.dart';
-import 'package:movie_app/common_widget/rating_vote.dart';
 import 'package:movie_app/constants.dart';
-import 'package:movie_app/models/movie.dart';
-import 'package:movie_app/screens/details/components/releasedate_runtime.dart';
+import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/image_border.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/rating_vote.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/releasedate_runtime.dart';
 
 class BackdropTitle extends StatelessWidget {
-  final Movie movie;
+  final MovieEntity movie;
 
   const BackdropTitle({
     super.key,

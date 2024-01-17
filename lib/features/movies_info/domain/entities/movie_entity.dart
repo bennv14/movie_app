@@ -1,12 +1,15 @@
 import 'package:equatable/equatable.dart';
-import 'package:movie_app/models/genre.dart';
-import 'package:movie_app/models/company.dart';
+import 'package:movie_app/features/movies_info/data/models/company_model.dart';
+import 'package:movie_app/features/movies_info/data/models/genre_model.dart';
+import 'package:movie_app/features/movies_info/domain/entities/cast_entity.dart';
+import 'package:movie_app/features/movies_info/domain/entities/company_entity.dart';
+import 'package:movie_app/features/movies_info/domain/entities/genre_entity.dart';
 
 class MovieEntity extends Equatable {
   final bool? adult;
   final String? backdropPath;
   final int? budget;
-  final List<Genre>? genres;
+  final List<GenreEntity>? genres;
   final List? genreIds;
   final String? homepage;
   final int? id;
@@ -16,7 +19,7 @@ class MovieEntity extends Equatable {
   final String? overview;
   final double? popularity;
   final String? posterPath;
-  final List<Company>? productionCompanies;
+  final List<CompanyEntity>? productionCompanies;
   final String? releaseDate;
   final int? revenue;
   final int? runtime;
