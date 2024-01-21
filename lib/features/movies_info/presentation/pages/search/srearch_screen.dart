@@ -12,7 +12,7 @@ class SearchScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: BlocProvider(
-        create: (context) => getIt.get<SearchMoviesBloc>(),
+        create: (context) => SearchMoviesBloc(getIt()),
         child: const SearchBody(),
       ),
     );

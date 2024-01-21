@@ -24,8 +24,17 @@ class _ReviewTabState extends State<ReviewTab> with AutomaticKeepAliveClientMixi
             );
 
           case ReviewsMovieStatus.success:
+            final length = state.reviews.length;
+            if (length == 0) {
+              return const Center(
+                child: Text(
+                  "Không có đánh giá!",
+                  style: headerLarge,
+                ),
+              );
+            }
             return ListView.builder(
-              itemCount: state.reviews.length + 1,
+              itemCount: length + 1,
               itemBuilder: (context, index) {
                 if (index == 0) {
                   return Padding(

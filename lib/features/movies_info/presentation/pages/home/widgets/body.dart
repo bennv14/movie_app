@@ -101,6 +101,11 @@ class _BodyState extends State<Body> {
                 for (var movie in state.movies) {
                   moviesCards.add(MovieCard(movie: movie));
                 }
+                if (moviesCards.isEmpty) {
+                  moviesCards.add(
+                    const Center(child: Text("No content", style: headerLarge)),
+                  );
+                }
                 return Carousel(
                   widgets: moviesCards,
                   onAddPage: () {

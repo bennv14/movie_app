@@ -13,6 +13,8 @@ class SearchBody extends StatelessWidget {
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         SliverPersistentHeader(
+          floating: true,
+          pinned: true,
           delegate: SearchBarDelegateHeader(maxHeight: 100),
         ),
       ],
@@ -22,14 +24,45 @@ class SearchBody extends StatelessWidget {
             case SearchMoviesStatus.init:
               return Container();
             case SearchMoviesStatus.loading:
-              return const Center(
-                child: CircularProgressIndicator(color: secondaryColor),
+              return ListView.builder(
+                itemCount: state.movies.length + 1,
+                itemBuilder: (context, index) {
+                  try {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                          left: defaultPadding, bottom: defaultPadding),
+                      child: MovieCard(movie: state.movies[index]),
+                    );
+                  } on RangeError {
+                    return const Center(
+                      child: CircularProgressIndicator(color: secondaryColor),
+                    );
+                  }
+                },
               );
             case SearchMoviesStatus.success:
+              final length = state.movies.length;
+              if (length == 0) {
+                return const Center(
+                  child: Text(
+                    "Không có phim phù hợp!",
+                    style: headerLarge,
+                  ),
+                );
+              }
               return ListView.builder(
-                itemCount: state.movies.length,
+                itemCount: state.movies.length + 1,
                 itemBuilder: (context, index) {
-                  return MovieCard(movie: state.movies[index]);
+                  try {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                          left: defaultPadding, bottom: defaultPadding),
+                      child: MovieCard(movie: state.movies[index]),
+                    );
+                  } on RangeError {
+                    context.read<SearchMoviesBloc>().add(FetchSearchMovies());
+                    return null;
+                  }
                 },
               );
             case SearchMoviesStatus.error:

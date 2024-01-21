@@ -33,8 +33,7 @@ class _SimilarTabState extends State<SimilarTab> with AutomaticKeepAliveClientMi
                   try {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: defaultPadding),
-                      child: MovieCard
-                        (movie: state.movies[index]),
+                      child: MovieCard(movie: state.movies[index]),
                     );
                   } on RangeError {
                     return const Padding(
@@ -51,6 +50,14 @@ class _SimilarTabState extends State<SimilarTab> with AutomaticKeepAliveClientMi
             );
           case SimilarMoviesStatus.success:
             int length = state.movies.length;
+            if (length == 0) {
+              return const Center(
+                child: Text(
+                  "Không có phim tương tự!",
+                  style: headerLarge,
+                ),
+              );
+            }
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               child: ListView.builder(

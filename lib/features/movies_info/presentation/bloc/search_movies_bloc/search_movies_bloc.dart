@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/resources/data_state.dart';
 import 'package:movie_app/features/movies_info/data/models/search_movies_request.dart';
 import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
@@ -23,6 +25,7 @@ class SearchMoviesBloc extends Bloc<SearchMoviesEvent, SearchMoviesState> {
           .distinct()
           .switchMap(mapper),
     );
+    on<FetchSearchMovies>(_onFetch);
   }
 
   FutureOr<void> _onSearch(
@@ -30,18 +33,64 @@ class SearchMoviesBloc extends Bloc<SearchMoviesEvent, SearchMoviesState> {
     Emitter<SearchMoviesState> emit,
   ) async {
     emit(
-      state.copyWith(query: event.query, status: SearchMoviesStatus.loading),
+      state.copyWith(
+        query: event.query,
+        status: SearchMoviesStatus.loading,
+        movies: [],
+      ),
     );
-    final dataState = await _searchMoviesUsecase(
+    try {
+      final dataState = await _searchMoviesUsecase(
         params: SearchMoviesRequest(
-      query: state.query,
-      page: state.currentPage + 1,
-    ));
-    if (dataState is DataSuccess) {
-      emit(state.copyWith(
-        status: SearchMoviesStatus.success,
-        movies: dataState.data!.responseData!,
-      ));
+          query: state.query,
+          page: state.currentPage + 1,
+        ),
+      );
+      if (dataState is DataSuccess) {
+        final dataDecode = json.decode(dataState.data!.response.body);
+        emit(state.copyWith(
+          status: SearchMoviesStatus.success,
+          movies: dataState.data!.responseData!,
+          currentPage: dataDecode['page'],
+          hasReachedMax: dataDecode['page'] >= dataDecode['total_pages'],
+        ));
+      } else {
+        emit(state.copyWith(status: SearchMoviesStatus.error));
+        log(name: "SearchMoivesBloc", dataState.exception.toString());
+      }
+    } on Exception catch (e) {
+      emit(state.copyWith(status: SearchMoviesStatus.error));
+      log(name: "SearchMoivesBloc", e.toString());
+    }
+  }
+
+  FutureOr<void> _onFetch(
+      FetchSearchMovies event, Emitter<SearchMoviesState> emit) async {
+    emit(
+      state.copyWith(status: SearchMoviesStatus.loading),
+    );
+    try {
+      final dataState = await _searchMoviesUsecase(
+        params: SearchMoviesRequest(
+          query: state.query,
+          page: state.currentPage + 1,
+        ),
+      );
+      if (dataState is DataSuccess) {
+        final dataDecode = json.decode(dataState.data!.response.body);
+        emit(state.copyWith(
+          status: SearchMoviesStatus.success,
+          movies: state.movies..addAll(dataState.data!.responseData!),
+          currentPage: dataDecode['page'],
+          hasReachedMax: dataDecode['page'] >= dataDecode['total_pages'],
+        ));
+      } else {
+        emit(state.copyWith(status: SearchMoviesStatus.error));
+        log(name: "SearchMoivesBloc", dataState.exception.toString());
+      }
+    } on Exception catch (e) {
+      emit(state.copyWith(status: SearchMoviesStatus.error));
+      log(name: "SearchMoivesBloc", e.toString());
     }
   }
 }

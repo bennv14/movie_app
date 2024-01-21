@@ -8,12 +8,15 @@ import 'package:movie_app/features/movies_info/presentation/pages/home/widgets/b
 import 'package:movie_app/features/movies_info/presentation/pages/search/srearch_screen.dart';
 import 'package:movie_app/injection_container.dart';
 import 'dart:developer';
+import 'package:flutter/services.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: buildAppBar(context),

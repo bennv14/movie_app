@@ -11,7 +11,8 @@ class RecommendationsTab extends StatefulWidget {
   State<RecommendationsTab> createState() => _RecommendationsTabState();
 }
 
-class _RecommendationsTabState extends State<RecommendationsTab> with AutomaticKeepAliveClientMixin{
+class _RecommendationsTabState extends State<RecommendationsTab>
+    with AutomaticKeepAliveClientMixin {
   @override
   @override
   Widget build(BuildContext context) {
@@ -33,8 +34,7 @@ class _RecommendationsTabState extends State<RecommendationsTab> with AutomaticK
                   try {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: defaultPadding),
-                      child: MovieCard
-                        (movie: state.movies[index]),
+                      child: MovieCard(movie: state.movies[index]),
                     );
                   } catch (e) {
                     return const Padding(
@@ -51,6 +51,14 @@ class _RecommendationsTabState extends State<RecommendationsTab> with AutomaticK
             );
           case RecommendMoviesStatus.success:
             int length = state.movies.length;
+            if (length == 0) {
+              return const Center(
+                child: Text(
+                  "Không có phim đề xuất",
+                  style: headerLarge,
+                ),
+              );
+            }
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               child: ListView.builder(
