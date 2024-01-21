@@ -1,16 +1,20 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/constants.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/reviews_movie_bloc/reviews_movie_bloc.dart';
 import 'review_card.dart';
 
-class ReviewTab extends StatelessWidget {
+class ReviewTab extends StatefulWidget {
   const ReviewTab({super.key});
 
   @override
+  State<ReviewTab> createState() => _ReviewTabState();
+}
+
+class _ReviewTabState extends State<ReviewTab> with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<ReviewsMovieBloc, ReviewsMovieState>(
       builder: (context, state) {
         switch (state.status) {
@@ -139,4 +143,7 @@ class ReviewTab extends StatelessWidget {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

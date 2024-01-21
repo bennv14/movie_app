@@ -1,8 +1,9 @@
-
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/constants/constants.dart';
+import 'package:movie_app/features/movies_info/presentation/bloc/search_movies_bloc/search_movies_bloc.dart';
+import 'package:movie_app/injection_container.dart';
 
 class SearchBarDelegateHeader extends SliverPersistentHeaderDelegate {
   final double maxHeight;
@@ -11,17 +12,16 @@ class SearchBarDelegateHeader extends SliverPersistentHeaderDelegate {
 
   SearchBarDelegateHeader({required this.maxHeight});
 
-  void backNavigator(BuildContext context) {
-    Navigator.of(context).pop();
-  }
+  void backNavigator(BuildContext context) {}
 
   void _onClearInp() {
     textController.text = "";
     isHasInput = false;
   }
 
-  void _onSubmitInp(String text){
-    log(text);
+  void _onSubmitInp(String text) {
+    log(name: "SearchMovieScreen", "query: $text");
+    getIt.get<SearchMoviesBloc>().add(SearchMovies(text));
   }
 
   Widget btnClearInput() => InkWell(
@@ -33,8 +33,7 @@ class SearchBarDelegateHeader extends SliverPersistentHeaderDelegate {
       );
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       color: Colors.white,
       child: Padding(

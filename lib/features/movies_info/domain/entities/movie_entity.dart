@@ -1,7 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:movie_app/features/movies_info/data/models/company_model.dart';
-import 'package:movie_app/features/movies_info/data/models/genre_model.dart';
-import 'package:movie_app/features/movies_info/domain/entities/cast_entity.dart';
 import 'package:movie_app/features/movies_info/domain/entities/company_entity.dart';
 import 'package:movie_app/features/movies_info/domain/entities/genre_entity.dart';
 

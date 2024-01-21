@@ -56,7 +56,8 @@ class RecommendMoviesBloc extends Bloc<RecommendMoviesEvent, RecommendMoviesStat
     emit(state.copyWith(status: RecommendMoviesStatus.loading));
     try {
       final dataState = await _getRecommendMoviesUseCase(
-          params: MovieRequest(id: state.id, page: state.currentPage + 1));
+        params: MovieRequest(id: state.id, page: state.currentPage + 1),
+      );
       if (dataState is DataSuccess) {
         final dataDecode = json.decode(dataState.data!.response.body);
 

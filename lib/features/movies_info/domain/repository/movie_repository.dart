@@ -3,7 +3,9 @@ import 'package:movie_app/core/resources/data_state.dart';
 import 'package:movie_app/features/movies_info/data/models/genre_model.dart';
 import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
 import 'package:movie_app/features/movies_info/data/models/my_response.dart';
+import 'package:movie_app/features/movies_info/data/models/search_movies_request.dart';
 import 'package:movie_app/features/movies_info/domain/entities/cast_entity.dart';
+import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movies_info/domain/entities/review_entity.dart';
 
 abstract class MovieRepository {
@@ -41,5 +43,9 @@ abstract class MovieRepository {
     required int id,
     int page = 1,
     String language = 'vi',
+  });
+
+  Future<DataState<MyResponse<List<MovieEntity>>>> searchMovies({
+    required SearchMoviesRequest request,
   });
 }

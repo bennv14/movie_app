@@ -7,7 +7,9 @@ import 'package:movie_app/features/movies_info/data/data_sources/remote/movie_ap
 import 'package:movie_app/features/movies_info/data/models/genre_model.dart';
 import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
 import 'package:movie_app/features/movies_info/data/models/my_response.dart';
+import 'package:movie_app/features/movies_info/data/models/search_movies_request.dart';
 import 'package:movie_app/features/movies_info/domain/entities/cast_entity.dart';
+import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movies_info/domain/entities/review_entity.dart';
 import 'package:movie_app/features/movies_info/domain/repository/movie_repository.dart';
 
@@ -154,6 +156,21 @@ class MovieRepositoryImpl implements MovieRepository {
   Future<DataState<MyResponse<List<CastEntity>>>> getCastMovie({required int id, String language = 'vi',}) async{
     try {
       final myResponse = await _movieAPISerVice.getCastsMovie(id: id, language: language);
+      if (myResponse.response.statusCode == 200) {
+        return DataSuccess(myResponse);
+      } else {
+        return DataFailed(
+            Exception("getCasts status code: ${myResponse.response.statusCode}"));
+      }
+    } on Exception catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<MyResponse<List<MovieEntity>>>> searchMovies({required SearchMoviesRequest request,}) async {
+    try {
+      final myResponse = await _movieAPISerVice.searchMovies(request: request);
       if (myResponse.response.statusCode == 200) {
         return DataSuccess(myResponse);
       } else {

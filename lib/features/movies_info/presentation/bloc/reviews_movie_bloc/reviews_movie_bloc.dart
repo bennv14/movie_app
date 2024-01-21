@@ -27,7 +27,8 @@ class ReviewsMovieBloc extends Bloc<ReviewsMovieEvent, ReviewsMovieState> {
     emit(state.copyWith(id: event.id, status: ReviewsMovieStatus.loading));
     try {
       final dataState = await _getReviewsMovieUseCase(
-          params: MovieRequest(id: state.id, page: state.currentPage + 1));
+        params: MovieRequest(id: state.id, page: state.currentPage + 1),
+      );
       if (dataState is DataSuccess) {
         final dataDecode = json.decode(dataState.data!.response.body);
         emit(
@@ -49,27 +50,29 @@ class ReviewsMovieBloc extends Bloc<ReviewsMovieEvent, ReviewsMovieState> {
       FetchReviewsMovie event, Emitter<ReviewsMovieState> emit) async {
     if (state.hasReachedMax) {
       return null;
-    }
-    emit(state.copyWith(status: ReviewsMovieStatus.loading));
-    try {
-      final dataState = await _getReviewsMovieUseCase(
-          params: MovieRequest(id: state.id, page: state.currentPage + 1));
-      if (dataState is DataSuccess) {
-        final dataDecode = json.decode(dataState.data!.response.body);
-
-        emit(
-          state.copyWith(
-            status: ReviewsMovieStatus.success,
-            reviews: List.of(state.reviews)..addAll(dataState.data!.responseData!),
-            currentPage: dataDecode['page'],
-            hasReachedMax: dataDecode['page'] >= dataDecode['total_pages'],
-            totalReviews: dataDecode['total_results'],
-
-          ),
+    } else {
+      try {
+        final dataState = await _getReviewsMovieUseCase(
+          params: MovieRequest(id: state.id, page: state.currentPage + 1),
         );
+        if (dataState is DataSuccess) {
+          final dataDecode = json.decode(dataState.data!.response.body);
+          emit(
+            state.copyWith(
+              status: ReviewsMovieStatus.success,
+              reviews: List.of(state.reviews)..addAll(dataState.data!.responseData!),
+              currentPage: dataDecode['page'],
+              hasReachedMax: dataDecode['page'] >= dataDecode['total_pages'],
+              totalReviews: dataDecode['total_results'],
+            ),
+          );
+        } else {
+          log(name: "ReviewsMovieStatus", dataState.exception.toString());
+        }
+      } on Exception catch (e) {
+        emit(state.copyWith(status: ReviewsMovieStatus.error));
+        log(name: "ReviewsMovieStatus", e.toString());
       }
-    } on Exception catch (e) {
-      log(e.toString(), name: 'ReviewsMovieBloc');
     }
   }
 }

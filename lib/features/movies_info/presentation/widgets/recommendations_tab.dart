@@ -4,12 +4,18 @@ import 'package:movie_app/constants.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/recommend_movies_bloc/recommend_movies_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/movie_card.dart';
 
-class RecommendationsTab extends StatelessWidget {
+class RecommendationsTab extends StatefulWidget {
   const RecommendationsTab({super.key});
 
   @override
+  State<RecommendationsTab> createState() => _RecommendationsTabState();
+}
+
+class _RecommendationsTabState extends State<RecommendationsTab> with AutomaticKeepAliveClientMixin{
+  @override
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<RecommendMoviesBloc, RecommendMoviesState>(
       builder: (context, state) {
         switch (state.status) {
@@ -93,4 +99,7 @@ class RecommendationsTab extends StatelessWidget {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

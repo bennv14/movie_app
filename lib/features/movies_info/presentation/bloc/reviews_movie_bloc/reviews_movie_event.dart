@@ -7,7 +7,7 @@ class InitReviewsMovie extends ReviewsMovieEvent {
 
   InitReviewsMovie(this.id);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [id];
 }
 
 class FetchReviewsMovie extends ReviewsMovieEvent {

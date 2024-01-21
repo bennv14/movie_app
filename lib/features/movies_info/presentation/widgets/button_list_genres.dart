@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/domain/entities/genre_entity.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/genres_bloc/genres_bloc.dart';
-import 'package:movie_app/injection_container.dart';
 
 class ButtonListGenres extends StatelessWidget {
   final List<GenreEntity> genres;
@@ -42,11 +41,11 @@ class _GenreCardState extends State<GenreCard> {
         return GestureDetector(
           onTap: () {
             if (isSelected) {
-              getIt.get<GenresBloc>().add(
+              context.read<GenresBloc>().add(
                     RemoveGenresSelectedEvent(genreSelectedID: widget.genre.id!),
                   );
             } else {
-              getIt.get<GenresBloc>().add(
+              context.read<GenresBloc>().add(
                     AddGenresSelectedEvent(genreSelectedID: widget.genre.id!),
                   );
             }

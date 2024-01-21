@@ -8,7 +8,6 @@ import 'package:movie_app/features/movies_info/presentation/pages/home/widgets/m
 import 'package:movie_app/features/movies_info/presentation/widgets/carousel.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/categoris.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/button_list_genres.dart';
-import 'package:movie_app/injection_container.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});
@@ -21,7 +20,7 @@ class _BodyState extends State<Body> {
   List<int> genresSelected = [];
 
   void fetchMovies() {
-    getIt.get<MoviesBloc>().add(FetchMovies());
+    context.read<MoviesBloc>().add(FetchMovies());
   }
 
   @override

@@ -8,7 +8,9 @@ import 'package:movie_app/features/movies_info/data/models/genre_model.dart';
 import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
 import 'package:movie_app/features/movies_info/data/models/my_response.dart';
 import 'package:movie_app/features/movies_info/data/models/review_model.dart';
+import 'package:movie_app/features/movies_info/data/models/search_movies_request.dart';
 import 'package:movie_app/features/movies_info/domain/entities/cast_entity.dart';
+import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movies_info/domain/entities/review_entity.dart';
 
 class MovieAPISerVice {
@@ -159,6 +161,28 @@ class MovieAPISerVice {
       movies.add(movie);
     }
     log(name: "MovieAPISerVice", " recommend length ${movies.length}");
+
+    return MyResponse<List<MovieModel>>(
+      responseData: movies,
+      response: response,
+    );
+  }
+
+  Future<MyResponse<List<MovieEntity>>> searchMovies({
+    required SearchMoviesRequest request,
+  }) async {
+    String strUrl =
+        "$movieBaseURL$uriSearchMovie?query=${request.query}&language=${request.language}&page=${request.page}";
+    log(name: "MovieAPISerVice", "searchMovies: $strUrl");
+    final response = await client.get(Uri.parse(strUrl), headers: headers);
+
+    final decodeData = json.decode(response.body);
+    final List<MovieModel> movies = [];
+    for (final data in decodeData["results"]) {
+      final movie = MovieModel.fromJson(data);
+      movies.add(movie);
+    }
+    log(name: "MovieAPISerVice", " search length ${movies.length}");
 
     return MyResponse<List<MovieModel>>(
       responseData: movies,

@@ -11,10 +11,11 @@ class SimilarTab extends StatefulWidget {
   State<SimilarTab> createState() => _SimilarTabState();
 }
 
-class _SimilarTabState extends State<SimilarTab> {
+class _SimilarTabState extends State<SimilarTab> with AutomaticKeepAliveClientMixin {
   @override
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<SimilarMoviesBloc, SimilarMoviesState>(
       builder: (context, state) {
         switch (state.status) {
@@ -93,4 +94,7 @@ class _SimilarTabState extends State<SimilarTab> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

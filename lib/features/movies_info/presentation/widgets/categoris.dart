@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/movies_bloc/movies_bloc.dart';
-import 'package:movie_app/injection_container.dart';
 
 class CategoryList extends StatefulWidget {
   const CategoryList({
@@ -35,29 +35,29 @@ class _CategoryListState extends State<CategoryList> {
           setState(() {
             selectedCategory = index;
             if (selectedCategory == 0) {
-              getIt<MoviesBloc>().add(
-                ChangeURI(
-                  uri: uriNowPlaying,
-                ),
-              );
+              context.read<MoviesBloc>().add(
+                    ChangeURI(
+                      uri: uriNowPlaying,
+                    ),
+                  );
             } else if (selectedCategory == 1) {
-              getIt<MoviesBloc>().add(
-                ChangeURI(
-                  uri: uriPopular,
-                ),
-              );
+              context.read<MoviesBloc>().add(
+                    ChangeURI(
+                      uri: uriPopular,
+                    ),
+                  );
             } else if (selectedCategory == 2) {
-              getIt<MoviesBloc>().add(
-                ChangeURI(
-                  uri: uriTopRate,
-                ),
-              );
+              context.read<MoviesBloc>().add(
+                    ChangeURI(
+                      uri: uriTopRate,
+                    ),
+                  );
             } else if (selectedCategory == 3) {
-              getIt<MoviesBloc>().add(
-                ChangeURI(
-                  uri: uriUpcomming,
-                ),
-              );
+              context.read<MoviesBloc>().add(
+                    ChangeURI(
+                      uri: uriUpcomming,
+                    ),
+                  );
             }
           });
         },

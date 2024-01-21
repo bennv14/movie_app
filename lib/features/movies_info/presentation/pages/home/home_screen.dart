@@ -20,10 +20,10 @@ class HomeScreen extends StatelessWidget {
       body: MultiBlocProvider(
         providers: [
           BlocProvider<MoviesBloc>(
-            create: (context) => getIt.get<MoviesBloc>()..add(InitMovies()),
+            create: (context) => MoviesBloc(getIt())..add(InitMovies()),
           ),
           BlocProvider<GenresBloc>(
-            create: (context) => getIt.get<GenresBloc>()..add(GetGenresEvent()),
+            create: (context) => GenresBloc(getIt())..add(GetGenresEvent()),
           ),
         ],
         child: const Body(),
