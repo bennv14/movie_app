@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/constants.dart';
+import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/data/data_sources/remote/movie_api_service.dart';
 import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
 import 'package:movie_app/features/movies_info/data/models/my_response.dart';
@@ -33,7 +33,7 @@ class _DetailScreenState extends State<DetailScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Body(
-              movie: snapshot.data?.responseData ?? const MovieModel(),
+              movie: snapshot.data!.responseData!,
             );
           } else if (snapshot.hasError) {
             return Center(

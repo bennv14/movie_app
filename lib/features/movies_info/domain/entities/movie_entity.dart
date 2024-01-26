@@ -54,6 +54,11 @@ class MovieEntity extends Equatable {
   });
 
   @override
+  String toString() {
+    return '$id: $title';
+  }
+
+  @override
   List<Object?> get props => [
         adult,
         backdropPath,

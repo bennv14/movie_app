@@ -37,6 +37,7 @@ class SearchMoviesBloc extends Bloc<SearchMoviesEvent, SearchMoviesState> {
         query: event.query,
         status: SearchMoviesStatus.loading,
         movies: [],
+        currentPage: 0,
       ),
     );
     try {
@@ -66,6 +67,9 @@ class SearchMoviesBloc extends Bloc<SearchMoviesEvent, SearchMoviesState> {
 
   FutureOr<void> _onFetch(
       FetchSearchMovies event, Emitter<SearchMoviesState> emit) async {
+    if (state.hasReachedMax) {
+      return null;
+    }
     emit(
       state.copyWith(status: SearchMoviesStatus.loading),
     );

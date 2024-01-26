@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/constants.dart';
+import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/domain/entities/genre_entity.dart';
 
 class ViewListGenres extends StatelessWidget {

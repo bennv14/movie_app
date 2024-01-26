@@ -1,9 +1,12 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_app/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
+import 'package:movie_app/features/movies_info/presentation/bloc/favourite_movies_bloc/favourite_movies_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/detail_movies/detail_screen.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/image_border.dart';
+import 'package:movie_app/injection_container.dart';
 
 class MovieCard extends StatelessWidget {
   final MovieEntity movie;
@@ -81,8 +84,32 @@ class MovieCard extends StatelessWidget {
             ],
           ),
         ),
-        TextButton(onPressed: () {}, child: const Icon(Icons.bookmark_add))
+        BlocBuilder<FavouriteMoviesBloc, FavouriteMoviesState>(
+          builder: (context, state) {
+            return TextButton(
+              onPressed: () {
+                _onClickBookmark(state.movies);
+              },
+              child: _buildBookmark(state.movies),
+            );
+          },
+        ),
       ],
     );
+  }
+
+  Icon _buildBookmark(List<MovieEntity> movies) {
+    return Icon(
+      movies.contains(movie) ? Icons.bookmark_added : Icons.bookmark_add,
+      color: secondaryColor,
+    );
+  }
+
+  void _onClickBookmark(List<MovieEntity> movies) {
+    if (movies.contains(movie)) {
+      getIt.get<FavouriteMoviesBloc>().add(RemoveFavouriteMovies(movie));
+    } else {
+      getIt.get<FavouriteMoviesBloc>().add(AddFavouriteMovies(movie));
+    }
   }
 }

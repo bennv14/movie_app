@@ -7,6 +7,44 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:865440923160:android:ca877f6bcb560cbb964d6d",
+        "android_client_info": {
+          "package_name": "com.ex.h"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0WL2bGmCC9M-YRLRYgIPix2pbM_UZ2uQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865440923160:android:762801d0f7e1d353964d6d",
+        "android_client_info": {
+          "package_name": "com.example.learn"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0WL2bGmCC9M-YRLRYgIPix2pbM_UZ2uQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:865440923160:android:1945877431309904964d6d",
         "android_client_info": {
           "package_name": "com.example.movie_app"

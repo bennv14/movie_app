@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/constants.dart';
+import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/domain/entities/review_entity.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/expandable_text.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/rating_vote.dart';
@@ -25,8 +25,7 @@ class ReviewCard extends StatelessWidget {
         children: [
           header(),
           const SizedBox(height: defaultPadding / 2),
-          ExpandableText
-            (text: review.content ?? ""),
+          ExpandableText(text: review.content ?? ""),
           const SizedBox(height: defaultPadding / 2),
           SizedBox(
             width: 65,

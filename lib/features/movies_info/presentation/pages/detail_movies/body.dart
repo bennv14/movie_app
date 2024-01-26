@@ -34,7 +34,8 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
-    castsData = getIt.get<GetCastsMovieUseCase>()(params: MovieRequest(id : widget.movie.id!));
+    castsData =
+        getIt.get<GetCastsMovieUseCase>()(params: MovieRequest(id: widget.movie.id!));
   }
 
   @override

@@ -1,11 +1,13 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:movie_app/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
+import 'package:movie_app/features/movies_info/presentation/bloc/favourite_movies_bloc/favourite_movies_bloc.dart';
+import 'package:movie_app/features/movies_info/presentation/controller/favourite_movies.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/image_border.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/rating_vote.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/releasedate_runtime.dart';
+import 'package:movie_app/injection_container.dart';
 
 class BackdropTitle extends StatelessWidget {
   final MovieEntity movie;
@@ -14,6 +16,11 @@ class BackdropTitle extends StatelessWidget {
     super.key,
     required this.movie,
   });
+
+  void clickBookmark() {
+    final favouriteMovies = FavouriteMovies.instance;
+    if (favouriteMovies.movies.contains(movie)) {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,14 +106,15 @@ class BackdropTitle extends StatelessWidget {
             Positioned(
               top: defaultPadding * 1.5,
               right: 0,
-              child: TextButton(
-                onPressed: () {
-                  log("add");
+              child: BlocBuilder<FavouriteMoviesBloc, FavouriteMoviesState>(
+                builder: (context, state) {
+                  return TextButton(
+                    onPressed: () {
+                      _onClickBookmark(state.movies);
+                    },
+                    child: _buildBookmark(state.movies),
+                  );
                 },
-                child: Icon(
-                  Icons.bookmark,
-                  color: Colors.white.withOpacity(0.9),
-                ),
               ),
             ),
           ],
@@ -120,5 +128,20 @@ class BackdropTitle extends StatelessWidget {
         )
       ],
     );
+  }
+
+  Icon _buildBookmark(List<MovieEntity> movies) {
+    return Icon(
+      movies.contains(movie) ? Icons.bookmark_added : Icons.bookmark_add,
+      color: Colors.white,
+    );
+  }
+
+  void _onClickBookmark(List<MovieEntity> movies) {
+    if (movies.contains(movie)) {
+      getIt.get<FavouriteMoviesBloc>().add(RemoveFavouriteMovies(movie));
+    } else {
+      getIt.get<FavouriteMoviesBloc>().add(AddFavouriteMovies(movie));
+    }
   }
 }

@@ -88,3 +88,6 @@ const Map<String, String> headers = <String, String>{
   'Accept': 'application/json',
   'Authorization': 'Bearer $assetTokenAuth',
 };
+
+const String favouriteMoviesColection = "favourite_movies";
+const String favouriteDoc = 'favourite';

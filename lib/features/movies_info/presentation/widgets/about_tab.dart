@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/constants.dart';
+import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/expandable_text.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/information.dart';
@@ -23,7 +23,9 @@ class _AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin 
         Padding(
           padding: const EdgeInsets.all(defaultPadding),
           child: Text(
-            widget.movie.tagline?.trim() == "" ? "Không có tagline" : widget.movie.tagline ?? "Null",
+            widget.movie.tagline?.trim() == ""
+                ? "Không có tagline"
+                : widget.movie.tagline ?? "Null",
             style: headerMedium,
           ),
         ),

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/constants.dart';
+import 'package:movie_app/core/constants/constants.dart';
 
 class ReleasedateRuntime extends StatelessWidget {
   final String release;
   final int runtime;
-  final FontWeight fontWeight; 
+  final FontWeight fontWeight;
   const ReleasedateRuntime(
-      {super.key, required this.release, required this.runtime, this.fontWeight = FontWeight.w500});
+      {super.key,
+      required this.release,
+      required this.runtime,
+      this.fontWeight = FontWeight.w500});
 
   @override
   Widget build(BuildContext context) {

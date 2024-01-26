@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/constants.dart';
+import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
 
 class Information extends StatelessWidget {
@@ -192,13 +192,11 @@ class Information extends StatelessWidget {
       n = n - 3;
     }
     while (n >= 3) {
-      formattedNumber =
-          "${preFormatNumber.substring(n - 3, n)} $formattedNumber";
+      formattedNumber = "${preFormatNumber.substring(n - 3, n)} $formattedNumber";
       n = n - 3;
     }
     if (n > 0) {
-      formattedNumber =
-          "${preFormatNumber.substring(0, n)} $formattedNumber";
+      formattedNumber = "${preFormatNumber.substring(0, n)} $formattedNumber";
     }
     return '$formattedNumber $lastSymbol';
   }
