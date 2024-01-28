@@ -172,7 +172,7 @@ class MovieAPISerVice {
     required SearchMoviesRequest request,
   }) async {
     String strUrl =
-        "$movieBaseURL$uriSearchMovie?query=${request.query}&language=${request.language}&page=${request.page}";
+        "$movieBaseURL$uriSearchMovie?query=${request.query}&language=${request.language}&page=${request.page}&include_adult=true";
     log(name: "MovieAPISerVice", "searchMovies: $strUrl");
     final response = await client.get(Uri.parse(strUrl), headers: headers);
 

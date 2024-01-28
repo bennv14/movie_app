@@ -46,8 +46,9 @@ class _CarouselState extends State<Carousel> {
         itemBuilder: (context, index) => TweenAnimationBuilder(
           duration: const Duration(milliseconds: 150),
           tween: Tween(
-              begin: selectedPage == index ? 1.0 : 0.8,
-              end: selectedPage == index ? 1.0 : 0.8),
+            begin: selectedPage == index ? 1.0 : 0.8,
+            end: selectedPage == index ? 1.0 : 0.8,
+          ),
           curve: Curves.ease,
           child: widget.widgets[index],
           builder: (context, value, child) {

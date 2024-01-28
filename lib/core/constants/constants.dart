@@ -21,19 +21,25 @@ const headerLarge = TextStyle(
 
 const headerMedium = TextStyle(
   fontSize: 16,
-  fontWeight: FontWeight.w600,
+  fontWeight: FontWeight.w500,
   color: Colors.black87,
 );
 
 const headerSmall = TextStyle(
   fontSize: 14,
-  fontWeight: FontWeight.w600,
+  fontWeight: FontWeight.w500,
   color: Colors.black87,
 );
 
 const textStyle = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w500,
+  color: Colors.black87,
+);
+
+const textMedium = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.w400,
   color: Colors.black87,
 );
 
@@ -51,6 +57,7 @@ const List<String> tabBarMovie = [
   "Gợi ý",
   "Tương tự"
 ];
+
 const List<String> categories = ["Đang chiếu", "Phổ biến", "BXH", "Sắp chiếu"];
 
 String urlImage(String path) {

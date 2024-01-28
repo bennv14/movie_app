@@ -45,7 +45,7 @@ class BuildMovieCard extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: defaultPadding / 2),
           child: Text(
-            movie.title ?? "Nul",
+            movie.title!,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context)
                 .textTheme
