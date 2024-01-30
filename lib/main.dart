@@ -12,7 +12,7 @@ import 'package:movie_app/features/movies_info/presentation/controller/favourite
 import 'package:movie_app/features/movies_info/presentation/pages/favourite_movies/favourite_movies_screen.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/home/home_screen.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/search/srearch_screen.dart';
-import 'package:movie_app/features/movies_info/presentation/pages/sidebar/sidebar.dart';
+import 'package:movie_app/features/movies_info/presentation/pages/sign_in_screen/sign_in_screen.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/user_detail/user_detail.dart';
 import 'package:movie_app/injection_container.dart';
 
@@ -67,12 +67,12 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Movie App',
       theme: theme(),
-      home: Scaffold(
-        appBar: buildAppBar(context),
-        drawer: SideBar(
-          changePage: changePageSelected,
-        ),
-        body: _pages[_pageSelected],
+      home: const Scaffold(
+        // appBar: buildAppBar(context),
+        // drawer: SideBar(
+        //   changePage: changePageSelected,
+        // ),
+        body: SignInSceen(),
       ),
     );
   }

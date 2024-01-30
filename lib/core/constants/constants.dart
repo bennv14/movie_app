@@ -4,6 +4,15 @@ const secondaryColor = Color(0xFFFE6D8E);
 const textColor = Color(0xFF12153D);
 const textLightColor = Color(0xFF9A9BB2);
 const fillStarColor = Color(0xFFFCC419);
+const borderTFFColor = Color.fromRGBO(168, 168, 169, 100);
+const backgroundTFFColor = Color.fromRGBO(243, 243, 243, 100);
+const iconTFFColor = Color.fromRGBO(103, 103, 103, 100);
+const bgSocialLoginColor = Color.fromRGBO(253, 243, 246, 100);
+const borderSocialLoginColor = Color.fromRGBO(248, 55, 88, 100);
+
+const iconsPath = 'assets/icons';
+const iconLogoGoogle = '$iconsPath/Google.svg';
+const iconLogoFacebook = '$iconsPath/Facebook.svg';
 
 const defaultPadding = 20.0;
 
@@ -11,6 +20,12 @@ const titleMovie = TextStyle(
   fontSize: 24,
   fontWeight: FontWeight.w600,
   color: Colors.black87,
+);
+
+const title = TextStyle(
+  fontSize: 40,
+  fontWeight: FontWeight.w700,
+  color: Colors.black,
 );
 
 const headerLarge = TextStyle(
@@ -44,11 +59,12 @@ const textMedium = TextStyle(
 );
 
 const defaultShadow = BoxShadow(
-    offset: Offset(0, 4),
-    blurRadius: 15,
-    color: secondaryColor,
-    spreadRadius: 40,
-    blurStyle: BlurStyle.inner);
+  offset: Offset(0, 4),
+  blurRadius: 15,
+  color: secondaryColor,
+  spreadRadius: 40,
+  blurStyle: BlurStyle.inner,
+);
 
 const List<String> tabBarMovie = [
   "Thông tin",
