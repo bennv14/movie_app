@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:movie_app/features/movies_info/data/data_sources/remote/movie_api_service.dart';
+import 'package:movie_app/features/movies_info/data/repository/firebase_auth_repository.dart';
 import 'package:movie_app/features/movies_info/data/repository/firebase_repository_impl.dart';
 import 'package:movie_app/features/movies_info/data/repository/movie_repository_impl.dart';
 import 'package:movie_app/features/movies_info/domain/repository/database_repository.dart';
@@ -14,8 +15,10 @@ import 'package:movie_app/features/movies_info/domain/usecases/get_movies_usecas
 import 'package:movie_app/features/movies_info/domain/usecases/get_recommend_movies_usecase.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_reviews_movie_usecase.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_similar_movies_usecase.dart';
+import 'package:movie_app/features/movies_info/domain/usecases/register_usecase.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/remove_favourite_movies_usecase.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/search_movies_usecase.dart';
+import 'package:movie_app/features/movies_info/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/favourite_movies_bloc/favourite_movies_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/genres_bloc/genres_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/movies_bloc/movies_bloc.dart';
@@ -37,6 +40,10 @@ Future<void> initDependencies() async {
 
   getIt.registerLazySingleton<DatabaseRepository>(
     () => FirebaseRepositoryImpl(),
+  );
+
+  getIt.registerLazySingleton<FirebaseAuthRepository>(
+    () => FirebaseAuthRepository(),
   );
 
   //register usecase
@@ -83,6 +90,11 @@ Future<void> initDependencies() async {
   getIt.registerLazySingleton<RemoveFavouriteMovieUsecase>(
     () => RemoveFavouriteMovieUsecase(getIt()),
   );
+
+  getIt.registerLazySingleton<RegisterUsecase>(
+    () => RegisterUsecase(getIt()),
+  );
+
   //register bloc
   getIt.registerLazySingleton<MoviesBloc>(
     () => MoviesBloc(getIt.get<GetMoviesUseCase>()),
@@ -98,5 +110,9 @@ Future<void> initDependencies() async {
 
   getIt.registerLazySingleton<FavouriteMoviesBloc>(
     () => FavouriteMoviesBloc(getIt()),
+  );
+
+  getIt.registerSingleton<AuthBloc>(
+    AuthBloc(getIt()),
   );
 }

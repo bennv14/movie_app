@@ -13,6 +13,9 @@ const borderSocialLoginColor = Color.fromRGBO(248, 55, 88, 100);
 const iconsPath = 'assets/icons';
 const iconLogoGoogle = '$iconsPath/Google.svg';
 const iconLogoFacebook = '$iconsPath/Facebook.svg';
+const regExEmail =
+    r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$";
+const regExPassword = r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$";
 
 const defaultPadding = 20.0;
 
