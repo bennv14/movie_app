@@ -12,39 +12,64 @@ App can store your favourite movies on cloud.
   </tr>
   <tr>
     <td><img src="screenshots\signin.jpg" width=270 height=480></td>
-    <td><img src="screenshots\signup.png" width=270 height=480></td>
+    <td><img src="screenshots\signup.jpg" width=270 height=480></td>
   </tr>
  </table>
 
+ <table>
+  <tr>
+    <td>Home Screen</td>
+     <td>Side Bar</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots\home.jpg" width=270 height=480></td>
+    <td><img src="screenshots\sidebar.jpg" width=270 height=480></td>
+  </tr>
+ </table>
 
+<table>
+  <tr>
+    <td>Search Screen</td>
+     <td>Favourite Screen</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots\search.jpg" width=270 height=480></td>
+    <td><img src="screenshots\facourite.jpg" width=270 height=480></td>
+  </tr>
+ </table>
 
-## Home Screen
+ <table>
+  <tr>
+    <td>Movie Detail Screen 1</td>
+     <td>Movie Detail Screen 2</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots\movie_detail.jpg" width=270 height=480></td>
+    <td><img src="screenshots\movie_detail_2.jpg" width=270 height=480></td>
+  </tr>
+ </table>
 
-![App ScreenShot](home.jpg)
+ <table>
+  <tr>
+    <td>Movie Detail Screen 3</td>
+     <td>Movie Detail Screen 4</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots\movie_detail_actor.jpg" width=270 height=480></td>
+    <td><img src="screenshots\movie_detail_comment.jpg" width=270 height=480></td>
+  </tr>
+ </table>
 
-## Side Bar
-
-![App ScreenShot](sidebar.jpg)
-
-## Favourite Movies Screen
-
-![App ScreenShot](favourite.jpg)
-
-## Search Screen
-
-![App ScreenShot](search.jpg)
-
-## Movie Detail Screen
-
-![App ScreenShot](movie_detail.jpg)
-
-![App ScreenShot](movie_detail_2.jpg)
-
-![App ScreenShot](movie_detail_actor.jpg)
-
-![App ScreenShot](movie_detail_comment.jpg)
-
-![App ScreenShot](movie_detail_recomment.jpg)
+ <table>
+  <tr>
+    <td>Movie Detail Screen 5</td>
+     <td>Movie Detail Screen 6</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/movie_detail_recommend.jpg" width=270 height=480></td>
+    <td><img src="screenshots\movie_detail_similar.jpg" width=270 height=480></td>
+  </tr>
+ </table>
 
 ## Getting Started
 
