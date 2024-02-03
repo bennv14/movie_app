@@ -5,6 +5,19 @@ This project is developing.
 App can login and sign up.
 App can store your favourite movies on cloud.
 
+<table>
+  <tr>
+    <td>First Screen Page</td>
+     <td>Holiday Mention</td>
+     <td>Present day in purple and selected day in pink</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/signin.png" width=270 height=480></td>
+    <td><img src="screenshots/signup.png" width=270 height=480></td>
+    <td><img src="screenshots/home.png" width=270 height=480></td>
+  </tr>
+ </table>
+
 ## Login Screen
 
 ![App ScreenShot](signin.jpg)
