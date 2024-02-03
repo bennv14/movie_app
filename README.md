@@ -5,8 +5,41 @@ This project is developing.
 App can login and sign up.
 App can store your favourite movies on cloud.
 
-##Login Screen
+## Login Screen
+
 ![App ScreenShot](signin.jpg)
+
+## Sign Up Screen
+
+![App ScreenShot](signup.jpg.jpg)
+
+## Home Screen
+
+![App ScreenShot](home.jpg)
+
+## Side Bar
+
+![App ScreenShot](sidebar.jpg)
+
+## Favourite Movies Screen
+
+![App ScreenShot](favourite.jpg)
+
+## Search Screen
+
+![App ScreenShot](search.jpg)
+
+## Movie Detail Screen
+
+![App ScreenShot](movie_detail.jpg)
+
+![App ScreenShot](movie_detail_2.jpg)
+
+![App ScreenShot](movie_detail_actor.jpg)
+
+![App ScreenShot](movie_detail_comment.jpg)
+
+![App ScreenShot](movie_detail_recomment.jpg)
 
 ## Getting Started
 
