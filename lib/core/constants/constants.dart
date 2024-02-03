@@ -90,10 +90,17 @@ Image createImage(String? url) {
       fit: BoxFit.contain,
     );
   } else {
-    return Image.network(
-      urlImage(url),
-      fit: BoxFit.cover,
-    );
+    try {
+      return Image.network(
+        urlImage(url),
+        fit: BoxFit.cover,
+      );
+    } on Exception {
+      return Image.asset(
+        "assets/images/no-image.png",
+        fit: BoxFit.contain,
+      );
+    }
   }
 }
 
@@ -102,7 +109,7 @@ const String movieBaseURL = "https://api.themoviedb.org/3";
 const String uriNowPlaying = "/movie/now_playing";
 const String uriPopular = "/movie/popular";
 const String uriTopRate = "/movie/top_rated";
-const String uriUpcomming = "/movie/upcoming";
+const String uriUpcoming = "/movie/upcoming";
 const String uriGenres = "/genre/movie/list";
 const String uriDetailMovie = "/movie";
 const String uriSearchMovie = "/search/movie";
@@ -115,5 +122,5 @@ const Map<String, String> headers = <String, String>{
   'Authorization': 'Bearer $assetTokenAuth',
 };
 
-const String favouriteMoviesColection = "favourite_movies";
-const String favouriteDoc = 'favourite';
+const String userCollections = "users";
+const String favouriteMovieCollections = "favourite_movies";

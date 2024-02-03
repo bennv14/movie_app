@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,11 +21,11 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     try {
       final dataState = await _registerUsecase(params: event.account);
       if (dataState is DataSuccess && dataState.data != null) {
-        emit(ResgisterSuccess(dataState.data!));
+        emit(RegisterSuccess(dataState.data!));
       } else {
         emit(
           RegisterFailure(
-            message: "Unknow error",
+            message: "Unknown error",
             exception: Exception(),
           ),
         );

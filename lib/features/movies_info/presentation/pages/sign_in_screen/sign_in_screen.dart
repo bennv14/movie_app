@@ -5,19 +5,19 @@ import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/data/models/account.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/sign_up_screen/sign_up_screen.dart';
-import 'package:movie_app/features/movies_info/presentation/widgets/center_circular_pogress_indicator.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/center_circular_progress_indicator.dart';
 import 'package:movie_app/injection_container.dart';
 import 'widgets/custom_icon_button.dart';
 import 'widgets/custom_text_from_field.dart';
 
-class SignInSceen extends StatefulWidget {
-  const SignInSceen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
   @override
-  State<SignInSceen> createState() => _SignInSceenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignInSceenState extends State<SignInSceen> {
+class _SignInScreenState extends State<SignInScreen> {
   bool _isPasswordVisible = false;
   bool _isLoggingIn = false;
 
@@ -93,7 +93,7 @@ class _SignInSceenState extends State<SignInSceen> {
               const SizedBox(height: defaultPadding),
               _buildLoginSocial(),
               const SizedBox(height: defaultPadding + 5),
-              _builSignUpRedirect(context),
+              _buildSignUpRedirect(context),
             ],
           ),
         ),
@@ -127,7 +127,7 @@ class _SignInSceenState extends State<SignInSceen> {
     );
   }
 
-  Row _builSignUpRedirect(BuildContext context) {
+  Row _buildSignUpRedirect(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

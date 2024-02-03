@@ -16,11 +16,13 @@ class FavouriteMoviesScreen extends StatelessWidget {
             itemCount: state.movies.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.all(0),
+                padding: const EdgeInsets.only(top: defaultPadding / 2),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: defaultPadding,
-                    vertical: defaultPadding / 2,
+                  padding: const EdgeInsets.only(
+                    top: 0,
+                    left: defaultPadding,
+                    right: defaultPadding,
+                    bottom: defaultPadding,
                   ),
                   child: MovieCard(
                     movie: state.movies[index],

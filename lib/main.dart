@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/config/theme/theme.dart';
 import 'package:flutter/services.dart';
-import 'package:movie_app/dashbroad.dart';
+import 'package:movie_app/dashboard.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/favourite_movies_bloc/favourite_movies_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/sign_in_screen/sign_in_screen.dart';
@@ -39,8 +37,7 @@ class MyApp extends StatelessWidget {
           create: (context) => getIt.get<AuthBloc>(),
         ),
         BlocProvider(
-          create: (context) =>
-              getIt.get<FavouriteMoviesBloc>()..add(InitialFavouriteMovies()),
+          create: (context) => getIt.get<FavouriteMoviesBloc>(),
         )
       ],
       child: MaterialApp(
@@ -52,9 +49,9 @@ class MyApp extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               getIt.get<AuthBloc>().add(LoggedIn(snapshot.data!));
-              return const Dashbroard();
+              return const Dashboard();
             } else {
-              return const SignInSceen();
+              return const SignInScreen();
             }
           },
         ),

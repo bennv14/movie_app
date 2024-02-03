@@ -5,6 +5,14 @@ abstract class FavouriteMoviesEvent extends Equatable {
 }
 
 class InitialFavouriteMovies extends FavouriteMoviesEvent {
+  final DatabaseRepository _databaseRepository;
+
+  const InitialFavouriteMovies(this._databaseRepository);
+  @override
+  List<Object> get props => [_databaseRepository];
+}
+
+class LogoutFavouriteMovies extends FavouriteMoviesEvent {
   @override
   List<Object> get props => [];
 }

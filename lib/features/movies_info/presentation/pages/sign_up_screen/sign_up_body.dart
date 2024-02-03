@@ -8,7 +8,7 @@ import 'package:movie_app/features/movies_info/presentation/bloc/register_bloc/r
 import 'package:movie_app/features/movies_info/presentation/pages/sign_in_screen/sign_in_screen.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/sign_in_screen/widgets/custom_icon_button.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/sign_in_screen/widgets/custom_text_from_field.dart';
-import 'package:movie_app/features/movies_info/presentation/widgets/center_circular_pogress_indicator.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/center_circular_progress_indicator.dart';
 import 'package:movie_app/injection_container.dart';
 
 class SignUpBody extends StatefulWidget {
@@ -90,7 +90,7 @@ class _SignUpBodyState extends State<SignUpBody> {
           setState(() {
             _isRegistering = false;
           });
-          if (state is ResgisterSuccess) {
+          if (state is RegisterSuccess) {
             getIt.get<AuthBloc>().add(LoggedIn(state.user));
             Navigator.pop(context);
           } else if (state is RegisterFailure) {
@@ -165,7 +165,7 @@ class _SignUpBodyState extends State<SignUpBody> {
         : () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => const SignInSceen()),
+              MaterialPageRoute(builder: (_) => const SignInScreen()),
             );
           };
 

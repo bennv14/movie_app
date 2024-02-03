@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/auth_bloc/auth_bloc.dart';
+import 'package:movie_app/features/movies_info/presentation/bloc/favourite_movies_bloc/favourite_movies_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/sidebar/widgets/user_card.dart';
 import 'package:movie_app/injection_container.dart';
 
@@ -82,8 +83,10 @@ class SideBar extends StatelessWidget {
             ),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               getIt.get<AuthBloc>().add(Logout());
+              await getIt.unregister<FavouriteMoviesBloc>();
+              getIt.registerSingleton<FavouriteMoviesBloc>(FavouriteMoviesBloc());
             },
             child: Text(
               'Logout',

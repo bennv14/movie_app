@@ -1,6 +1,12 @@
-# movie_app
+# Movie App
 
-A new Flutter project.
+This project is developing.
+
+App can login and sign up.
+App can store your favourite movies on cloud.
+
+##Login Screen
+![App ScreenShot](signin.jpg)
 
 ## Getting Started
 

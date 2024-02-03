@@ -1,10 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:movie_app/features/movies_info/data/data_sources/remote/movie_api_service.dart';
 import 'package:movie_app/features/movies_info/data/repository/firebase_auth_repository.dart';
-import 'package:movie_app/features/movies_info/data/repository/firebase_repository_impl.dart';
 import 'package:movie_app/features/movies_info/data/repository/movie_repository_impl.dart';
-import 'package:movie_app/features/movies_info/domain/repository/database_repository.dart';
 import 'package:movie_app/features/movies_info/domain/repository/movie_repository.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/add_favourite_movies_usecase.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_casts_movie_usecase.dart';
@@ -36,10 +35,6 @@ Future<void> initDependencies() async {
   //register repository
   getIt.registerLazySingleton<MovieRepository>(
     () => MovieRepositoryImpl(getIt.get<MovieAPISerVice>()),
-  );
-
-  getIt.registerLazySingleton<DatabaseRepository>(
-    () => FirebaseRepositoryImpl(),
   );
 
   getIt.registerLazySingleton<FirebaseAuthRepository>(
@@ -109,10 +104,15 @@ Future<void> initDependencies() async {
   );
 
   getIt.registerLazySingleton<FavouriteMoviesBloc>(
-    () => FavouriteMoviesBloc(getIt()),
+    () => FavouriteMoviesBloc(),
   );
 
   getIt.registerSingleton<AuthBloc>(
     AuthBloc(getIt()),
   );
+
+  //register user
+  getIt.registerLazySingleton<User>(() {
+    return FirebaseAuth.instance.currentUser!;
+  });
 }

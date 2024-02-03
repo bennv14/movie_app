@@ -22,12 +22,12 @@ class _CategoryListState extends State<CategoryList> {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
-        itemBuilder: (context, index) => builCategory(index, context),
+        itemBuilder: (context, index) => buildCategory(index, context),
       ),
     );
   }
 
-  Padding builCategory(int index, BuildContext context) {
+  Padding buildCategory(int index, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
       child: GestureDetector(
@@ -55,7 +55,7 @@ class _CategoryListState extends State<CategoryList> {
             } else if (selectedCategory == 3) {
               context.read<MoviesBloc>().add(
                     ChangeURI(
-                      uri: uriUpcomming,
+                      uri: uriUpcoming,
                     ),
                   );
             }

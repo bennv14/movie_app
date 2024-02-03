@@ -6,8 +6,8 @@ import 'package:movie_app/features/movies_info/presentation/bloc/genres_bloc/gen
 import 'package:movie_app/features/movies_info/presentation/bloc/movies_bloc/movies_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/home/widgets/movie_poster_card.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/carousel.dart';
-import 'package:movie_app/features/movies_info/presentation/widgets/categoris.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/button_list_genres.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/categories.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});

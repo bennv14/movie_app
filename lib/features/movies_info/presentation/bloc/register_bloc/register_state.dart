@@ -11,10 +11,10 @@ class RegisterInitial extends RegisterState {}
 
 class RegisterLoading extends RegisterState {}
 
-class ResgisterSuccess extends RegisterState {
+class RegisterSuccess extends RegisterState {
   final User user;
 
-  const ResgisterSuccess(this.user);
+  const RegisterSuccess(this.user);
 }
 
 class RegisterFailure extends RegisterState {

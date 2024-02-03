@@ -11,8 +11,8 @@ part 'favourite_movies_event.dart';
 part 'favourite_movies_state.dart';
 
 class FavouriteMoviesBloc extends Bloc<FavouriteMoviesEvent, FavouriteMoviesState> {
-  final DatabaseRepository _databaseRepository;
-  FavouriteMoviesBloc(this._databaseRepository) : super(const FavouriteMoviesState()) {
+  late DatabaseRepository _databaseRepository;
+  FavouriteMoviesBloc() : super(const FavouriteMoviesState()) {
     on<InitialFavouriteMovies>(_onInitial);
     on<AddFavouriteMovies>(_onAdd);
     on<RemoveFavouriteMovies>(_onRemove);
@@ -22,7 +22,7 @@ class FavouriteMoviesBloc extends Bloc<FavouriteMoviesEvent, FavouriteMoviesStat
     InitialFavouriteMovies event,
     Emitter<FavouriteMoviesState> emit,
   ) async {
-    log(name: "favouritebloc", 'init');
+    _databaseRepository = event._databaseRepository;
     emit(state.copyWith(status: FavouriteMoviesStatus.loading));
     try {
       final dataState = await _databaseRepository.getFavouriteMovies();
