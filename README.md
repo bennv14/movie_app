@@ -12,7 +12,7 @@ App can store your favourite movies on cloud.
      <td>Present day in purple and selected day in pink</td>
   </tr>
   <tr>
-    <td><img src="screenshots/signin.png" width=270 height=480></td>
+    <td><img src="screenshots\signin.jpg" width=270 height=480></td>
     <td><img src="screenshots/signup.png" width=270 height=480></td>
     <td><img src="screenshots/home.png" width=270 height=480></td>
   </tr>
