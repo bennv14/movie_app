@@ -34,7 +34,7 @@ App can store your favourite movies on cloud.
   </tr>
   <tr>
     <td><img src="screenshots\search.jpg" width=270 height=480></td>
-    <td><img src="screenshots\facourite.jpg" width=270 height=480></td>
+    <td><img src="screenshots\favourite.jpg" width=270 height=480></td>
   </tr>
  </table>
 
@@ -55,7 +55,7 @@ App can store your favourite movies on cloud.
      <td>Movie Detail Screen 4</td>
   </tr>
   <tr>
-    <td><img src="screenshots\movie_detail_actor.jpg" width=270 height=480></td>
+    <td><img src="screenshots\movie_detail_actors.jpg" width=270 height=480></td>
     <td><img src="screenshots\movie_detail_comment.jpg" width=270 height=480></td>
   </tr>
  </table>
