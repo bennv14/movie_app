@@ -11,7 +11,7 @@ App can store your favourite movies on cloud.
 
 ## Sign Up Screen
 
-![App ScreenShot](signup.jpg.jpg)
+![App ScreenShot](signup.jpg)
 
 ## Home Screen
 
