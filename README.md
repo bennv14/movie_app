@@ -7,24 +7,16 @@ App can store your favourite movies on cloud.
 
 <table>
   <tr>
-    <td>First Screen Page</td>
-     <td>Holiday Mention</td>
-     <td>Present day in purple and selected day in pink</td>
+    <td>Login Screen</td>
+     <td>Sign Up Screen</td>
   </tr>
   <tr>
     <td><img src="screenshots\signin.jpg" width=270 height=480></td>
-    <td><img src="screenshots/signup.png" width=270 height=480></td>
-    <td><img src="screenshots/home.png" width=270 height=480></td>
+    <td><img src="screenshots\signup.png" width=270 height=480></td>
   </tr>
  </table>
 
-## Login Screen
 
-![App ScreenShot](signin.jpg)
-
-## Sign Up Screen
-
-![App ScreenShot](signup.jpg)
 
 ## Home Screen
 
