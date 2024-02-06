@@ -41,13 +41,16 @@ class FavouriteMoviesBloc extends Bloc<FavouriteMoviesEvent, FavouriteMoviesStat
     AddFavouriteMovies event,
     Emitter<FavouriteMoviesState> emit,
   ) async {
-    emit(state.copyWith(status: FavouriteMoviesStatus.loading, movies: state.movies));
+    emit(
+      state.copyWith(status: FavouriteMoviesStatus.loading, movies: state.movies),
+    );
     try {
       await _databaseRepository.addFavouriteMovie(event.movie);
       emit(
         state.copyWith(
-            status: FavouriteMoviesStatus.success,
-            movies: state.movies..add(event.movie)),
+          status: FavouriteMoviesStatus.success,
+          movies: state.movies..add(event.movie),
+        ),
       );
     } catch (e) {
       emit(

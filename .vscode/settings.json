@@ -17,5 +17,6 @@
     "OSIs",
     "tabbar",
     "YRLR"
-  ]
+  ],
+  "cSpell.enableFiletypes": ["!dart"]
 }

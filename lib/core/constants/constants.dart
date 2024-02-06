@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/features/movies_info/presentation/widgets/center_circular_progress_indicator.dart';
 
 const secondaryColor = Color(0xFFFE6D8E);
 const textColor = Color(0xFF12153D);
@@ -87,20 +88,23 @@ Image createImage(String? url) {
   if (url == null) {
     return Image.asset(
       "assets/images/no-image.png",
-      fit: BoxFit.contain,
+      fit: BoxFit.fill,
     );
   } else {
-    try {
-      return Image.network(
-        urlImage(url),
-        fit: BoxFit.cover,
-      );
-    } on Exception {
-      return Image.asset(
-        "assets/images/no-image.png",
-        fit: BoxFit.contain,
-      );
-    }
+    return Image.network(
+      urlImage(url),
+      fit: BoxFit.fill,
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        } else {
+          return const CenterCircularProgressIndicator();
+        }
+      },
+      errorBuilder: (context, error, stackTrace) {
+        return Center(child: Text(error.toString()));
+      },
+    );
   }
 }
 

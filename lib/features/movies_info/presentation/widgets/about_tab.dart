@@ -26,7 +26,7 @@ class _AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin 
             widget.movie.tagline?.trim() == ""
                 ? "Không có tagline"
                 : widget.movie.tagline ?? "Null",
-            style: headerMedium,
+            style: headerLarge,
           ),
         ),
         Padding(
@@ -42,7 +42,7 @@ class _AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin 
           padding: EdgeInsets.all(defaultPadding),
           child: Text(
             "Thể loại",
-            style: headerMedium,
+            style: headerLarge,
           ),
         ),
         ViewListGenres(genres: widget.movie.genres ?? []),
@@ -50,15 +50,21 @@ class _AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin 
           padding: EdgeInsets.all(defaultPadding),
           child: Text(
             "Thông tin",
-            style: headerMedium,
+            style: headerLarge,
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(
             left: defaultPadding,
-            bottom: defaultPadding,
           ),
           child: Information(movie: widget.movie),
+        ),
+        const Padding(
+          padding: EdgeInsets.all(defaultPadding),
+          child: Text(
+            "Posters and backdrops",
+            style: headerLarge,
+          ),
         ),
       ],
     );
