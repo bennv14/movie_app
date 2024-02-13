@@ -84,7 +84,7 @@ String urlImage(String path) {
   return "https://image.tmdb.org/t/p/w500$path";
 }
 
-Image createImage(String? url) {
+Image createImage(String? url, {BoxFit fit = BoxFit.fill}) {
   if (url == null) {
     return Image.asset(
       "assets/images/no-image.png",
@@ -93,7 +93,7 @@ Image createImage(String? url) {
   } else {
     return Image.network(
       urlImage(url),
-      fit: BoxFit.fill,
+      fit: fit,
       loadingBuilder: (context, child, loadingProgress) {
         if (loadingProgress == null) {
           return child;
@@ -128,3 +128,6 @@ const Map<String, String> headers = <String, String>{
 
 const String userCollections = "users";
 const String favouriteMovieCollections = "favourite_movies";
+
+const backdropRatio = 16 / 9;
+const posterRatio = 2 / 3;

@@ -60,20 +60,9 @@ class MovieEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        adult,
-        backdropPath,
-        budget,
-        genreIds,
         id,
-        originalLanguage,
-        originalTitle,
-        overview,
-        popularity,
-        posterPath,
-        releaseDate,
         title,
-        video,
-        voteAverage,
-        voteCount,
+        originalTitle,
+        releaseDate,
       ];
 }

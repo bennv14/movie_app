@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/core/resources/data_state.dart';
+import 'package:movie_app/features/movies_info/data/dto/movie_request.dart';
+import 'package:movie_app/features/movies_info/data/dto/my_response.dart';
 import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
-import 'package:movie_app/features/movies_info/data/models/movie_request.dart';
-import 'package:movie_app/features/movies_info/data/models/my_response.dart';
 import 'package:movie_app/features/movies_info/domain/entities/cast_entity.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_casts_movie_usecase.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_recommend_movies_usecase.dart';
@@ -119,11 +119,7 @@ class _BodyState extends State<Body> {
       labelPadding: const EdgeInsets.symmetric(horizontal: defaultPadding),
       indicatorSize: TabBarIndicatorSize.label,
       indicatorWeight: 4,
-      tabs: tabBarMovie
-          .map((e) => Tab(
-                text: e,
-              ))
-          .toList(),
+      tabs: tabBarMovie.map((e) => Tab(text: e)).toList(),
     );
   }
 }

@@ -9,6 +9,7 @@ import 'package:movie_app/features/movies_info/domain/usecases/add_favourite_mov
 import 'package:movie_app/features/movies_info/domain/usecases/get_casts_movie_usecase.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_favourite_movies_usecase.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_genres_usecase.dart';
+import 'package:movie_app/features/movies_info/domain/usecases/get_images_movies_usecase.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_movie_details_usecase.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_movies_usecase.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_recommend_movies_usecase.dart';
@@ -88,6 +89,10 @@ Future<void> initDependencies() async {
 
   getIt.registerLazySingleton<RegisterUsecase>(
     () => RegisterUsecase(getIt()),
+  );
+
+  getIt.registerLazySingleton<GetImagesMovieUsecase>(
+    () => GetImagesMovieUsecase(getIt()),
   );
 
   //register bloc

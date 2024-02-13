@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-Container borderImage(
-        {required Image image,
-        required double height,
-        required double width,
-        required BorderRadius borderRadius}) =>
+Container borderImage({
+  required Image image,
+  double? height,
+  double? width,
+  BorderRadius? borderRadius,
+}) =>
     Container(
       decoration: BoxDecoration(
         color: Colors.grey[300],
@@ -13,7 +14,7 @@ Container borderImage(
       height: height,
       width: width,
       child: ClipRRect(
-        borderRadius: borderRadius,
+        borderRadius: borderRadius ?? BorderRadius.zero,
         child: image,
       ),
     );

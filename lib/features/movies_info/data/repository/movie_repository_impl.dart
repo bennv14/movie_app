@@ -4,10 +4,11 @@ import 'dart:io';
 import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/core/resources/data_state.dart';
 import 'package:movie_app/features/movies_info/data/data_sources/remote/movie_api_service.dart';
+import 'package:movie_app/features/movies_info/data/dto/movie_image.dart';
+import 'package:movie_app/features/movies_info/data/dto/my_response.dart';
+import 'package:movie_app/features/movies_info/data/dto/search_movies_request.dart';
 import 'package:movie_app/features/movies_info/data/models/genre_model.dart';
 import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
-import 'package:movie_app/features/movies_info/data/models/my_response.dart';
-import 'package:movie_app/features/movies_info/data/models/search_movies_request.dart';
 import 'package:movie_app/features/movies_info/domain/entities/cast_entity.dart';
 import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movies_info/domain/entities/review_entity.dart';
@@ -37,9 +38,7 @@ class MovieRepositoryImpl implements MovieRepository {
         return DataSuccess(dataState);
       } else {
         return DataFailed(
-          Exception(
-            "getMovies status code: ${dataState.response.statusCode}"
-          ),
+          Exception("getMovies status code: ${dataState.response.statusCode}"),
         );
       }
     } on Exception catch (e) {
@@ -72,7 +71,8 @@ class MovieRepositoryImpl implements MovieRepository {
       if (response.response.statusCode == 200) {
         return DataSuccess(response);
       }
-      return DataFailed(Exception("getDetails status code: ${response.response.statusCode}"));
+      return DataFailed(
+          Exception("getDetails status code: ${response.response.statusCode}"));
     } on Exception catch (e) {
       return DataFailed(e);
     }
@@ -95,9 +95,7 @@ class MovieRepositoryImpl implements MovieRepository {
         return DataSuccess(dataState);
       } else {
         return DataFailed(
-          Exception(
-            "getSimilar status code: ${dataState.response.statusCode}"
-          ),
+          Exception("getSimilar status code: ${dataState.response.statusCode}"),
         );
       }
     } on Exception catch (e) {
@@ -123,9 +121,7 @@ class MovieRepositoryImpl implements MovieRepository {
         return DataSuccess(dataState);
       } else {
         return DataFailed(
-          Exception(
-            "getRecommend status code: ${dataState.response.statusCode}"
-          ),
+          Exception("getRecommend status code: ${dataState.response.statusCode}"),
         );
       }
     } on Exception catch (e) {
@@ -153,7 +149,10 @@ class MovieRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<DataState<MyResponse<List<CastEntity>>>> getCastMovie({required int id, String language = 'vi',}) async{
+  Future<DataState<MyResponse<List<CastEntity>>>> getCastMovie({
+    required int id,
+    String language = 'vi',
+  }) async {
     try {
       final myResponse = await _movieAPISerVice.getCastsMovie(id: id, language: language);
       if (myResponse.response.statusCode == 200) {
@@ -168,7 +167,9 @@ class MovieRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<DataState<MyResponse<List<MovieEntity>>>> searchMovies({required SearchMoviesRequest request,}) async {
+  Future<DataState<MyResponse<List<MovieEntity>>>> searchMovies({
+    required SearchMoviesRequest request,
+  }) async {
     try {
       final myResponse = await _movieAPISerVice.searchMovies(request: request);
       if (myResponse.response.statusCode == 200) {
@@ -176,6 +177,22 @@ class MovieRepositoryImpl implements MovieRepository {
       } else {
         return DataFailed(
             Exception("getCasts status code: ${myResponse.response.statusCode}"));
+      }
+    } on Exception catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<MyResponse<ImagesMovie>>> getImagesMovie({required int id}) async {
+    try {
+      final myResponse = await _movieAPISerVice.getImagesMovie(id: id);
+      if (myResponse.response.statusCode == 200) {
+        return DataSuccess(myResponse);
+      } else {
+        return DataFailed(
+          Exception("getImages status code: ${myResponse.response.statusCode}"),
+        );
       }
     } on Exception catch (e) {
       return DataFailed(e);

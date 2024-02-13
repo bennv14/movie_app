@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/favourite_movies_bloc/favourite_movies_bloc.dart';
-import 'package:movie_app/features/movies_info/presentation/controller/favourite_movies.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/image_border.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/rating_vote.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/releasedate_runtime.dart';
@@ -18,8 +17,11 @@ class BackdropTitle extends StatelessWidget {
   });
 
   void clickBookmark() {
-    final favouriteMovies = FavouriteMovies.instance;
-    if (favouriteMovies.movies.contains(movie)) {}
+    if (getIt.get<FavouriteMoviesBloc>().state.movies.contains(movie)) {
+      getIt.get<FavouriteMoviesBloc>().add(RemoveFavouriteMovies(movie));
+    } else {
+      getIt.get<FavouriteMoviesBloc>().add(AddFavouriteMovies(movie));
+    }
   }
 
   @override

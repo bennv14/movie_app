@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/resources/data_state.dart';
-import 'package:movie_app/features/movies_info/data/models/movie_request.dart';
+import 'package:movie_app/features/movies_info/data/dto/movie_request.dart';
 import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movies_info/domain/usecases/get_recommend_movies_usecase.dart';
 

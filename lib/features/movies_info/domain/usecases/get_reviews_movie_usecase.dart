@@ -1,7 +1,7 @@
 import 'package:movie_app/core/resources/data_state.dart';
 import 'package:movie_app/core/usecases/usecase.dart';
-import 'package:movie_app/features/movies_info/data/models/movie_request.dart';
-import 'package:movie_app/features/movies_info/data/models/my_response.dart';
+import 'package:movie_app/features/movies_info/data/dto/movie_request.dart';
+import 'package:movie_app/features/movies_info/data/dto/my_response.dart';
 import 'package:movie_app/features/movies_info/domain/entities/review_entity.dart';
 import 'package:movie_app/features/movies_info/domain/repository/movie_repository.dart';
 

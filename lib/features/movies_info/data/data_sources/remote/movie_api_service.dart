@@ -3,13 +3,16 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:movie_app/core/constants/constants.dart';
+import 'package:movie_app/features/movies_info/data/dto/movie_image.dart';
+import 'package:movie_app/features/movies_info/data/dto/my_response.dart';
+import 'package:movie_app/features/movies_info/data/dto/search_movies_request.dart';
 import 'package:movie_app/features/movies_info/data/models/cast_model.dart';
 import 'package:movie_app/features/movies_info/data/models/genre_model.dart';
+import 'package:movie_app/features/movies_info/data/models/image_model.dart';
 import 'package:movie_app/features/movies_info/data/models/movie_model.dart';
-import 'package:movie_app/features/movies_info/data/models/my_response.dart';
 import 'package:movie_app/features/movies_info/data/models/review_model.dart';
-import 'package:movie_app/features/movies_info/data/models/search_movies_request.dart';
 import 'package:movie_app/features/movies_info/domain/entities/cast_entity.dart';
+import 'package:movie_app/features/movies_info/domain/entities/image_entity.dart';
 import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movies_info/domain/entities/review_entity.dart';
 
@@ -78,6 +81,36 @@ class MovieAPISerVice {
       return MyResponse(response: response, responseData: movie);
     } else {
       throw Exception("Fail getFullDetailMovie");
+    }
+  }
+
+  Future<MyResponse<ImagesMovie>> getImagesMovie(
+      {required int id, String language = 'en'}) async {
+    final uri = Uri.parse("$movieBaseURL$uriDetailMovie/$id/images?language=$language");
+    final response = await http.get(
+      uri,
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      final decodeData = json.decode(response.body);
+      final List<ImageEntity> posters = [];
+      for (final image in decodeData["posters"]) {
+        posters.add(ImageModel.fromMap(image));
+      }
+      final List<ImageEntity> backdrops = [];
+      for (final image in decodeData["backdrops"]) {
+        backdrops.add(ImageModel.fromMap(image));
+      }
+      log(
+        name: "getImagesMovie",
+        "backdrops: ${backdrops.length} posters: ${posters.length}",
+      );
+      return MyResponse(
+        response: response,
+        responseData: ImagesMovie(posters: posters, backdrops: backdrops),
+      );
+    } else {
+      throw Exception("Fail getImagesMovie");
     }
   }
 

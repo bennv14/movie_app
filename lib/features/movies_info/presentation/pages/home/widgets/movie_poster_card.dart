@@ -15,8 +15,9 @@ class MovieCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
       child: OpenContainer(
-        closedElevation: 0.2,
-        openElevation: 0.2,
+        transitionDuration: const Duration(milliseconds: 550),
+        closedElevation: 0.3,
+        openElevation: 0.3,
         closedBuilder: (context, action) => BuildMovieCard(movie: movie),
         openBuilder: (context, action) => DetailScreen(movie: movie),
       ),

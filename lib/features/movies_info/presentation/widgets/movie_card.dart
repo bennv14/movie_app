@@ -15,6 +15,7 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OpenContainer(
+      transitionDuration: const Duration(milliseconds: 550),
       closedElevation: 0.2,
       openElevation: 0.2,
       closedBuilder: (context, action) => buildMovieCard(),
