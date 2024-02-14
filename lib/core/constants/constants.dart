@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/center_circular_progress_indicator.dart';
 
@@ -103,6 +104,35 @@ Image createImage(String? url, {BoxFit fit = BoxFit.fill}) {
       },
       errorBuilder: (context, error, stackTrace) {
         return Center(child: Text(error.toString()));
+      },
+    );
+  }
+}
+
+cachedImage(String? url, {BoxFit fit = BoxFit.fill}) {
+  if (url == null) {
+    return Image.asset(
+      "assets/images/no-image.png",
+      fit: BoxFit.fill,
+    );
+  } else {
+    return CachedNetworkImage(
+      imageUrl: urlImage(url),
+      progressIndicatorBuilder: (context, url, progress) =>
+          const CenterCircularProgressIndicator(),
+      errorWidget: (context, url, error) => Text(
+        error.toString(),
+        style: textStyle,
+      ),
+      imageBuilder: (context, imageProvider) {
+        return Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: imageProvider,
+              fit: fit,
+            ),
+          ),
+        );
       },
     );
   }

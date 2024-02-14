@@ -38,7 +38,7 @@ class BackdropTitle extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 borderImage(
-                  image: createImage(movie.backdropPath),
+                  image: cachedImage(movie.backdropPath),
                   height: heightBackdrop,
                   width: width,
                   borderRadius: const BorderRadius.only(
@@ -87,7 +87,7 @@ class BackdropTitle extends StatelessWidget {
               top: heightBackdrop - 75,
               left: defaultPadding,
               child: borderImage(
-                image: createImage(movie.posterPath),
+                image: cachedImage(movie.posterPath),
                 height: 150,
                 width: 100,
                 borderRadius: const BorderRadius.all(

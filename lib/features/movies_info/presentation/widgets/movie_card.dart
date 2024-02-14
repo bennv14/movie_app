@@ -30,7 +30,7 @@ class MovieCard extends StatelessWidget {
         Stack(
           children: [
             borderImage(
-              image: createImage(movie.posterPath),
+              image: cachedImage(movie.posterPath),
               height: 150,
               width: 100,
               borderRadius: const BorderRadius.all(

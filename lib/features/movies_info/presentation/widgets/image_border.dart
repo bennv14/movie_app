@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 Container borderImage({
-  required Image image,
+  required Widget image,
   double? height,
   double? width,
   BorderRadius? borderRadius,

@@ -40,7 +40,7 @@ class BuildMovieCard extends StatelessWidget {
         Expanded(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: createImage(movie.posterPath),
+            child: cachedImage(movie.posterPath),
           ),
         ),
         Padding(

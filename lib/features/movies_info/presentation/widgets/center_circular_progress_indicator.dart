@@ -3,12 +3,20 @@ import 'package:movie_app/core/constants/constants.dart';
 
 class CenterCircularProgressIndicator extends StatelessWidget {
   final Color color;
-  const CenterCircularProgressIndicator({super.key, this.color = secondaryColor});
+  final double? value;
+  const CenterCircularProgressIndicator({
+    super.key,
+    this.color = secondaryColor,
+    this.value,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(color: secondaryColor),
+    return Center(
+      child: CircularProgressIndicator(
+        color: secondaryColor,
+        value: value,
+      ),
     );
   }
 }
