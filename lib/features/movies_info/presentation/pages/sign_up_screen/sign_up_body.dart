@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/data/models/account.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/auth_bloc/auth_bloc.dart';
@@ -207,7 +210,9 @@ class _SignUpBodyState extends State<SignUpBody> {
             iconLogoGoogle,
             fit: BoxFit.contain,
           ),
-          onPressed: state is RegisterLoading ? null : () {},
+          onPressed: () async {
+            await getIt.get<GoogleSignIn>().signIn();
+          },
         ),
         CustomIconButton(
           height: defaultPadding * 3,

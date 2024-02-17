@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/constants/constants.dart';
@@ -8,34 +10,46 @@ class ImageLibrary extends StatelessWidget {
   const ImageLibrary({
     super.key,
     required this.images,
-    required this.widthPoster,
-    required this.ratio,
+    this.height,
+    this.width,
   });
 
   final List<ImageEntity> images;
-  final double widthPoster;
-  final double ratio;
+  final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
     return OpenContainer(
-      transitionDuration: const Duration(milliseconds: 450),
-      transitionType: ContainerTransitionType.fade,
-      closedElevation: 0.2,
-      openElevation: 0,
-      openBuilder: (context, action) => openLibrary(context),
-      closedBuilder: (context, action) => represent(),
+      transitionDuration: const Duration(milliseconds: 5500),
+      closedColor: Colors.transparent,
+      openColor: Colors.transparent,
+      closedElevation: 0.5,
+      openElevation: 2,
+      openBuilder: (context, action) {
+        log('open');
+        return openLibrary(context);
+      },
+      closedBuilder: (context, action) {
+        log('close');
+        return represent();
+      },
+      closedShape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(defaultPadding),
+        ),
+      ),
     );
   }
 
   Widget represent() {
     return ContainerBackGroundImage(
+      height: height,
+      width: width,
       padding: const EdgeInsets.only(
         left: defaultPadding / 2,
         bottom: defaultPadding / 4,
       ),
-      widthPoster: widthPoster,
-      ratio: ratio,
       image: images[0],
       borderRadius: BorderRadius.circular(defaultPadding / 4),
       alignment: Alignment.bottomLeft,
@@ -62,10 +76,11 @@ class ImageLibrary extends StatelessWidget {
           child: Row(
             children: [
               IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.arrow_back))
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_back),
+              ),
             ],
           ),
         ),

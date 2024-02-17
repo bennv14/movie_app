@@ -24,4 +24,6 @@ class Login extends AuthEvent {
   List<Object> get props => [account];
 }
 
+class LogInByGoogle extends AuthEvent {}
+
 class Logout extends AuthEvent {}

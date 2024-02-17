@@ -161,3 +161,8 @@ const String favouriteMovieCollections = "favourite_movies";
 
 const backdropRatio = 16 / 9;
 const posterRatio = 2 / 3;
+
+const googleSignInscopes = [
+  'email',
+  'https://www.googleapis.com/auth/contacts.readonly',
+];

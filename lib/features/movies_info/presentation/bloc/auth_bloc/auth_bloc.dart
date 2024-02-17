@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/constants/firebase_auth_exception_code.dart';
 import 'package:movie_app/core/resources/data_state.dart';
@@ -16,6 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<Login>(_onLogin);
     on<Logout>(_onLogout);
     on<LoggedIn>(_onLoggedIn);
+    on<LogInByGoogle>(_onLoginByGoogle);
   }
 
   FutureOr<void> _onLogin(Login event, Emitter<AuthState> emit) async {
@@ -72,6 +75,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthenticationLoading());
       await _firebaseAuthRepository.signOut();
       emit(Unauthenticated());
+    } on PlatformException {
+      emit(Unauthenticated());
     } on Exception catch (e) {
       emit(
         AuthenticationFailure(
@@ -84,5 +89,31 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   FutureOr<void> _onLoggedIn(LoggedIn event, Emitter<AuthState> emit) async {
     emit(Authenticated(event.user));
+  }
+
+  FutureOr<void> _onLoginByGoogle(LogInByGoogle event, Emitter<AuthState> emit) async {
+    emit(AuthenticationLoading());
+    try {
+      final dataState = await _firebaseAuthRepository.signInByGoogle();
+      if (dataState is DataSuccess && dataState.data != null) {
+        emit(Authenticated(dataState.data!));
+      } else {
+        emit(
+          AuthenticationFailure(
+            message: "Unknow Error",
+            exception: Exception("Unknown"),
+          ),
+        );
+      }
+    } on PlatformException {
+      emit(Unauthenticated());
+    } on Exception catch (e) {
+      emit(
+        AuthenticationFailure(
+          message: "Unknown error",
+          exception: e,
+        ),
+      );
+    }
   }
 }

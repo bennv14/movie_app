@@ -5,11 +5,12 @@ class ReleasedateRuntime extends StatelessWidget {
   final String release;
   final int runtime;
   final FontWeight fontWeight;
-  const ReleasedateRuntime(
-      {super.key,
-      required this.release,
-      required this.runtime,
-      this.fontWeight = FontWeight.w500});
+  const ReleasedateRuntime({
+    super.key,
+    required this.release,
+    required this.runtime,
+    this.fontWeight = FontWeight.w500,
+  });
 
   @override
   Widget build(BuildContext context) {

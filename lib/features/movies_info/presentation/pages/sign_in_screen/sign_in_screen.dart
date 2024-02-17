@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/data/models/account.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/auth_bloc/auth_bloc.dart';
@@ -50,6 +52,10 @@ class _SignInScreenState extends State<SignInScreen> {
     } else {
       return true;
     }
+  }
+
+  void loginByGoogle() async {
+    getIt.get<AuthBloc>().add(LogInByGoogle());
   }
 
   @override
@@ -162,7 +168,6 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Row _buildLoginSocial() {
-    void loginByGoogle() {}
     void loginByFacebook() {}
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,

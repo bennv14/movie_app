@@ -5,30 +5,30 @@ import 'package:movie_app/features/movies_info/domain/entities/image_entity.dart
 class ContainerBackGroundImage extends StatelessWidget {
   const ContainerBackGroundImage({
     super.key,
-    required this.widthPoster,
-    required this.ratio,
     required this.image,
     this.child,
     this.borderRadius,
     this.alignment,
     this.padding,
+    this.height,
+    this.width,
   });
 
-  final double widthPoster;
-  final double ratio;
   final ImageEntity image;
   final Widget? child;
   final BorderRadiusGeometry? borderRadius;
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
+  final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: alignment,
       padding: padding,
-      width: widthPoster * ratio,
-      height: widthPoster * ratio / backdropRatio,
+      width: width,
+      height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(defaultPadding / 4),
         image: DecorationImage(

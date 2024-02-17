@@ -92,43 +92,39 @@ class _AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin 
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.all(defaultPadding),
+                    padding: EdgeInsets.only(
+                      top: defaultPadding,
+                      left: defaultPadding,
+                      bottom: defaultPadding,
+                    ),
                     child: Text(
                       "Media",
                       style: headerLarge,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-                    child: Row(
-                      children: [
-                        posters.isNotEmpty
-                            ? SizedBox(
-                                width: widthPoster,
-                                height: widthPoster / posterRatio,
-                                child: ImageLibrary(
-                                  images: posters,
-                                  widthPoster: widthPoster,
-                                  ratio: ratio,
-                                ),
-                              )
-                            : Container(),
-                        const SizedBox(
-                          width: defaultPadding,
-                        ),
-                        backdrops.isNotEmpty
-                            ? SizedBox(
-                                width: widthPoster * ratio,
-                                height: widthPoster * ratio / backdropRatio,
-                                child: ImageLibrary(
-                                  images: backdrops,
-                                  widthPoster: widthPoster,
-                                  ratio: ratio,
-                                ),
-                              )
-                            : Container(),
-                      ],
-                    ),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: defaultPadding,
+                      ),
+                      posters.isNotEmpty
+                          ? ImageLibrary(
+                              width: widthPoster,
+                              height: widthPoster / posterRatio,
+                              images: posters,
+                            )
+                          : Container(),
+                      const SizedBox(
+                        width: defaultPadding,
+                      ),
+                      backdrops.isNotEmpty
+                          ? ImageLibrary(
+                              width: widthPoster * ratio,
+                              height: widthPoster * ratio / backdropRatio,
+                              images: backdrops,
+                            )
+                          : Container(),
+                    ],
                   ),
                 ],
               );
