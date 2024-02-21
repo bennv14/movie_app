@@ -3,16 +3,18 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movie_app/core/constants/constants.dart';
+import 'package:movie_app/dashboard.dart';
 import 'package:movie_app/features/movies_info/data/models/account.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/auth_bloc/auth_bloc.dart';
-import 'package:movie_app/features/movies_info/presentation/bloc/register_bloc/register_bloc.dart';
+import 'package:movie_app/features/movies_info/presentation/controller/auth_strategy/email_auth_strategy.dart';
+import 'package:movie_app/features/movies_info/presentation/controller/auth_strategy/googe_auth_strategy.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/sign_in_screen/sign_in_screen.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/sign_in_screen/widgets/custom_icon_button.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/sign_in_screen/widgets/custom_text_from_field.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/center_circular_progress_indicator.dart';
 import 'package:movie_app/injection_container.dart';
+import 'package:movie_app/main.dart';
 
 class SignUpBody extends StatefulWidget {
   const SignUpBody({super.key});
@@ -64,7 +66,7 @@ class _SignUpBodyState extends State<SignUpBody> {
     }
   }
 
-  bool _checkEnableRegister(RegisterState state) {
+  bool _checkEnableRegister() {
     if (_checkValidate() && !_isRegistering) {
       return true;
     } else {
@@ -73,65 +75,64 @@ class _SignUpBodyState extends State<SignUpBody> {
   }
 
   void _doRegister() async {
-    context.read<RegisterBloc>().add(
-          Register(
-            Account(email: _email, password: _password),
-          ),
-        );
+    getIt
+        .get<AuthBloc>()
+        .add(Register(EmailAuthentication(Account(email: _email, password: _password))));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<RegisterBloc, RegisterState>(
-      bloc: context.read<RegisterBloc>(),
+    return BlocListener(
+      bloc: getIt.get<AuthBloc>(),
       listener: (context, state) {
-        if (state is RegisterLoading) {
+        if (state is AuthenticationFailure) {
+          if (_isRegistering) {
+            setState(() {
+              _isRegistering = false;
+            });
+          }
+          _buildDialog(context, state.message);
+        } else if (state is Authenticated) {
+          Navigator.pop(context);
+        } else if (state is AuthenticationLoading) {
           setState(() {
             _isRegistering = true;
           });
-        } else {
-          setState(() {
-            _isRegistering = false;
-          });
-          if (state is RegisterSuccess) {
-            Navigator.pop(context);
-          } else if (state is RegisterFailure) {
-            _buildDialog(context, state.message);
-          }
         }
       },
-      child: Builder(builder: (context) {
-        final state = context.read<RegisterBloc>().state;
-        return Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: _buildTitle(),
-                ),
-                _buildEmail(state),
-                _buildPassword(state),
-                _buildConfirmPassword(state),
-                _buildForgotPassword(),
-                _buildRegisterBtn(state),
-                const SizedBox(height: defaultPadding * 2),
-                Text(
-                  "- OR Continue with -",
-                  style: textStyle.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black87,
-                  ),
-                ),
-                const SizedBox(height: defaultPadding),
-                _buildLoginSocial(state),
-                const SizedBox(height: defaultPadding + 5),
-                _buildSignInRedirect(context),
-              ],
+      child: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: _buildTitle(),
             ),
-          ),
-        );
-      }),
+            _buildEmail(),
+            _buildPassword(),
+            _buildConfirmPassword(),
+            _buildForgotPassword(),
+            _buildRegisterBtn(),
+            const SizedBox(height: defaultPadding * 2),
+            Text(
+              "- OR Continue with -",
+              style: textStyle.copyWith(
+                fontWeight: FontWeight.w400,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: defaultPadding),
+            _buildLoginSocial(),
+            const SizedBox(height: defaultPadding + 5),
+            _buildSignInRedirect(context),
+          ],
+        ),
+      ),
     );
   }
 
@@ -197,7 +198,7 @@ class _SignUpBodyState extends State<SignUpBody> {
     );
   }
 
-  Row _buildLoginSocial(RegisterState state) {
+  Row _buildLoginSocial() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -209,9 +210,11 @@ class _SignUpBodyState extends State<SignUpBody> {
             iconLogoGoogle,
             fit: BoxFit.contain,
           ),
-          onPressed: () async {
-            await getIt.get<GoogleSignIn>().signIn();
-          },
+          onPressed: _isRegistering
+              ? null
+              : () {
+                  getIt.get<AuthBloc>().add(Login(GoogleAuthentication()));
+                },
         ),
         CustomIconButton(
           height: defaultPadding * 3,
@@ -221,7 +224,7 @@ class _SignUpBodyState extends State<SignUpBody> {
             iconLogoFacebook,
             fit: BoxFit.contain,
           ),
-          onPressed: state is RegisterLoading ? null : () {},
+          onPressed: _isRegistering ? null : () {},
         ),
       ],
     );
@@ -255,7 +258,7 @@ class _SignUpBodyState extends State<SignUpBody> {
     );
   }
 
-  Container _buildRegisterBtn(RegisterState state) {
+  Container _buildRegisterBtn() {
     return Container(
       height: defaultPadding * 3,
       width: double.infinity,
@@ -272,12 +275,11 @@ class _SignUpBodyState extends State<SignUpBody> {
               borderRadius: BorderRadius.circular(4),
             ),
           ),
-          backgroundColor: MaterialStateProperty.all(_checkEnableRegister(state)
-              ? secondaryColor
-              : secondaryColor.withOpacity(0.6)),
+          backgroundColor: MaterialStateProperty.all(
+              _checkEnableRegister() ? secondaryColor : secondaryColor.withOpacity(0.6)),
         ),
-        onPressed: _checkEnableRegister(state) ? _doRegister : null,
-        child: state is RegisterLoading
+        onPressed: _checkEnableRegister() ? _doRegister : null,
+        child: _isRegistering
             ? const CenterCircularProgressIndicator(color: Colors.white)
             : Text(
                 "Create Account",
@@ -287,7 +289,7 @@ class _SignUpBodyState extends State<SignUpBody> {
     );
   }
 
-  Container _buildEmail(RegisterState state) {
+  Container _buildEmail() {
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: defaultPadding,
@@ -314,7 +316,7 @@ class _SignUpBodyState extends State<SignUpBody> {
     );
   }
 
-  Container _buildPassword(RegisterState state) {
+  Container _buildPassword() {
     show() {
       setState(() {
         _isPasswordVisible = true;
@@ -373,7 +375,7 @@ class _SignUpBodyState extends State<SignUpBody> {
     );
   }
 
-  Container _buildConfirmPassword(RegisterState state) {
+  Container _buildConfirmPassword() {
     void show() {
       setState(() {
         _isConfirmPasswordVisible = true;

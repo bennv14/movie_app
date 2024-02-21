@@ -17,6 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<Login>(_onLogin);
     on<Logout>(_onLogout);
     on<LoggedIn>(_onLoggedIn);
+    on<Register>(_onRegister);
   }
 
   FutureOr<void> _onLogin(Login event, Emitter<AuthState> emit) async {
@@ -72,8 +73,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthenticationLoading());
       await _authStrategy.logout();
       emit(Unauthenticated());
-    } on PlatformException {
-      emit(Unauthenticated());
     } on Exception catch (e) {
       emit(
         AuthenticationFailure(
@@ -87,5 +86,53 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   FutureOr<void> _onLoggedIn(LoggedIn event, Emitter<AuthState> emit) async {
     _authStrategy = event.authStrategy;
     emit(Authenticated(event.user));
+  }
+
+  FutureOr<void> _onRegister(Register event, Emitter<AuthState> emit) async {
+    emit(AuthenticationLoading());
+    try {
+      _authStrategy = event.authStrategy;
+      final dataState = await _authStrategy.register();
+      if (dataState is DataSuccess && dataState.data != null) {
+        emit(Authenticated(dataState.data!));
+      } else {
+        emit(
+          AuthenticationFailure(
+            message: "User not found",
+            exception: Exception("Unknown"),
+          ),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == FirebaseAuthExceptionCode.userNotFound) {
+        emit(
+          AuthenticationFailure(
+            message: "User not found",
+            exception: e,
+          ),
+        );
+      } else if (e.code == FirebaseAuthExceptionCode.wrongPassword) {
+        emit(
+          AuthenticationFailure(
+            message: "Wrong password",
+            exception: e,
+          ),
+        );
+      } else if (e.code == FirebaseAuthExceptionCode.userDisable) {
+        emit(
+          AuthenticationFailure(
+            message: "User is disabled",
+            exception: e,
+          ),
+        );
+      } else {
+        emit(
+          AuthenticationFailure(
+            message: "Unknown error",
+            exception: e,
+          ),
+        );
+      }
+    }
   }
 }

@@ -28,3 +28,10 @@ class Login extends AuthEvent {
 class LogInByGoogle extends AuthEvent {}
 
 class Logout extends AuthEvent {}
+
+class Register extends AuthEvent {
+  final AuthStrategy authStrategy;
+  const Register(this.authStrategy);
+  @override
+  List<Object> get props => [authStrategy];
+}

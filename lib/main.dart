@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,13 +25,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await initDependencies();
-
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // status bar color
     ),
   );
-
   runApp(const MyApp());
 }
 
@@ -51,15 +51,18 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Movie App',
         theme: theme(),
-        home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              getIt.get<AuthBloc>().add(
-                    LoggedIn(snapshot.data!, authStrategy: GoogleAuthentication()),
-                  );
+        home: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            final user = FirebaseAuth.instance.currentUser;
+            if (state is Authenticated) {
               return const Dashboard();
             } else {
+              if (user != null) {
+                getIt.get<AuthBloc>().add(
+                      LoggedIn(user, authStrategy: GoogleAuthentication()),
+                    );
+                return const Dashboard();
+              }
               return const SignInScreen();
             }
           },
