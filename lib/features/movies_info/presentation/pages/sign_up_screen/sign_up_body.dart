@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movie_app/core/constants/constants.dart';
-import 'package:movie_app/dashboard.dart';
 import 'package:movie_app/features/movies_info/data/models/account.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/controller/auth_strategy/email_auth_strategy.dart';
@@ -14,7 +11,6 @@ import 'package:movie_app/features/movies_info/presentation/pages/sign_in_screen
 import 'package:movie_app/features/movies_info/presentation/pages/sign_in_screen/widgets/custom_text_from_field.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/center_circular_progress_indicator.dart';
 import 'package:movie_app/injection_container.dart';
-import 'package:movie_app/main.dart';
 
 class SignUpBody extends StatefulWidget {
   const SignUpBody({super.key});
