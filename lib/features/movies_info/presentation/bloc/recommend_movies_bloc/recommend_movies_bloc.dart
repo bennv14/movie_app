@@ -17,7 +17,6 @@ class RecommendMoviesBloc extends Bloc<RecommendMoviesEvent, RecommendMoviesStat
 
   RecommendMoviesBloc(this._getRecommendMoviesUseCase)
       : super(const RecommendMoviesState()) {
-    log('init');
     on<InitRecommendMovies>(_onInit);
     on<FetchRecommendMovies>(_onFetching);
   }

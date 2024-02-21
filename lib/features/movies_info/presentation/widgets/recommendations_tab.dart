@@ -71,7 +71,6 @@ class _RecommendationsTabState extends State<RecommendationsTab>
                     );
                   } on RangeError {
                     context.read<RecommendMoviesBloc>().add(FetchRecommendMovies());
-                    // log('$index');
                     return null;
                   }
                 },

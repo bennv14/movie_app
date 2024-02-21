@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,7 +12,6 @@ import 'package:movie_app/features/movies_info/presentation/pages/home/home_scre
 import 'package:movie_app/features/movies_info/presentation/pages/search/search_screen.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/sidebar/sidebar.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/user_detail/user_detail.dart';
-import 'package:movie_app/injection_container.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -37,19 +38,10 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
-        if (state is Authenticated) {
-          getIt.get<FavouriteMoviesBloc>().add(
-                InitialFavouriteMovies(FirebaseRepositoryImpl(state.user)),
-              );
-        }
-      },
-      child: Scaffold(
-        appBar: buildAppBar(context),
-        drawer: SideBar(changePage: _changePageSelected),
-        body: _pages[_pageSelected],
-      ),
+    return Scaffold(
+      appBar: buildAppBar(context),
+      drawer: SideBar(changePage: _changePageSelected),
+      body: _pages[_pageSelected],
     );
   }
 

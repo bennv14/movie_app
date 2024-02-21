@@ -8,6 +8,7 @@ class InitialFavouriteMovies extends FavouriteMoviesEvent {
   final DatabaseRepository _databaseRepository;
 
   const InitialFavouriteMovies(this._databaseRepository);
+
   @override
   List<Object> get props => [_databaseRepository];
 }

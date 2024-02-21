@@ -85,8 +85,6 @@ class SideBar extends StatelessWidget {
           TextButton(
             onPressed: () async {
               getIt.get<AuthBloc>().add(Logout());
-              await getIt.unregister<FavouriteMoviesBloc>();
-              getIt.registerSingleton<FavouriteMoviesBloc>(FavouriteMoviesBloc());
             },
             child: Text(
               'Logout',

@@ -1,19 +1,13 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movie_app/config/theme/theme.dart';
 import 'package:flutter/services.dart';
-import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/dashboard.dart';
-import 'package:movie_app/features/movies_info/data/models/account.dart';
-import 'package:movie_app/features/movies_info/data/repository/firebase_auth_repository.dart';
+import 'package:movie_app/features/movies_info/data/repository/firebase_repository_impl.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/favourite_movies_bloc/favourite_movies_bloc.dart';
-import 'package:movie_app/features/movies_info/presentation/controller/auth_strategy/email_auth_strategy.dart';
 import 'package:movie_app/features/movies_info/presentation/controller/auth_strategy/googe_auth_strategy.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/sign_in_screen/sign_in_screen.dart';
 import 'package:movie_app/firebase_options.dart';
@@ -55,12 +49,19 @@ class MyApp extends StatelessWidget {
           builder: (context, state) {
             final user = FirebaseAuth.instance.currentUser;
             if (state is Authenticated) {
+              getIt
+                  .get<FavouriteMoviesBloc>()
+                  .add(InitialFavouriteMovies(FirebaseRepositoryImpl(state.user)));
               return const Dashboard();
             } else {
               if (user != null) {
+                getIt
+                    .get<FavouriteMoviesBloc>()
+                    .add(InitialFavouriteMovies(FirebaseRepositoryImpl(user)));
                 getIt.get<AuthBloc>().add(
                       LoggedIn(user, authStrategy: GoogleAuthentication()),
                     );
+
                 return const Dashboard();
               }
               return const SignInScreen();

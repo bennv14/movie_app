@@ -27,11 +27,9 @@ class ImageLibrary extends StatelessWidget {
       closedElevation: 0.5,
       openElevation: 2,
       openBuilder: (context, action) {
-        log('open');
         return openLibrary(context);
       },
       closedBuilder: (context, action) {
-        log('close');
         return represent();
       },
       closedShape: const RoundedRectangleBorder(
