@@ -94,7 +94,6 @@ class _SignUpBodyState extends State<SignUpBody> {
             _isRegistering = false;
           });
           if (state is RegisterSuccess) {
-            getIt.get<AuthBloc>().add(LoggedIn(state.user));
             Navigator.pop(context);
           } else if (state is RegisterFailure) {
             _buildDialog(context, state.message);

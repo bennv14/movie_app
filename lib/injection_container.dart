@@ -115,7 +115,7 @@ Future<void> initDependencies() async {
   );
 
   getIt.registerSingleton<AuthBloc>(
-    AuthBloc(getIt()),
+    AuthBloc(),
   );
 
   //register user

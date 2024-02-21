@@ -8,20 +8,21 @@ abstract class AuthEvent extends Equatable {
 }
 
 class LoggedIn extends AuthEvent {
+  final AuthStrategy authStrategy;
   final User user;
 
-  const LoggedIn(this.user);
+  const LoggedIn(this.user, {required this.authStrategy});
 
   @override
-  List<Object> get props => [user];
+  List<Object> get props => [user, authStrategy];
 }
 
 class Login extends AuthEvent {
-  final Account account;
-  const Login(this.account);
+  final AuthStrategy authStrategy;
+  const Login(this.authStrategy);
 
   @override
-  List<Object> get props => [account];
+  List<Object> get props => [authStrategy];
 }
 
 class LogInByGoogle extends AuthEvent {}

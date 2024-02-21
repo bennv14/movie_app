@@ -1,32 +1,29 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/constants/firebase_auth_exception_code.dart';
 import 'package:movie_app/core/resources/data_state.dart';
-import 'package:movie_app/features/movies_info/data/models/account.dart';
-import 'package:movie_app/features/movies_info/data/repository/firebase_auth_repository.dart';
+import 'package:movie_app/features/movies_info/presentation/controller/auth_strategy/auth_strategy.dart';
+import 'package:movie_app/features/movies_info/presentation/controller/auth_strategy/googe_auth_strategy.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final FirebaseAuthRepository _firebaseAuthRepository;
-  AuthBloc(this._firebaseAuthRepository) : super(Unauthenticated()) {
+  late AuthStrategy _authStrategy;
+  AuthBloc() : super(Unauthenticated()) {
     on<Login>(_onLogin);
     on<Logout>(_onLogout);
     on<LoggedIn>(_onLoggedIn);
-    on<LogInByGoogle>(_onLoginByGoogle);
   }
 
   FutureOr<void> _onLogin(Login event, Emitter<AuthState> emit) async {
     emit(AuthenticationLoading());
     try {
-      final dataState = await _firebaseAuthRepository.signInByEmailPassword(
-        event.account,
-      );
+      _authStrategy = event.authStrategy;
+      final dataState = await _authStrategy.login();
       if (dataState is DataSuccess && dataState.data != null) {
         emit(Authenticated(dataState.data!));
       } else {
@@ -73,7 +70,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   FutureOr<void> _onLogout(Logout event, Emitter<AuthState> emit) async {
     try {
       emit(AuthenticationLoading());
-      await _firebaseAuthRepository.signOut();
+      await _authStrategy.logout();
       emit(Unauthenticated());
     } on PlatformException {
       emit(Unauthenticated());
@@ -88,32 +85,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   FutureOr<void> _onLoggedIn(LoggedIn event, Emitter<AuthState> emit) async {
+    _authStrategy = event.authStrategy;
     emit(Authenticated(event.user));
-  }
-
-  FutureOr<void> _onLoginByGoogle(LogInByGoogle event, Emitter<AuthState> emit) async {
-    emit(AuthenticationLoading());
-    try {
-      final dataState = await _firebaseAuthRepository.signInByGoogle();
-      if (dataState is DataSuccess && dataState.data != null) {
-        emit(Authenticated(dataState.data!));
-      } else {
-        emit(
-          AuthenticationFailure(
-            message: "Unknow Error",
-            exception: Exception("Unknown"),
-          ),
-        );
-      }
-    } on PlatformException {
-      emit(Unauthenticated());
-    } on Exception catch (e) {
-      emit(
-        AuthenticationFailure(
-          message: "Unknown error",
-          exception: e,
-        ),
-      );
-    }
   }
 }

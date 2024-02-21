@@ -6,6 +6,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/data/models/account.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/auth_bloc/auth_bloc.dart';
+import 'package:movie_app/features/movies_info/presentation/controller/auth_strategy/email_auth_strategy.dart';
+import 'package:movie_app/features/movies_info/presentation/controller/auth_strategy/googe_auth_strategy.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/sign_up_screen/sign_up_screen.dart';
 import 'package:movie_app/features/movies_info/presentation/widgets/center_circular_progress_indicator.dart';
 import 'package:movie_app/injection_container.dart';
@@ -54,8 +56,8 @@ class _SignInScreenState extends State<SignInScreen> {
     }
   }
 
-  void loginByGoogle() async {
-    getIt.get<AuthBloc>().add(LogInByGoogle());
+  void _doLoginByGoogle() async {
+    getIt.get<AuthBloc>().add(Login(GoogleAuthentication()));
   }
 
   @override
@@ -180,7 +182,7 @@ class _SignInScreenState extends State<SignInScreen> {
             iconLogoGoogle,
             fit: BoxFit.contain,
           ),
-          onPressed: _isLoggingIn ? null : loginByGoogle,
+          onPressed: _isLoggingIn ? null : _doLoginByGoogle,
         ),
         CustomIconButton(
           height: defaultPadding * 3,
@@ -263,14 +265,9 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void _doLogin() {
-    getIt.get<AuthBloc>().add(
-          Login(
-            Account(
-              email: _email,
-              password: _password,
-            ),
-          ),
-        );
+    getIt
+        .get<AuthBloc>()
+        .add(Login(EmailAuthentication(Account(email: _email, password: _password))));
   }
 
   Container _buildEmail() {

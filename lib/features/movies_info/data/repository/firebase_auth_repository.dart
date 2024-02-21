@@ -3,16 +3,15 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/core/resources/data_state.dart';
 import 'package:movie_app/features/movies_info/data/models/account.dart';
 
 class FirebaseAuthRepository {
-  final firebaseAuth = FirebaseAuth.instance;
-  final googleSignIn = GoogleSignIn(scopes: googleSignInscopes);
+  final _firebaseAuth = FirebaseAuth.instance;
+  final _googleSignIn = GoogleSignIn();
 
   Future<DataState<User>> signUpWithEmailPassword(Account account) async {
-    final user = await firebaseAuth.createUserWithEmailAndPassword(
+    final user = await _firebaseAuth.createUserWithEmailAndPassword(
       email: account.email,
       password: account.password,
     );
@@ -23,8 +22,10 @@ class FirebaseAuthRepository {
     }
   }
 
+  bool get isGoogleSignIn => _googleSignIn.currentUser != null;
+
   Future<DataState<User>> signInByEmailPassword(Account account) async {
-    final user = await firebaseAuth.signInWithEmailAndPassword(
+    final user = await _firebaseAuth.signInWithEmailAndPassword(
       email: account.email,
       password: account.password,
     );
@@ -37,7 +38,7 @@ class FirebaseAuthRepository {
 
   Future<DataState<User>> signInByGoogle() async {
     try {
-      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
         throw Exception("Google sign cancelled");
       }
@@ -47,7 +48,7 @@ class FirebaseAuthRepository {
         idToken: googleAuth.idToken,
       );
       final UserCredential userCredential =
-          await firebaseAuth.signInWithCredential(credential);
+          await _firebaseAuth.signInWithCredential(credential);
       final User? user = userCredential.user;
       if (user != null) {
         return DataSuccess(user);
@@ -60,10 +61,22 @@ class FirebaseAuthRepository {
     }
   }
 
+  Future<void> firebaseSignOut() async {
+    if (_firebaseAuth.currentUser != null) {
+      await _firebaseAuth.signOut();
+    }
+  }
+
+  Future<void> googleSignOut() async {
+    if (await _googleSignIn.isSignedIn() == true) {
+      await _googleSignIn.signOut();
+    }
+  }
+
   Future<void> signOut() async {
     try {
-      await firebaseAuth.signOut();
-      await googleSignIn.disconnect();
+      await _firebaseAuth.signOut();
+      await _googleSignIn.disconnect();
     } on FirebaseAuth {
       rethrow;
     }
