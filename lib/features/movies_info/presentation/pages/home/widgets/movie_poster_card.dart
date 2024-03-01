@@ -5,22 +5,56 @@ import 'package:movie_app/features/movies_info/domain/entities/movie_entity.dart
 import 'package:animations/animations.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/detail_movies/detail_screen.dart';
 
-class MovieCard extends StatelessWidget {
+class MainMovieCard extends StatelessWidget {
   final MovieEntity movie;
 
-  const MovieCard({super.key, required this.movie});
+  const MainMovieCard({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-      child: OpenContainer(
-        transitionDuration: const Duration(milliseconds: 550),
-        closedElevation: 0.3,
-        openElevation: 0.3,
-        closedBuilder: (context, action) => BuildMovieCard(movie: movie),
-        openBuilder: (context, action) => DetailScreen(movie: movie),
-      ),
+    return OpenContainer(
+      transitionDuration: const Duration(milliseconds: 550),
+      closedElevation: 0,
+      openElevation: 0,
+      openColor: Colors.transparent,
+      closedColor: Colors.transparent,
+      closedBuilder: (context, action) => buildMovieCard(),
+      openBuilder: (context, action) => DetailScreen(movie: movie),
+    );
+  }
+
+  Widget buildMovieCard() {
+    return Column(
+      children: [
+        Expanded(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(defaultPadding),
+            child: cachedImage(movie.posterPath),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: defaultPadding / 2),
+          child: Text(
+            movie.title!,
+            overflow: TextOverflow.ellipsis,
+            style: headerLarge,
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              "assets/icons/star_fill.svg",
+              height: 20,
+            ),
+            const SizedBox(width: defaultPadding / 2),
+            Text(
+              "${movie.voteAverage}",
+              style: headerMedium,
+            )
+          ],
+        )
+      ],
     );
   }
 }

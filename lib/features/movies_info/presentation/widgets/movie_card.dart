@@ -16,8 +16,10 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return OpenContainer(
       transitionDuration: const Duration(milliseconds: 550),
-      closedElevation: 0.2,
-      openElevation: 0.2,
+      closedElevation: 0,
+      openElevation: 0,
+      closedColor: Colors.transparent,
+      openColor: Colors.transparent,
       closedBuilder: (context, action) => buildMovieCard(),
       openBuilder: (context, action) => DetailScreen(movie: movie),
     );

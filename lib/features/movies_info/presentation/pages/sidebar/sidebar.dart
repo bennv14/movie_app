@@ -1,10 +1,11 @@
 import 'dart:developer';
 
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/constants/constants.dart';
 import 'package:movie_app/features/movies_info/presentation/bloc/auth_bloc/auth_bloc.dart';
-import 'package:movie_app/features/movies_info/presentation/bloc/favourite_movies_bloc/favourite_movies_bloc.dart';
 import 'package:movie_app/features/movies_info/presentation/pages/sidebar/widgets/user_card.dart';
+import 'package:movie_app/features/movies_info/presentation/pages/user_detail/user_detail.dart';
 import 'package:movie_app/injection_container.dart';
 
 class SideBar extends StatelessWidget {
@@ -20,14 +21,16 @@ class SideBar extends StatelessWidget {
       shape: shapeSideBar(),
       child: Column(
         children: [
-          const SizedBox(height: defaultPadding),
-          SafeArea(
-            child: TextButton(
-                onPressed: () {
-                  Scaffold.of(context).closeDrawer();
-                  changePage(2);
-                },
-                child: const UserCard()),
+          OpenContainer(
+            closedBuilder: (context, action) => Container(
+              width: double.infinity,
+              padding: const EdgeInsets.only(top: defaultPadding * 2),
+              child: const UserCard(),
+            ),
+            openBuilder: (context, action) => const UserDetailScreen(),
+            transitionDuration: const Duration(milliseconds: 550),
+            closedElevation: 0,
+            openElevation: 0,
           ),
           const SizedBox(
             height: defaultPadding,

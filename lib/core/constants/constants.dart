@@ -138,6 +138,35 @@ cachedImage(String? url, {BoxFit fit = BoxFit.fill}) {
   }
 }
 
+Widget catchImageAvatar(String? url, {BoxFit fit = BoxFit.fill}) {
+  if (url == null) {
+    return Image.asset(
+      "assets/images/no-image.png",
+      fit: BoxFit.fill,
+    );
+  } else {
+    return CachedNetworkImage(
+      imageUrl: url,
+      progressIndicatorBuilder: (context, url, progress) =>
+          const CenterCircularProgressIndicator(),
+      errorWidget: (context, url, error) => Text(
+        error.toString(),
+        style: textStyle,
+      ),
+      imageBuilder: (context, imageProvider) {
+        return Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: imageProvider,
+              fit: fit,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
 const String movieBaseURL = "https://api.themoviedb.org/3";
 
 const String uriNowPlaying = "/movie/now_playing";

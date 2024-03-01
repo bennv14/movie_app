@@ -9,15 +9,17 @@ class CustomTextFromField extends StatelessWidget {
   final Widget? subfixIcon;
   final Color? fillColor;
   final InputBorder? focusedBorder;
-  final InputBorder border;
+  final InputBorder? border;
   final EdgeInsets? contentPadding;
   final Color cursorColor;
   final bool obscureText;
   final TextEditingController? controller;
-  final bool enabled;
+  final bool? enabled;
   final FormFieldValidator<String>? validator;
   final ValueChanged<String>? onChanged;
   final AutovalidateMode? autovalidateMode;
+  final String? labelText;
+  final TextStyle? labelStyle;
 
   const CustomTextFromField({
     super.key,
@@ -33,10 +35,12 @@ class CustomTextFromField extends StatelessWidget {
     this.subfixIcon,
     this.obscureText = false,
     this.controller,
-    this.enabled = false,
+    this.enabled,
     this.validator,
     this.onChanged,
     this.autovalidateMode,
+    this.labelText,
+    this.labelStyle,
   });
 
   @override
@@ -51,6 +55,8 @@ class CustomTextFromField extends StatelessWidget {
       controller: controller,
       style: style,
       decoration: InputDecoration(
+        labelText: labelText,
+        labelStyle: labelStyle,
         hintText: hintText,
         hintStyle: hintStyle,
         isDense: true,

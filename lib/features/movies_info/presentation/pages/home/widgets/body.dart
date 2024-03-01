@@ -42,7 +42,7 @@ class _BodyState extends State<Body> {
           case MoviesStatus.waiting:
             List<Widget> moviesCards = [];
             for (var movie in state.movies) {
-              moviesCards.add(MovieCard(movie: movie));
+              moviesCards.add(MainMovieCard(movie: movie));
             }
             return Carousel(
               widgets: moviesCards
@@ -59,7 +59,7 @@ class _BodyState extends State<Body> {
           case MoviesStatus.failure:
             List<Widget> moviesCards = [];
             for (var movie in state.movies) {
-              moviesCards.add(MovieCard(movie: movie));
+              moviesCards.add(MainMovieCard(movie: movie));
             }
             return Carousel(
               widgets: moviesCards
@@ -84,7 +84,7 @@ class _BodyState extends State<Body> {
           case MoviesStatus.success:
             List<Widget> moviesCards = [];
             for (var movie in state.movies) {
-              moviesCards.add(MovieCard(movie: movie));
+              moviesCards.add(MainMovieCard(movie: movie));
             }
             if (moviesCards.isEmpty) {
               moviesCards.add(
